@@ -11,7 +11,31 @@ const navigationConfig = [
 	{
 		id: 'home-component',
 		title: 'home',
-		translate: 'Home',
+		translate: 'Admin Home',
+		type: 'item',
+		icon: 'whatshot',
+		url: '/admin-home'
+	},
+	{
+		id: 'users-component',
+		title: 'users',
+		translate: 'Admin Usuarios',
+		type: 'item',
+		icon: 'whatshot',
+		url: '/admin-users'
+	},
+	{
+		id: 'payments-component',
+		title: 'payments',
+		translate: 'Admin Pagos',
+		type: 'item',
+		icon: 'whatshot',
+		url: '/admin-payments'
+	},
+	{
+		id: 'home-component',
+		title: 'home',
+		translate: 'User Home',
 		type: 'item',
 		icon: 'whatshot',
 		url: '/home'
@@ -19,18 +43,27 @@ const navigationConfig = [
 	{
 		id: 'contacts-component',
 		title: 'Contactos',
-		translate: 'Contactos',
+		translate: 'User Contactos',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/contacts'
+		url: '/user-contacts'
 	},
+	// {
+	// 	id: 'tags-component',
+	// 	title: 'Etiquetas',
+	// 	translate: 'Etiquetas',
+	// 	type: 'item',
+	// 	icon: 'whatshot',
+	// 	url: '/tags'
+	// },
 	{
-		id: 'tags-component',
-		title: 'Etiquetas',
-		translate: 'Etiquetas',
+		id: 'editor-component',
+		title: 'Editor',
+		translate: 'Editor',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/tags'
+		url: '/editor',
+		// target: '_blank'
 	},
 	{
 		id: 'example-component',
@@ -39,7 +72,7 @@ const navigationConfig = [
 		type: 'link',
 		icon: 'whatshot',
 		url: '/example',
-		target: '_blank'
+		// target: '_blank'
 	},
 	// {
 	// 	id: 'asistencia',

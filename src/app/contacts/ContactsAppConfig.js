@@ -9,12 +9,12 @@ const ContactsAppConfig = {
 	},
 	routes: [
 		{
-			path: '/contacts/:id',
+			path: '/user-contacts/:id',
 			component: React.lazy(() => import('./ContactsApp'))
 		},
 		{
-			path: '/contacts',
-			component: () => <Redirect to="/contacts/all" />
+			path: '/user-contacts',
+			component: () => <Redirect to="/user-contacts/all" />
 		}
 	]
 };
