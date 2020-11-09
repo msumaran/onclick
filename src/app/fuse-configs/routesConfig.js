@@ -12,6 +12,9 @@ import ContactsAppConfig from 'app/contacts/ContactsAppConfig';
 import EditorPageConfig from 'app/pages/EditorPage/EditorPageConfig';
 import ExampleConfig from 'app/main/example/ExampleConfig';
 
+import DashboardConfig from 'app/dashboard/DashboardConfig';
+import DashboardConfigAdmin from 'app/admin/dashboard/DashboardConfig';
+
 // import TagsAppConfig from 'app/tags/TagsAppConfig';
 // import ScrumboardAppConfig from 'app/scrumboard/ScrumboardAppConfig';
 // import ProfilePageConfig from 'app/profile/ProfilePageConfig';
@@ -26,6 +29,9 @@ const routeConfigs = [
 	ContactsAppConfig,
 	EditorPageConfig,
 	ExampleConfig, 
+	
+	DashboardConfig, 
+	DashboardConfigAdmin, 
 
 	// TagsAppConfig,
 	// ProfilePageConfig,

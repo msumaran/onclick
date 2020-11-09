@@ -9,12 +9,12 @@ i18next.addResourceBundle('ar', 'navigation', ar);
 
 const navigationConfig = [
 	{
-		id: 'home-component',
-		title: 'home',
+		id: 'admin-home-component',
+		title: 'homeAdmin',
 		translate: 'Admin Home',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/admin-home'
+		url: '/admin-dashboard'
 	},
 	{
 		id: 'users-component',
@@ -38,7 +38,7 @@ const navigationConfig = [
 		translate: 'User Home',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/home'
+		url: '/dashboard'
 	},
 	{
 		id: 'contacts-component',
@@ -48,14 +48,14 @@ const navigationConfig = [
 		icon: 'whatshot',
 		url: '/user-contacts'
 	},
-	// {
-	// 	id: 'tags-component',
-	// 	title: 'Etiquetas',
-	// 	translate: 'Etiquetas',
-	// 	type: 'item',
-	// 	icon: 'whatshot',
-	// 	url: '/tags'
-	// },
+	{
+		id: 'contacts-component',
+		title: 'Contactos',
+		translate: 'User Forms',
+		type: 'item',
+		icon: 'whatshot',
+		url: '/user-forms'
+	},
 	{
 		id: 'editor-component',
 		title: 'Editor',
@@ -73,15 +73,7 @@ const navigationConfig = [
 		icon: 'whatshot',
 		url: '/example',
 		// target: '_blank'
-	},
-	// {
-	// 	id: 'asistencia',
-	// 	title: 'Marcar Asistencia',
-	// 	translate: 'Marcar Asistencia',
-	// 	type: 'item',
-	// 	icon: 'avtimer',
-	// 	url: '/scrumboard'
-	// }
+	}
 ];
 
 export default navigationConfig;
