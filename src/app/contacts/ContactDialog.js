@@ -41,6 +41,7 @@ function ContactDialog(props) {
 
     const dispatch = useDispatch();
     const contactDialog = useSelector(({ contactsApp }) => contactsApp.contacts.contactDialog);
+	const userUID = useSelector(({ auth }) => auth.user.uid);
 
     const { form, handleChange, setForm, setInForm } = useForm(defaultFormState);
 
@@ -86,15 +87,15 @@ function ContactDialog(props) {
         event.preventDefault();
 
         if (contactDialog.type === 'new') {
-            dispatch(Actions.addContact(form));
+            dispatch(Actions.addContact(form, userUID));
         } else {
-            dispatch(Actions.updateContact(form));
+            dispatch(Actions.updateContact(form, userUID));
         }
         closeComposeDialog();
     }
 
     function handleRemove() {
-        dispatch(Actions.removeContact(form.id));
+        dispatch(Actions.removeContact(form.id, userUID));
         closeComposeDialog();
     }
 

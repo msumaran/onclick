@@ -18,21 +18,23 @@ export const TOGGLE_STARRED_CONTACT = '[CONTACTS APP] TOGGLE STARRED CONTACT';
 export const TOGGLE_STARRED_CONTACTS = '[CONTACTS APP] TOGGLE STARRED CONTACTS';
 export const SET_CONTACTS_STARRED = '[CONTACTS APP] SET CONTACTS STARRED ';
 
-export function getContacts(routeParams) {
+
+export function getContacts(routeParams, userUID) {
     return (dispatch, getState) => {
-        let ref = firebaseService.db.ref(`contacts`);
+
+        let ref = firebaseService.db.ref(`users/${userUID}/contacts`);
 
         switch (routeParams.id) {
             case 'starred':
                 ref = ref.orderByChild("starred").equalTo(true)
                 break;
             default:
-
         }
         ref
             .once('value')
             .then(snapshot => {
                 let contacts = snapshot.val();
+                console.log("contacts ", contacts)
                 if (contacts !== null) {
                     _.forEach(contacts, function(value, key) {
                         if (value) value.id = key;
@@ -101,31 +103,31 @@ export function closeEditContactDialog() {
     };
 }
 
-export function addContact(newContact) {
+export function addContact(newContact, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
-        firebaseService.db.ref(`contacts`)
+        firebaseService.db.ref(`users/${userUID}/contacts`)
             .push(newContact)
             .then(snapshot => {
                 Promise.all([
                     dispatch({
                         type: ADD_CONTACT
                     })
-                ]).then(() => dispatch(getContacts(routeParams)));
+                ]).then(() => dispatch(getContacts(routeParams, userUID)));
             });
     };
 }
 
-export function updateContact(contact) {
+export function updateContact(contact, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
      
-        firebaseService.db.ref('contacts').child(contact.id).update(contact).then(() => {
+        firebaseService.db.ref(`users/${userUID}/contacts`).child(contact.id).update(contact).then(() => {
             Promise.all([
                 dispatch({
                     type: ADD_CONTACT
                 })
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         }).catch(error => {
             return {
                 errorCode: error.code,
@@ -135,16 +137,16 @@ export function updateContact(contact) {
     };
 }
 
-export function removeContact(contactId) {
+export function removeContact(contactId, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
         const id = contactId;
-        firebaseService.db.ref(`contacts/${id}`).remove().then(() => {
+        firebaseService.db.ref(`users/${userUID}/contacts/${id}`).remove().then(() => {
             Promise.all([
                 dispatch({
                     type: REMOVE_CONTACT
                 })
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         }).catch(error => {
             return {
                 errorCode: error.code,
@@ -154,13 +156,13 @@ export function removeContact(contactId) {
     };
 }
 
-export function removeContacts(contactIds) {
+export function removeContacts(contactIds, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
 
         let promises = [];
         contactIds.forEach(element => {
-            promises.push(firebaseService.db.ref(`contacts/${element}`).remove());
+            promises.push(firebaseService.db.ref(`users/${userUID}/contacts/${element}`).remove());
         });
 
         return Promise.all(promises).then(result => {
@@ -168,41 +170,41 @@ export function removeContacts(contactIds) {
                 dispatch({
                     type: REMOVE_CONTACTS
                 })
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         });
     };
 }
 
-export function toggleStarredContact(contactId) {
+export function toggleStarredContact(contactId, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
 
 
-        firebaseService.db.ref('contacts').child(contactId).once("value", function(snapshot) {
+        firebaseService.db.ref(`users/${userUID}/contacts`).child(contactId).once("value", function(snapshot) {
             let contact = snapshot.val();
             if (contact.starred === undefined || contact.starred === false) {
                 contact.starred = true;
             } else {
                 contact.starred = false;
             }
-            firebaseService.db.ref('contacts').child(contactId).update(contact).then(() => {
+            firebaseService.db.ref(`users/${userUID}/contacts`).child(contactId).update(contact).then(() => {
                 Promise.all([
                     dispatch({
                         type: TOGGLE_STARRED_CONTACT
                     })
-                ]).then(() => dispatch(getContacts(routeParams)))
+                ]).then(() => dispatch(getContacts(routeParams, userUID)))
             });
         });
     };
 }
 
-export function toggleStarredContacts(contactIds) {
+export function toggleStarredContacts(contactIds, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
 
         let promises = [];
         contactIds.forEach(element => {
-            promises.push(firebaseService.db.ref('contacts').child(element).update({ starred: true }));
+            promises.push(firebaseService.db.ref(`users/${userUID}/contacts`).child(element).update({ starred: true }));
         });
 
         return Promise.all(promises).then(result => {
@@ -213,7 +215,7 @@ export function toggleStarredContacts(contactIds) {
                 dispatch({
                     type: DESELECT_ALL_CONTACTS
                 }),
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         });
 
         // const request = axios.post('/api/contacts-app/toggle-starred-contacts', {
@@ -229,18 +231,18 @@ export function toggleStarredContacts(contactIds) {
         //             type: DESELECT_ALL_CONTACTS
         //         }),
         //         dispatch(getUserData())
-        //     ]).then(() => dispatch(getContacts(routeParams)))
+        //     ]).then(() => dispatch(getContacts(routeParams, userUID)))
         // );
     };
 }
 
-export function setContactsStarred(contactIds) {
+export function setContactsStarred(contactIds, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
 
         let promises = [];
         contactIds.forEach(element => {
-            promises.push(firebaseService.db.ref('contacts').child(element).update({ starred: true }));
+            promises.push(firebaseService.db.ref(`users/${userUID}/contacts`).child(element).update({ starred: true }));
         });
 
         return Promise.all(promises).then(result => {
@@ -251,18 +253,18 @@ export function setContactsStarred(contactIds) {
                 dispatch({
                     type: DESELECT_ALL_CONTACTS
                 }),
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         });
     };
 }
 
-export function setContactsUnstarred(contactIds) {
+export function setContactsUnstarred(contactIds, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
 
         let promises = [];
         contactIds.forEach(element => {
-            promises.push(firebaseService.db.ref('contacts').child(element).update({ starred: false }));
+            promises.push(firebaseService.db.ref(`users/${userUID}/contacts`).child(element).update({ starred: false }));
         });
 
         return Promise.all(promises).then(result => {
@@ -273,7 +275,7 @@ export function setContactsUnstarred(contactIds) {
                 dispatch({
                     type: DESELECT_ALL_CONTACTS
                 }),
-            ]).then(() => dispatch(getContacts(routeParams)));
+            ]).then(() => dispatch(getContacts(routeParams, userUID)));
         });
     };
 }

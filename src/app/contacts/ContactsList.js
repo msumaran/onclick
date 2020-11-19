@@ -20,6 +20,8 @@ function ContactsList(props) {
 
 	const [filteredData, setFilteredData] = useState(null);
 
+	const userUID = useSelector(({ auth }) => auth.user.uid);
+
 	useEffect(() => {
 		function getFilteredArray(entities, _searchText) {
 			const arr = Object.keys(entities).map(id => entities[id]);
@@ -151,7 +153,7 @@ function ContactsList(props) {
 								<IconButton
 									onClick={ev => {
 										ev.stopPropagation();
-										dispatch(Actions.toggleStarredContact(row.original.id));
+										dispatch(Actions.toggleStarredContact(row.original.id, userUID));
 									}}
 								>
 									{row.original.starred && row.original.starred === true ? (
@@ -163,7 +165,7 @@ function ContactsList(props) {
 								<IconButton
 									onClick={ev => {
 										ev.stopPropagation();
-										dispatch(Actions.removeContact(row.original.id));
+										dispatch(Actions.removeContact(row.original.id, userUID));
 									}}
 								>
 									<Icon>delete</Icon>

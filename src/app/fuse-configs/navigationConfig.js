@@ -53,15 +53,15 @@ const navigationConfig = [
 		url: '/user-contacts',
 		auth: ['user', 'admin']
 	},
-	{
-		id: 'forms-component',
-		title: 'Contactos',
-		translate: 'Formularios',
-		type: 'item',
-		icon: 'whatshot',
-		url: '/user-forms',
-		auth: ['user', 'admin']
-	},
+	// {
+	// 	id: 'forms-component',
+	// 	title: 'Contactos',
+	// 	translate: 'Formularios',
+	// 	type: 'item',
+	// 	icon: 'whatshot',
+	// 	url: '/user-forms',
+	// 	auth: ['user', 'admin']
+	// },
 	{
 		id: 'editor-component',
 		title: 'Editor',

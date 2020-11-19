@@ -12,6 +12,7 @@ import * as Actions from './store/actions';
 function ContactsMultiSelectMenu(props) {
 	const dispatch = useDispatch();
 	const selectedContactIds = useSelector(({ contactsApp }) => contactsApp.contacts.selectedContactIds);
+	const userUID = useSelector(({ auth }) => auth.user.uid);
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
@@ -42,7 +43,7 @@ function ContactsMultiSelectMenu(props) {
 				<MenuList>
 					<MenuItem
 						onClick={() => {
-							dispatch(Actions.removeContacts(selectedContactIds));
+							dispatch(Actions.removeContacts(selectedContactIds, userUID));
 							closeSelectedContactsMenu();
 						}}
 					>
@@ -53,7 +54,7 @@ function ContactsMultiSelectMenu(props) {
 					</MenuItem>
 					<MenuItem
 						onClick={() => {
-							dispatch(Actions.setContactsStarred(selectedContactIds));
+							dispatch(Actions.setContactsStarred(selectedContactIds, userUID));
 							closeSelectedContactsMenu();
 						}}
 					>

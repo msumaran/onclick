@@ -5,7 +5,7 @@ import Icon from '@material-ui/core/Icon';
 import { makeStyles } from '@material-ui/core/styles';
 import withReducer from 'app/store/withReducer';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ContactDialog from './ContactDialog';
 import ContactsHeader from './ContactsHeader';
 import ContactsList from './ContactsList';
@@ -28,14 +28,16 @@ function ContactsApp(props) {
 	const classes = useStyles(props);
 	const pageLayout = useRef(null);
 
+	const userUID = useSelector(({ auth }) => auth.user.uid);
+
 	useEffect(() => {
-		dispatch(Actions.getContacts(props.match.params));
+		dispatch(Actions.getContacts(props.match.params, userUID));
 		dispatch(Actions.getUserData());
 	}, [dispatch, props.match.params]);
 
-	useEffect(() => {
-		dispatch(Actions.getContacts(props.match.params));
-	}, [dispatch, props.match.params]);
+	// useEffect(() => {
+	// 	dispatch(Actions.getContacts(props.match.params));
+	// }, [dispatch, props.match.params]);
 
 	return (
 		<div>
