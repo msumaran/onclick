@@ -82,6 +82,7 @@ class Auth extends Component {
 				 * Retrieve user data from Auth0
 				 */
 				auth0Service.getUserData().then(tokenData => {
+					
 					this.props.setUserDataAuth0(tokenData);
 
 					resolve();
@@ -101,6 +102,7 @@ class Auth extends Component {
 	firebaseCheck = () =>
 		new Promise(resolve => {
 			firebaseService.init(success => {
+				// console.log("success ", success)
 				if (!success) {
 					resolve();
 				}
@@ -108,6 +110,7 @@ class Auth extends Component {
 
 			firebaseService.onAuthStateChanged(authUser => {
 				if (authUser) {
+					// console.log("authUser ", authUser)
 					this.props.showMessage({ message: 'Ingresando al sistema' });
 
 					/**
@@ -115,6 +118,7 @@ class Auth extends Component {
 					 */
 					firebaseService.getUserData(authUser.uid).then(
 						user => {
+							// console.log("user ", user)
 
 							
 							this.props.setUserDataFirebase(user, authUser);

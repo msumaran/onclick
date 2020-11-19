@@ -15,7 +15,7 @@ const HomeConfig = {
 			config: {}
 		}
 	},
-	auth: authRoles.admin, 
+	auth: authRoles.user, 
 	routes: [
 		{
 			path: '/home',

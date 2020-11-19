@@ -11,10 +11,11 @@ const navigationConfig = [
 	{
 		id: 'admin-home-component',
 		title: 'homeAdmin',
-		translate: 'Admin Home',
+		translate: 'Admin dashboard',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/admin-dashboard'
+		url: '/admin-dashboard',
+		auth: ['admin']
 	},
 	{
 		id: 'users-component',
@@ -22,7 +23,8 @@ const navigationConfig = [
 		translate: 'Admin Usuarios',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/admin-users'
+		url: '/admin-users',
+		auth: ['admin']
 	},
 	{
 		id: 'payments-component',
@@ -30,31 +32,35 @@ const navigationConfig = [
 		translate: 'Admin Pagos',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/admin-payments'
+		url: '/admin-payments',
+		auth: ['admin']
 	},
 	{
 		id: 'home-component',
 		title: 'home',
-		translate: 'User Home',
+		translate: 'Dashboard',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/dashboard'
+		url: '/dashboard',
+		auth: ['user']
 	},
 	{
 		id: 'contacts-component',
 		title: 'Contactos',
-		translate: 'User Contactos',
+		translate: 'Contactos',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/user-contacts'
+		url: '/user-contacts',
+		auth: ['user']
 	},
 	{
-		id: 'contacts-component',
+		id: 'forms-component',
 		title: 'Contactos',
-		translate: 'User Forms',
+		translate: 'Formularios',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/user-forms'
+		url: '/user-forms',
+		auth: ['user']
 	},
 	{
 		id: 'editor-component',
@@ -63,6 +69,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/editor',
+		auth: ['user']
 		// target: '_blank'
 	},
 	{
@@ -72,6 +79,7 @@ const navigationConfig = [
 		type: 'link',
 		icon: 'whatshot',
 		url: '/example',
+		auth: ['user']
 		// target: '_blank'
 	}
 ];

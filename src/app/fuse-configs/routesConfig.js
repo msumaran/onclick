@@ -5,33 +5,39 @@ import FuseUtils from '@fuse/utils';
 import LoginConfig from 'app/login/LoginConfig';
 import RegisterConfig from 'app/register/RegisterConfig';
 
-import UsersConfig from 'app/users/UsersConfig';
+import DashboardConfigAdmin from 'app/admin/dashboard/DashboardConfig';
 
-import HomeConfig from 'app/home/HomeConfig';
+import DashboardConfig from 'app/dashboard/DashboardConfig';
 import ContactsAppConfig from 'app/contacts/ContactsAppConfig';
 import EditorPageConfig from 'app/pages/EditorPage/EditorPageConfig';
 import ExampleConfig from 'app/main/example/ExampleConfig';
 
-import DashboardConfig from 'app/dashboard/DashboardConfig';
-import DashboardConfigAdmin from 'app/admin/dashboard/DashboardConfig';
+import HomeConfig from 'app/home/HomeConfig';
 
+// import UsersConfig from 'app/users/UsersConfig';
 // import TagsAppConfig from 'app/tags/TagsAppConfig';
 // import ScrumboardAppConfig from 'app/scrumboard/ScrumboardAppConfig';
 // import ProfilePageConfig from 'app/profile/ProfilePageConfig';
 
 const routeConfigs = [
+	// GENERAL
 	LoginConfig,
 	RegisterConfig,
 
-	UsersConfig, 
+	// ADMIN
+	DashboardConfigAdmin, // falta USUAURIOS/PAGOS
 
-	HomeConfig, 
+	// USER
+	DashboardConfig,
 	ContactsAppConfig,
+		// FORMULARIOS
 	EditorPageConfig,
 	ExampleConfig, 
+
+	// UsersConfig,
 	
-	DashboardConfig, 
-	DashboardConfigAdmin, 
+	// DEFAULT
+	HomeConfig, 
 
 	// TagsAppConfig,
 	// ProfilePageConfig,

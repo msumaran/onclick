@@ -60,7 +60,7 @@ export function createUserSettingsFirebase(authUser) {
 		const guestUser = getState().auth.user;
 		const fuseDefaultSettings = getState().fuse.settings.defaults;
 		const { currentUser } = firebase.auth();
-		console.log('createUserSettingsFirebase', authUser);
+		// console.log('createUserSettingsFirebase', authUser);
 		/**
 		 * Merge with current Settings
 		 */
