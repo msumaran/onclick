@@ -42,7 +42,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/dashboard',
-		auth: ['user']
+		auth: ['user', 'admin']
 	},
 	{
 		id: 'contacts-component',
@@ -51,7 +51,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/user-contacts',
-		auth: ['user']
+		auth: ['user', 'admin']
 	},
 	{
 		id: 'forms-component',
@@ -60,7 +60,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/user-forms',
-		auth: ['user']
+		auth: ['user', 'admin']
 	},
 	{
 		id: 'editor-component',
@@ -69,7 +69,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/editor',
-		auth: ['user']
+		auth: ['user', 'admin']
 		// target: '_blank'
 	},
 	{
@@ -79,7 +79,7 @@ const navigationConfig = [
 		type: 'link',
 		icon: 'whatshot',
 		url: '/example',
-		auth: ['user']
+		auth: ['user', 'admin']
 		// target: '_blank'
 	}
 ];
