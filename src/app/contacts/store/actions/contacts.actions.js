@@ -122,6 +122,7 @@ export function updateContact(contact, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().contactsApp.contacts;
      
+        console.log("contact ", contact)
         firebaseService.db.ref(`users/${userUID}/contacts`).child(contact.id).update(contact).then(() => {
             Promise.all([
                 dispatch({

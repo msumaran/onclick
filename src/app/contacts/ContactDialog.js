@@ -37,7 +37,7 @@ const defaultFormState = {
 function ContactDialog(props) {
 
     let isUploading = false;
-    let progress = 0;
+    // let progress = 0;
 
     const dispatch = useDispatch();
     const contactDialog = useSelector(({ contactsApp }) => contactsApp.contacts.contactDialog);

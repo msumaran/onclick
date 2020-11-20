@@ -33,7 +33,7 @@ function ContactsApp(props) {
 	useEffect(() => {
 		dispatch(Actions.getContacts(props.match.params, userUID));
 		dispatch(Actions.getUserData());
-	}, [dispatch, props.match.params]);
+	}, [dispatch, props.match.params, userUID]);
 
 	// useEffect(() => {
 	// 	dispatch(Actions.getContacts(props.match.params));
