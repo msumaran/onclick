@@ -2,6 +2,7 @@ import * as Actions from '../actions';
 
 const initialState = {
 	role: [], // guest
+	landing: {}, // guest
 	data: {
 		displayName: 'Miguel Sumaran',
 		photoURL: 'assets/images/avatars/Velazquez.jpg',
@@ -25,6 +26,12 @@ const user = (state = initialState, action) => {
 		}
 		case Actions.USER_LOGGED_OUT: {
 			return initialState;
+		}
+		case Actions.SAVE_USER_LANDING: {
+			return {
+				...state,
+				landing: { ...state.landing, body: {...action.payload.body} } // .body
+			};
 		}
 		default: {
 			return state;

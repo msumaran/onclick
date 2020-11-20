@@ -37,7 +37,7 @@ class FirebaseService {
         if (!firebase.apps.length) {
             return false;
         }
-        console.log(userId);
+        // console.log(userId);
 
         return new Promise((resolve, reject) => {
             this.db

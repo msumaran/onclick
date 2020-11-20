@@ -1,5 +1,6 @@
 
 import React, { useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import FusePageSimple from '@fuse/core/FusePageSimple';
 import { makeStyles } from '@material-ui/core'
@@ -8,33 +9,41 @@ import Button from '@material-ui/core/Button'
 import EmailEditor from 'react-email-editor'
 import sample from './sample.json';
 
+// import { obtenerPokemonesAccion } from '../redux/pokeDucks'
+import * as userActions from "../../auth/store/actions"
+
 const useStyles = makeStyles(theme => ({
     page: {}
 }))
 
 const EditorPage = (props) => {
 
+    const userUID = useSelector(({ auth }) => auth.user.uid);
+
+    const dispatch =  useDispatch()
+
     const classes = useStyles(props)
 
     const emailEditorRef = useRef(null)
 
-    const exportHtml = () => {
+    const landing = useSelector(({ auth }) => auth.user.landing.code ? JSON.parse( auth.user.landing.code ) : sample ) ;
+
+    const onLoad = () => {
+        emailEditorRef.current.editor.loadDesign( landing )
+    }
+
+    const saveLanding = () => {
 
         emailEditorRef.current.editor.exportHtml((data) => {
-            const { design, html } = data;
-            console.log('exportHtml', html);
+            dispatch( userActions.saveLanding( data.design, userUID ) )
         });
     }
 
-    const onLoad = () => {
-
-        console.log({ sample })
-
-        emailEditorRef.current.editor.loadDesign(sample)
-        // you can load your template here;
-        // const templateJson = {};
-        // emailEditorRef.current.editor.loadDesign(templateJson);
-    }
+    // useEffect( ()=>{
+    //     // onLoad()
+    //     console.log("ok: ", landing)
+        
+    // }, [landing] )
 
     return (
         <div className={classes.page}>
@@ -51,14 +60,15 @@ const EditorPage = (props) => {
 
                         <div>
                             <div>
-                                <Button variant="contained" onClick={exportHtml}>
-                                    Export HTML
+                                <Button variant="contained" onClick={saveLanding}>
+                                    Guardar
                                 </Button>
                             </div>
 
                             <EmailEditor
                                 ref={emailEditorRef}
                                 onLoad={onLoad}
+                                minHeight={650}
                             />
                         </div>
                     </div>

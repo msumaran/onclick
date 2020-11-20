@@ -10,6 +10,7 @@ import firebase from 'firebase/app';
 export const SET_USER_DATA = '[USER] SET DATA';
 export const REMOVE_USER_DATA = '[USER] REMOVE DATA';
 export const USER_LOGGED_OUT = '[USER] LOGGED OUT';
+export const SAVE_USER_LANDING = '[USER] SAVE LANDING';
 
 /**
  * Set user data from Auth0 token data
@@ -237,5 +238,28 @@ function updateUserData(user, dispatch) {
 				});
 			break;
 		}
+	}
+}
+
+
+export function saveLanding(dataLanding, userUID){
+	return ( dispatch, getState )=>{
+
+		firebaseService.db.ref(`users/${userUID}/landing`)
+		.update( { code: JSON.stringify( {body:dataLanding.body} ) } )
+		.then(() => {
+
+			dispatch({
+				type: SAVE_USER_LANDING,
+				payload: dataLanding
+			});
+		})
+		.catch(error => {
+            return {
+                errorCode: error.code,
+                errorMessage: error.message
+            }
+        });
+
 	}
 }
