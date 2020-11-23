@@ -18,12 +18,12 @@ const navigationConfig = [
 		auth: ['admin']
 	},
 	{
-		id: 'users-component',
+		id: 'clients-component',
 		title: 'users',
-		translate: 'Admin Usuarios',
+		translate: 'Admin Clientes',
 		type: 'item',
 		icon: 'whatshot',
-		url: '/admin-users',
+		url: '/admin-clients',
 		auth: ['admin']
 	},
 	{
