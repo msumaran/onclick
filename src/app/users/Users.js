@@ -24,7 +24,7 @@ function UsersPage(props) {
 			}
 			content={
 				<div className="p-24 rounded-top bgdark">
-					<h4>Content</h4>
+					<h4>Content users</h4>
 					<br />
 					<DemoContent />
 				</div>

@@ -27,8 +27,8 @@ const navigationConfig = [
 		auth: ['admin']
 	},
 	{
-		id: 'payments-component',
-		title: 'payments',
+		id: 'paylogs-component',
+		title: 'paylogs',
 		translate: 'Admin Pagos',
 		type: 'item',
 		icon: 'whatshot',
@@ -42,7 +42,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/dashboard',
-		auth: ['user', 'admin']
+		auth: ['user']
 	},
 	{
 		id: 'contacts-component',
@@ -51,7 +51,7 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/user-contacts',
-		auth: ['user', 'admin']
+		auth: ['user']
 	},
 	// {
 	// 	id: 'forms-component',
@@ -69,19 +69,19 @@ const navigationConfig = [
 		type: 'item',
 		icon: 'whatshot',
 		url: '/editor',
-		auth: ['user', 'admin']
+		auth: ['user']
 		// target: '_blank'
 	},
-	{
-		id: 'example-component',
-		title: 'Landing',
-		translate: 'Landing',
-		type: 'link',
-		icon: 'whatshot',
-		url: '/example',
-		auth: ['user', 'admin']
-		// target: '_blank'
-	}
+	// {
+	// 	id: 'example-component',
+	// 	title: 'Landing',
+	// 	translate: 'Landing',
+	// 	type: 'link',
+	// 	icon: 'whatshot',
+	// 	url: '/example',
+	// 	auth: ['user', 'admin']
+	// 	// target: '_blank'
+	// }
 ];
 
 export default navigationConfig;

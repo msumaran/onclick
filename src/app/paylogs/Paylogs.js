@@ -8,13 +8,17 @@ import withReducer from 'app/store/withReducer';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ContactDialog from './ContactDialog';
-import ContactsHeader from './ContactsHeader';
-import ContactsList from './ContactsList';
-import ContactsSidebarContent from './ContactsSidebarContent';
+// import DemoContent from '@fuse/core/DemoContent';
+// import { useTranslation } from 'react-i18next';
+
+// import PaylogsDialog from './PaylogsDialog';
+import PaylogsHeader from './PaylogsHeader';
+import PaylogsList from './PaylogsList';
+// import PaylogsSidebarContent from './PaylogsSidebarContent';
 
 import * as Actions from './store/actions';
 import reducer from './store/reducers';
+
 
 const useStyles = makeStyles({
 	addButton: {
@@ -25,23 +29,17 @@ const useStyles = makeStyles({
 	}
 });
 
-function ContactsApp(props) {
-	const dispatch = useDispatch();
-	
+function PaylogsPage(props) {
+    const dispatch = useDispatch();
 	const classes = useStyles(props);
 	const pageLayout = useRef(null);
-
 	const userUID = useSelector(({ auth }) => auth.user.uid);
 
-	useEffect(() => {
-		dispatch(Actions.getContacts(props.match.params, userUID));
+    useEffect(() => {
+		dispatch(Actions.getPaylogs(props.match.params, userUID));
 		dispatch(Actions.getUserData());
-	}, [dispatch, props.match.params, userUID]);
-
-	// useEffect(() => {
-	// 	dispatch(Actions.getContacts(props.match.params));
-	// }, [dispatch, props.match.params]);
-
+    }, [dispatch, props.match.params, userUID]);
+    
 	return (
 		<div>
 			<FusePageSimple
@@ -51,14 +49,15 @@ function ContactsApp(props) {
 					leftSidebar: 'w-256 border-0 bgdark',
 					header: 'min-h-72 h-72 sm:h-136 sm:min-h-136 bgdark rounded-left'
 				}}
-				header={<ContactsHeader pageLayout={pageLayout} />}
-				content={<ContactsList />}
-				leftSidebarContent={<ContactsSidebarContent />}
+				header={<PaylogsHeader pageLayout={pageLayout} />}
+				content={<PaylogsList />}
+				// leftSidebarContent={<PaylogsSidebarContent />}
 				sidebarInner
 				ref={pageLayout}
 				innerScroll
 			/>
-			<FuseAnimate animation="transition.expandIn" delay={300}>
+
+			{/* <FuseAnimate animation="transition.expandIn" delay={300}>
 				<Fab
 					color="primary"
 					aria-label="add"
@@ -67,10 +66,12 @@ function ContactsApp(props) {
 				>
 					<Icon>person_add</Icon>
 				</Fab>
-			</FuseAnimate>
-			<ContactDialog />
+			</FuseAnimate> */}
+
+			{/* <PaylogsDialog /> */}
+
 		</div>
 	);
 }
 
-export default withReducer('contactsApp', reducer)(ContactsApp);
+export default withReducer('paylogsApp', reducer)(PaylogsPage);

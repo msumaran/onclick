@@ -14,7 +14,8 @@ import ExampleConfig from 'app/main/example/ExampleConfig';
 
 import HomeConfig from 'app/home/HomeConfig';
 
-// import UsersConfig from 'app/users/UsersConfig';
+import UsersConfig from 'app/users/UsersConfig';
+import PaylogsConfig from 'app/paylogs/PaylogsConfig';
 // import TagsAppConfig from 'app/tags/TagsAppConfig';
 // import ScrumboardAppConfig from 'app/scrumboard/ScrumboardAppConfig';
 // import ProfilePageConfig from 'app/profile/ProfilePageConfig';
@@ -26,6 +27,8 @@ const routeConfigs = [
 
 	// ADMIN
 	DashboardConfigAdmin, // falta USUAURIOS/PAGOS
+	UsersConfig,
+	PaylogsConfig,
 
 	// USER
 	DashboardConfig,
@@ -34,7 +37,6 @@ const routeConfigs = [
 	EditorPageConfig,
 	ExampleConfig, 
 
-	// UsersConfig,
 	
 	// DEFAULT
 	HomeConfig, 

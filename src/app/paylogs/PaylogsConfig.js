@@ -1,5 +1,5 @@
 // import i18next from 'i18next';
-import Users from './Users';
+import Paylogs from './Paylogs';
 // import en from './i18n/en';
 // import tr from './i18n/tr';
 // import ar from './i18n/ar';
@@ -9,7 +9,7 @@ import { authRoles } from 'app/auth';
 // i18next.addResourceBundle('tr', 'examplePage', tr);
 // i18next.addResourceBundle('ar', 'examplePage', ar);
 
-const UsersConfig = {
+const PaylogsConfig = {
 	settings: {
 		layout: {
 			config: {}
@@ -18,10 +18,10 @@ const UsersConfig = {
 	auth: authRoles.admin, 
 	routes: [
 		{
-			path: '/admin-users',
-			component: Users
+			path: '/admin-payments',
+			component: Paylogs
 		}
 	]
 };
 
-export default UsersConfig;
+export default PaylogsConfig;
