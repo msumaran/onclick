@@ -27,6 +27,8 @@ class FirebaseService {
 
         this.auth = firebase.auth();
 
+        this.authOut = firebase.auth;
+
         success(true);
     }
 

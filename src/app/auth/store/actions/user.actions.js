@@ -68,7 +68,7 @@ export function createUserSettingsFirebase(authUser) {
 		const user = _.merge({}, guestUser, {
 			uid: authUser.uid,
 			from: 'firebase',
-			role: ['admin'],
+			role: ['user'],
 			data: {
 				displayName: authUser.displayName,
 				lastName: authUser.lastName,
@@ -80,6 +80,34 @@ export function createUserSettingsFirebase(authUser) {
 
 		updateUserData(user, dispatch);
 		return dispatch(setUserData(user));
+	};
+}
+
+export function createClientSettingsFirebase(authUser) {
+	return (dispatch, getState) => {
+		const guestUser = getState().auth.user;
+		const fuseDefaultSettings = getState().fuse.settings.defaults;
+		const { currentUser } = firebase.auth();
+		// console.log('createUserSettingsFirebase', authUser);
+		/**
+		 * Merge with current Settings
+		 */
+		const user = _.merge({}, guestUser, {
+			uid: authUser.uid,
+			from: 'firebase',
+			role: ['user'],
+			data: {
+				displayName: authUser.displayName,
+				lastName: authUser.lastName,
+				email: authUser.email,
+				settings: { ...fuseDefaultSettings }
+			}
+		});
+		// currentUser.updateProfile(user.data);
+
+		// updateUserData(user, dispatch);
+		// return dispatch(setUserData(user));
+		return
 	};
 }
 
@@ -245,13 +273,24 @@ function updateUserData(user, dispatch) {
 export function saveLanding(dataLanding, userUID){
 	return ( dispatch, getState )=>{
 
+		// console.log("dataLanding: ", dataLanding.html)
+
 		firebaseService.db.ref(`users/${userUID}/landing`)
-		.update( { code: JSON.stringify( {body:dataLanding.body} ) } )
+		.update( 
+			{ 
+				code: JSON.stringify( {body:dataLanding.design.body} ) ,
+				html:  dataLanding.html
+			} 
+		)
 		.then(() => {
 
 			dispatch({
 				type: SAVE_USER_LANDING,
-				payload: dataLanding
+				payload: {
+					json: dataLanding.design,
+					html: dataLanding.html
+				},
+				// payload: dataLanding.design
 			});
 		})
 		.catch(error => {

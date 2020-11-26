@@ -76,3 +76,53 @@ export function registerWithFirebase(model) {
 				});
 			});
 }
+
+
+export function registerClientWithFirebase(model) {
+	if (!firebaseService.auth) {
+		console.warn("Firebase Service didn't initialize, check your configuration");
+
+		return () => false;
+	}
+
+	const { email, password, displayName, lastName } = model;
+	return dispatch =>
+		firebaseService.auth
+			.createUserWithEmailAndPassword(email, password)
+			.then(response => {
+				dispatch(
+					UserActions.createClientSettingsFirebase({
+						...response.user,
+						displayName,
+						lastName,
+						email
+					})
+				);
+
+				return dispatch({
+					type: REGISTER_SUCCESS
+				});
+			})
+			.catch(error => {
+				const usernameErrorCodes = ['auth/operation-not-allowed', 'auth/user-not-found', 'auth/user-disabled'];
+
+				const emailErrorCodes = ['auth/email-already-in-use', 'auth/invalid-email'];
+
+				const passwordErrorCodes = ['auth/weak-password', 'auth/wrong-password'];
+
+				const response = {
+					email: emailErrorCodes.includes(error.code) ? error.message : null,
+					displayName: usernameErrorCodes.includes(error.code) ? error.message : null,
+					password: passwordErrorCodes.includes(error.code) ? error.message : null
+				};
+
+				if (error.code === 'auth/invalid-api-key') {
+					dispatch(Actions.showMessage({ message: error.message }));
+				}
+
+				return dispatch({
+					type: REGISTER_ERROR,
+					payload: response
+				});
+			});
+}

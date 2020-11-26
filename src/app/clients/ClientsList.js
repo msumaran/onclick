@@ -138,6 +138,12 @@ function ClientsList(props) {
 						filterable: true,
 						className: 'font-bold'
 					},
+					{
+						Header: 'Analitycs',
+						accessor: 'analitycs',
+						filterable: true,
+						className: 'font-bold'
+					},
 					// {
 					// 	Header: 'Apellidos',
 					// 	accessor: 'lastName',
@@ -165,27 +171,17 @@ function ClientsList(props) {
 						width: 128,
 						Cell: row => (
 							<div className="flex items-center">
-
+								
 								<IconButton
 									onClick={ev => {
 										ev.stopPropagation();
-										dispatch(Actions.toggleStarredClient(row.original.id, userUID));
-									}}
-								>
-									{row.original.starred && row.original.starred === true ? (
-										<Icon>star</Icon>
-									) : (
-										<Icon>star_border</Icon>
-									)}
-								</IconButton>
 
-								<IconButton
-									onClick={ev => {
-										ev.stopPropagation();
-										dispatch(Actions.removeClient(row.original.id, userUID));
+										dispatch(
+											Actions.openAnalitycs(row.original.id, row.original.analitycs)
+										);
 									}}
 								>
-									<Icon>delete</Icon>
+									<Icon>code</Icon>
 								</IconButton>
 
 							</div>

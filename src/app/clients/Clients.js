@@ -16,6 +16,8 @@ import ClientsHeader from './ClientsHeader';
 import ClientsList from './ClientsList';
 // import ClientsSidebarContent from './ClientsSidebarContent';
 
+import ClientsDialogAnalitycs from './ClientsDialogAnalitycs';
+
 import * as Actions from './store/actions';
 import reducer from './store/reducers';
 
@@ -69,6 +71,8 @@ function ClientsPage(props) {
 			</FuseAnimate>
 
 			<ClientsDialog />
+			
+			<ClientsDialogAnalitycs />
 
 		</div>
 	);

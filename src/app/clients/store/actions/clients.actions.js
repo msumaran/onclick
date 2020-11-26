@@ -18,8 +18,16 @@ export const TOGGLE_STARRED_CLIENT = '[CLIENTS APP] TOGGLE STARRED CLIENT';
 export const TOGGLE_STARRED_CLIENTS = '[CLIENTS APP] TOGGLE STARRED CLIENTS';
 export const SET_CLIENTS_STARRED = '[CLIENTS APP] SET CLIENTS STARRED ';
 
+export const REGISTER_CLIENT_SUCCESS = '[CLIENTS APP] REGISTER CLIENT SUCCESS';
+export const REGISTER_CLIENT_ERROR = '[CLIENTS APP] REGISTER CLIENT ERROR';
 
-export function getClients(routeParams, userUID) {
+export const OPEN_DIALOG_ANALITYCS = '[CLIENTS APP] OPEN DIALOG ANALITYCS';
+export const CLOSE_DIALOG_ANALITYCS = '[CLIENTS APP] CLOSE DIALOG ANALITYCS';
+export const SAVE_DIALOG_ANALITYCS = '[CLIENTS APP] SAVE DIALOG ANALITYCS';
+
+export const SHOW_ERROR = '[CLIENTS APP] SHOW ERROR';
+
+export function getClients(routeParams) {
     return (dispatch, getState) => {
 
         // let ref = firebaseService.db.ref(`users`);
@@ -119,11 +127,39 @@ export function addClient(newClient, userUID) {
     };
 }
 
+export function registerClientWithFirebase(model) {
+	if (!firebaseService.auth) {
+		console.warn("Firebase Service didn't initialize, check your configuration");
+		return () => false;
+	}
+
+	const { email, password, displayName, lastName } = model;
+    return dispatch =>
+
+
+        firebaseService.auth
+			.createUserWithEmailAndPassword(email, password)
+			.then(response => {
+
+                console.log("RESPONSE ", response)
+
+                dispatch({
+                    type: ADD_CLIENT
+                })
+
+			})
+			.catch(error => {
+				dispatch({
+					type: REGISTER_CLIENT_ERROR,
+				});
+			});
+}
+
 export function updateClient(client, userUID) {
     return (dispatch, getState) => {
         const { routeParams } = getState().clientsApp.clients;
      
-        console.log("client ", client)
+        // console.log("client ", client)
         firebaseService.db.ref(`users`).child(client.id).update(client).then(() => {
             Promise.all([
                 dispatch({
@@ -157,6 +193,51 @@ export function removeClient(clientId, userUID) {
         });
     };
 }
+
+export function openAnalitycs(client, analitycs="") {
+    return {
+        type: OPEN_DIALOG_ANALITYCS,
+        payload: {
+            id: client,
+            analitycs: analitycs,
+        }
+    };
+}
+
+export function closeAnalitycs(client) {
+    return {
+        type: CLOSE_DIALOG_ANALITYCS,
+    };
+}
+
+export function saveDialogAnalitycs(form) {
+
+    return (dispatch, getState) => {
+        const { routeParams } = getState().clientsApp.clients;
+        
+        firebaseService.db.ref(`users/${form.id}`)
+        .update( { analitycs: form.analitycs } )
+        .then( () => { 
+
+            Promise.all([
+                dispatch ({
+                    type: SAVE_DIALOG_ANALITYCS,
+                    payload: form
+                })
+            ]).then(() => dispatch(getClients(routeParams)));
+
+            
+        })
+        .catch(error=>{
+            dispatch ({
+                type: SHOW_ERROR
+            })
+        })
+    };
+
+}
+
+
 
 export function removeClients(clientIds, userUID) {
     return (dispatch, getState) => {

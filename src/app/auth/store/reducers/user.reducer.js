@@ -30,7 +30,14 @@ const user = (state = initialState, action) => {
 		case Actions.SAVE_USER_LANDING: {
 			return {
 				...state,
-				landing: { ...state.landing, body: {...action.payload.body} } // .body
+				landing: { 
+					...state.landing, 
+					// code: {
+					// 	...action.payload.json.body
+					// },
+					code: JSON.stringify(action.payload.json.body) ,
+					html:action.payload.html
+				}
 			};
 		}
 		default: {

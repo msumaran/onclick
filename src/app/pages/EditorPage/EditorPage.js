@@ -33,11 +33,17 @@ const EditorPage = (props) => {
     }
 
     const saveLanding = () => {
-
         emailEditorRef.current.editor.exportHtml((data) => {
-            dispatch( userActions.saveLanding( data.design, userUID ) )
+            dispatch( userActions.saveLanding( data, userUID ) )
         });
     }
+
+    // const exportLanding = () => {
+    //     emailEditorRef.current.editor.exportHtml((data) => {
+    //         console.log(data.html)
+    //         // dispatch( userActions.saveLanding( data.design, userUID ) )
+    //     });
+    // }
 
     // useEffect( ()=>{
     //     // onLoad()
@@ -63,6 +69,10 @@ const EditorPage = (props) => {
                                 <Button variant="contained" onClick={saveLanding}>
                                     Guardar
                                 </Button>
+
+                                {/* <Button variant="contained" onClick={exportLanding}>
+                                    Exportar HTML
+                                </Button> */}
                             </div>
 
                             <EmailEditor

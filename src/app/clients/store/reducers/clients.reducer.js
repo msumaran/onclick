@@ -10,7 +10,14 @@ const initialState = {
 		props: {
 			open: false
 		},
-		data: null
+		data: null,
+	},
+	clientDialogAnalitycs: {
+		type: 'new',
+		props: {
+			open: false
+		},
+		data: null,
 	}
 };
 
@@ -110,6 +117,51 @@ const clientsReducer = (state = initialState, action) => {
 				}
 			};
 		}
+		case Actions.REGISTER_CLIENT_SUCCESS: {
+			return state;
+		}
+
+		case Actions.OPEN_DIALOG_ANALITYCS: {
+			return {
+				...state,
+				clientDialogAnalitycs: {
+					type: 'new',
+					props: {
+						open: true
+					},
+					data: {
+						id: action.payload.id,
+						analitycs: action.payload.analitycs,
+					}
+				}
+			};
+		}
+		case Actions.SAVE_DIALOG_ANALITYCS: {
+			return {
+				...state,
+				clientDialogAnalitycs: { ...initialState.clientDialogAnalitycs}
+			};
+		}
+		case Actions.CLOSE_DIALOG_ANALITYCS: {
+			return {
+				...state,
+				clientDialogAnalitycs: {
+					type: 'new',
+					props: {
+						open: false
+					},
+					data: {
+						id: "",
+						analitycs: "",
+					}
+				}
+			};
+		}
+
+		case Actions.SHOW_ERROR: {
+			return state;
+		}
+
 		default: {
 			return state;
 		}

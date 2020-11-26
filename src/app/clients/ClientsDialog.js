@@ -15,26 +15,23 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as Actions from './store/actions';
+// import * as authActions from 'app/auth/store/actions';
+
 import firebase from "firebase";
 
 import FileUploader from "react-firebase-file-uploader";
 
 const defaultFormState = {
     id: '',
-    name: '',
-    lastName: '',
-    avatar: 'assets/images/avatars/profile.jpg',
-    nickname: '',
-    company: '',
-    jobTitle: '',
-    email: '',
-    phone: '',
-    address: '',
-    birthday: '',
-    notes: ''
+    displayName: '',
+	lastName: '',
+	razon_social: '',
+	ruc: '',
+	phone: '',
+	email: '',
+	password: '',
+	password_confirm: ''
 };
-
-
 
 function ClientsDialog(props) {
 
@@ -82,14 +79,15 @@ function ClientsDialog(props) {
     }
 
     function canBeSubmitted() {
-        return form.name.length > 0;
+        return form.displayName.length > 0;
     }
     //Upload image
     function handleSubmit(event) {
         event.preventDefault();
 
         if (clientDialog.type === 'new') {
-            dispatch(Actions.addClient(form, userUID));
+			// dispatch(Actions.addClient(form, userUID));
+            dispatch( Actions.registerClientWithFirebase(form) );
         } else {
             dispatch(Actions.updateClient(form, userUID));
         }
@@ -152,19 +150,19 @@ function ClientsDialog(props) {
 					<Avatar className="w-96 h-96" alt="client avatar" src={form.avatar} />
 				
 					<label hidden = {isUploading} style={{backgroundColor: 'white', color: '#192d3e', padding:4, borderRadius: 4, cursor: 'pointer'}}>
-   Cambiar imagen
-					<FileUploader
-					hidden
-            accept="image/*"
-            name="avatar"
-            randomizeFilename
-            storageRef={firebase.storage().ref("images")}
-            onUploadStart={handleUploadStart}
-            onUploadError={handleUploadError}
-            onUploadSuccess={handleUploadSuccess}
-            onProgress={handleProgress}
-          />
-            </label>
+   						Cambiar imagen
+						<FileUploader
+							hidden
+							accept="image/*"
+							name="avatar"
+							randomizeFilename
+							storageRef={firebase.storage().ref("images")}
+							onUploadStart={handleUploadStart}
+							onUploadError={handleUploadError}
+							onUploadSuccess={handleUploadSuccess}
+							onProgress={handleProgress}
+						/>
+					</label>
 					{clientDialog.type === 'edit' && (
 						<Typography variant="h6" color="inherit" className="pt-8">
 							{form.name}
@@ -172,8 +170,10 @@ function ClientsDialog(props) {
 					)}
 				</div>
 			</AppBar>
+
 			<form noValidate onSubmit={handleSubmit} className="flex flex-col md:overflow-hidden">
 				<DialogContent classes={{ root: 'p-24' }}>
+
 					<div className="flex">
 						<div className="min-w-48 pt-20">
 							<Icon color="action">account_circle</Icon>
@@ -183,9 +183,9 @@ function ClientsDialog(props) {
 							className="mb-24"
 							label="Nombres"
 							autoFocus
-							id="name"
-							name="name"
-							value={form.name}
+							id="displayName"
+							name="displayName"
+							value={form.displayName}
 							onChange={handleChange}
 							variant="outlined"
 							required
@@ -203,25 +203,40 @@ function ClientsDialog(props) {
 							value={form.lastName}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
 					</div>
-{/* 
+
 					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">star</Icon>
-						</div>
+						<div className="min-w-48 pt-20" />
 						<TextField
 							className="mb-24"
-							label="Nickname"
-							id="nickname"
-							name="nickname"
-							value={form.nickname}
+							label="Razón social"
+							id="razon_social"
+							name="razon_social"
+							value={form.razon_social}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
-					</div> */}
+					</div>
+
+					<div className="flex">
+						<div className="min-w-48 pt-20" />
+						<TextField
+							className="mb-24"
+							label="RUC"
+							id="ruc"
+							name="ruc"
+							value={form.ruc}
+							onChange={handleChange}
+							variant="outlined"
+							required
+							fullWidth
+						/>
+					</div>
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
@@ -235,6 +250,7 @@ function ClientsDialog(props) {
 							value={form.phone}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
 					</div>
@@ -251,95 +267,45 @@ function ClientsDialog(props) {
 							value={form.email}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
 					</div>
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">domain</Icon>
+							<Icon color="action">password</Icon>
 						</div>
 						<TextField
 							className="mb-24"
-							label="Empresa"
-							id="company"
-							name="company"
-							value={form.company}
+							label="Password"
+							id="password"
+							name="password"
+							value={form.password}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
 					</div>
 
 					<div className="flex">
 						<div className="min-w-48 pt-20">
-							<Icon color="action">work</Icon>
+							<Icon color="action">password</Icon>
 						</div>
 						<TextField
 							className="mb-24"
-							label="Cargo"
-							id="jobTitle"
-							name="jobTitle"
-							value={form.jobTitle}
+							label="Repetir Password"
+							id="password_confirm"
+							name="password_confirm"
+							value={form.password_confirm}
 							onChange={handleChange}
 							variant="outlined"
+							required
 							fullWidth
 						/>
 					</div>
 
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">cake</Icon>
-						</div>
-						<TextField
-							className="mb-24"
-							id="birthday"
-							label="Cumpleaños"
-							type="date"
-							name="birthday"
-							value={form.birthday}
-							onChange={handleChange}
-							InputLabelProps={{
-								shrink: true
-							}}
-							variant="outlined"
-							fullWidth
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">home</Icon>
-						</div>
-						<TextField
-							className="mb-24"
-							label="Dirección"
-							id="address"
-							name="address"
-							value={form.address}
-							onChange={handleChange}
-							variant="outlined"
-							fullWidth
-						/>
-					</div>
-
-					<div className="flex">
-						<div className="min-w-48 pt-20">
-							<Icon color="action">note</Icon>
-						</div>
-						<TextField
-							className="mb-24"
-							label="Notas"
-							id="notes"
-							name="notes"
-							value={form.notes}
-							onChange={handleChange}
-							variant="outlined"
-							multiline
-							rows={5}
-							fullWidth
-						/>
-					</div>
 				</DialogContent>
 
 				{clientDialog.type === 'new' ? (
@@ -352,7 +318,6 @@ function ClientsDialog(props) {
 								type="submit"
 								disabled={!canBeSubmitted()}
 							>
-								
 								Agregar
 							</Button>
 						</div>
