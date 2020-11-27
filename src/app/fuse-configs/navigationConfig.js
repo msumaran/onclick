@@ -45,6 +45,16 @@ const navigationConfig = [
 		auth: ['user']
 	},
 	{
+		id: 'payments-component',
+		title: 'Pagos',
+		translate: 'Pagos',
+		type: 'item',
+		icon: 'whatshot',
+		url: '/user-payments',
+		auth: ['user']
+		// target: '_blank'
+	},
+	{
 		id: 'contacts-component',
 		title: 'Contactos',
 		translate: 'Contactos',

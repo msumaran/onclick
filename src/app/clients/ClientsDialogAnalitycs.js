@@ -189,6 +189,9 @@ function ClientsDialogAnalitycs(props) {
 								Agregar
 							</Button>
 						</div>
+						<IconButton onClick={ closeComposeDialog }>
+							<Icon>close</Icon>
+						</IconButton>
 					</DialogActions>
 				) : (
 					<DialogActions className="justify-between p-8">

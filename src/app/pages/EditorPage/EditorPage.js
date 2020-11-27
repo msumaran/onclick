@@ -20,6 +20,9 @@ const EditorPage = (props) => {
 
     const userUID = useSelector(({ auth }) => auth.user.uid);
 
+    // const useEditor = useSelector(({ auth }) => auth.user.useEditor);
+    const useEditor = true;
+
     const dispatch =  useDispatch()
 
     const classes = useStyles(props)
@@ -64,23 +67,34 @@ const EditorPage = (props) => {
                         <h4>Landing Editor</h4>
                         <br />
 
-                        <div>
-                            <div>
-                                <Button variant="contained" onClick={saveLanding}>
-                                    Guardar
-                                </Button>
+                        {
+                            useEditor ? 
+                                (
+                                    <div>
+                                        <div>
+                                            <Button variant="contained" onClick={saveLanding}>
+                                                Guardar
+                                            </Button>
+            
+                                            {/* <Button variant="contained" onClick={exportLanding}>
+                                                Exportar HTML
+                                            </Button> */}
+                                        </div>
+            
+                                        <EmailEditor
+                                            ref={emailEditorRef}
+                                            onLoad={onLoad}
+                                            minHeight={650}
+                                        />
+                                    </div>
+                                ):
+                                (
+                                    <p>
+                                        Por favor asegúrese de que realizo la compra de un pack en la sección de pagos, gracias.
+                                    </p>
+                                )
+                        }
 
-                                {/* <Button variant="contained" onClick={exportLanding}>
-                                    Exportar HTML
-                                </Button> */}
-                            </div>
-
-                            <EmailEditor
-                                ref={emailEditorRef}
-                                onLoad={onLoad}
-                                minHeight={650}
-                            />
-                        </div>
                     </div>
                 }
             />

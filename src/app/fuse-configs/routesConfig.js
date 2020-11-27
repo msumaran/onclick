@@ -10,6 +10,7 @@ import DashboardConfigAdmin from 'app/admin/dashboard/DashboardConfig';
 import DashboardConfig from 'app/dashboard/DashboardConfig';
 import ContactsAppConfig from 'app/contacts/ContactsAppConfig';
 import EditorPageConfig from 'app/pages/EditorPage/EditorPageConfig';
+import PaymentsAppConfig from 'app/payments/PaymentsAppConfig';
 import ExampleConfig from 'app/main/example/ExampleConfig';
 
 import HomeConfig from 'app/home/HomeConfig';
@@ -33,6 +34,8 @@ const routeConfigs = [
 	// USER
 	DashboardConfig,
 	ContactsAppConfig,
+	PaymentsAppConfig,
+
 		// FORMULARIOS
 	EditorPageConfig,
 	ExampleConfig, 

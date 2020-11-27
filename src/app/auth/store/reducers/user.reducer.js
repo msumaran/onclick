@@ -8,7 +8,8 @@ const initialState = {
 		photoURL: 'assets/images/avatars/Velazquez.jpg',
 		email: 'johndoe@withinpixels.com',
 		shortcuts: ['calendar', 'mail', 'contacts', 'todo']
-	}
+	},
+	useEditor: false 
 };
 
 const user = (state = initialState, action) => {

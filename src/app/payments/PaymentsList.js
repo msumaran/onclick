@@ -5,24 +5,22 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTable from 'react-table';
-
-import PaylogsMultiSelectMenu from './PaylogsMultiSelectMenu';
+import PaymentsMultiSelectMenu from './PaymentsMultiSelectMenu';
 import * as Actions from './store/actions';
 
 import Moment from 'react-moment';
 import 'moment-timezone';
 Moment.globalFormat = 'D MMM YYYY';
 
-function PaylogsList(props) {
+function PaymentsList(props) {
 	const dispatch = useDispatch();
-	const paylogs = useSelector(({ paylogsApp }) => paylogsApp.paylogs.entities);
-	const selectedPaylogIds = useSelector(({ paylogsApp }) => paylogsApp.paylogs.selectedPaylogIds);
-	const searchText = useSelector(({ paylogsApp }) => paylogsApp.paylogs.searchText);
-	//const user = useSelector(({ paylogsApp }) => paylogsApp.user);
+	const payments = useSelector(({ paymentsApp }) => paymentsApp.payments.entities);
+	const selectedPaymentIds = useSelector(({ paymentsApp }) => paymentsApp.payments.selectedPaymentIds);
+	const searchText = useSelector(({ paymentsApp }) => paymentsApp.payments.searchText);
+	//const user = useSelector(({ paymentsApp }) => paymentsApp.user);
 
 	const [filteredData, setFilteredData] = useState(null);
 
@@ -37,10 +35,10 @@ function PaylogsList(props) {
 			return FuseUtils.filterArrayByString(arr, _searchText);
 		}
 
-		if (paylogs) {
-			setFilteredData(getFilteredArray(paylogs, searchText));
+		if (payments) {
+			setFilteredData(getFilteredArray(payments, searchText));
 		}
-	}, [paylogs, searchText]);
+	}, [payments, searchText]);
 
 	if (!filteredData) {
 		return null;
@@ -50,7 +48,7 @@ function PaylogsList(props) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography color="textSecondary" variant="h5">
-				¡No hay datos!
+				¡No hay pagos!
 				</Typography>
 			</div>
 		);
@@ -65,7 +63,7 @@ function PaylogsList(props) {
 						className: 'cursor-pointer',
 						onClick: (e, handleOriginal) => {
 							if (rowInfo) {
-								dispatch(Actions.openEditPaylogDialog(rowInfo.original));
+								dispatch(Actions.openEditPaymentDialog(rowInfo.original));
 							}
 						}
 					};
@@ -82,16 +80,16 @@ function PaylogsList(props) {
 					// 			color="primary"
 					// 			onChange={event => {
 					// 				return event.target.checked
-					// 					? dispatch(Actions.selectAllPaylogs())
-					// 					: dispatch(Actions.deSelectAllPaylogs());
+					// 					? dispatch(Actions.selectAllPayments())
+					// 					: dispatch(Actions.deSelectAllPayments());
 					// 			}}
 					// 			checked={
-					// 				selectedPaylogIds.length === Object.keys(paylogs).length &&
-					// 				selectedPaylogIds.length > 0
+					// 				selectedPaymentIds.length === Object.keys(payments).length &&
+					// 				selectedPaymentIds.length > 0
 					// 			}
 					// 			indeterminate={
-					// 				selectedPaylogIds.length !== Object.keys(paylogs).length &&
-					// 				selectedPaylogIds.length > 0
+					// 				selectedPaymentIds.length !== Object.keys(payments).length &&
+					// 				selectedPaymentIds.length > 0
 					// 			}
 					// 		/>
 					// 	),
@@ -102,8 +100,8 @@ function PaylogsList(props) {
 					// 				onClick={event => {
 					// 					event.stopPropagation();
 					// 				}}
-					// 				checked={selectedPaylogIds.includes(row.value.id)}
-					// 				onChange={() => dispatch(Actions.toggleInSelectedPaylogs(row.value.id))}
+					// 				checked={selectedPaymentIds.includes(row.value.id)}
+					// 				onChange={() => dispatch(Actions.toggleInSelectedPayments(row.value.id))}
 					// 			/>
 					// 		);
 					// 	},
@@ -111,37 +109,25 @@ function PaylogsList(props) {
 					// 	sortable: false,
 					// 	width: 64
 					// },
-
 					// {
-					// 	Header: () => selectedPaylogIds.length > 0 && <PaylogsMultiSelectMenu />,
+					// 	Header: () => selectedPaymentIds.length > 0 && <PaymentsMultiSelectMenu />,
 					// 	accessor: 'avatar',
 					// 	Cell: row => <Avatar className="mx-8" alt={row.original.name} src={row.value} />,
-					// 	// Cell: row => <Avatar className="mx-8" alt={row.original.payId} src={row.userId} />,
 					// 	className: 'justify-center',
 					// 	width: 64,
 					// 	sortable: false
 					// },
 					{
-						Header: 'Pago ID',
-						accessor: 'payId',
-						filterable: true
-					},
-					{
-						Header: 'Nombres',
-						accessor: 'displayName',
-						filterable: true,
-						className: 'font-bold'
-					},
-					{
-						Header: 'Apellidos',
-						accessor: 'lastName',
+						Header: 'Nombre de paquete',
+						accessor: 'pack',
 						filterable: true,
 						className: 'font-bold'
 					},
 					{
 						Header: 'Precio',
-						accessor: 'price',
-						filterable: true
+						accessor: 'packPrice',
+						filterable: true,
+						className: 'font-bold'
 					},
 					{
 						Header: 'Inicia',
@@ -159,16 +145,23 @@ function PaylogsList(props) {
 						className: 'justify-left',
 						sortable: false
 					},
+					{
+						Header: 'Creado',
+						accessor: 'createdAt',
+						filterable: true,
+						Cell: row => <Moment unix>{row.original.createdAt}</Moment>,
+						className: 'justify-left',
+						sortable: false
+					},
 					// {
 					// 	Header: '',
 					// 	width: 128,
 					// 	Cell: row => (
 					// 		<div className="flex items-center">
-
 					// 			<IconButton
 					// 				onClick={ev => {
 					// 					ev.stopPropagation();
-					// 					dispatch(Actions.toggleStarredPaylog(row.original.id, userUID));
+					// 					dispatch(Actions.toggleStarredPayment(row.original.id, userUID));
 					// 				}}
 					// 			>
 					// 				{row.original.starred && row.original.starred === true ? (
@@ -177,25 +170,23 @@ function PaylogsList(props) {
 					// 					<Icon>star_border</Icon>
 					// 				)}
 					// 			</IconButton>
-
 					// 			<IconButton
 					// 				onClick={ev => {
 					// 					ev.stopPropagation();
-					// 					dispatch(Actions.removePaylog(row.original.id, userUID));
+					// 					dispatch(Actions.removePayment(row.original.id, userUID));
 					// 				}}
 					// 			>
 					// 				<Icon>delete</Icon>
 					// 			</IconButton>
-
 					// 		</div>
 					// 	)
 					// }
 				]}
 				defaultPageSize={10}
-				noDataText="¡No hay paylogs!"
+				noDataText="¡No hay pagos!"
 			/>
 		</FuseAnimate>
 	);
 }
 
-export default PaylogsList;
+export default PaymentsList;

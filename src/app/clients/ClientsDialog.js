@@ -94,10 +94,10 @@ function ClientsDialog(props) {
         closeComposeDialog();
     }
 
-    function handleRemove() {
-        dispatch(Actions.removeClient(form.id, userUID));
-        closeComposeDialog();
-    }
+    // function handleRemove() {
+    //     dispatch(Actions.removeClient(form.id, userUID));
+    //     closeComposeDialog();
+    // }
 
 
     function handleUploadStart() {
@@ -321,6 +321,9 @@ function ClientsDialog(props) {
 								Agregar
 							</Button>
 						</div>
+						<IconButton onClick={closeComposeDialog}>
+							<Icon>close</Icon>
+						</IconButton>
 					</DialogActions>
 				) : (
 					<DialogActions className="justify-between p-8">
@@ -335,8 +338,8 @@ function ClientsDialog(props) {
 								Guardar
 							</Button>
 						</div>
-						<IconButton onClick={handleRemove}>
-							<Icon>delete</Icon>
+						<IconButton onClick={closeComposeDialog}>
+							<Icon>close</Icon>
 						</IconButton>
 					</DialogActions>
 				)}
