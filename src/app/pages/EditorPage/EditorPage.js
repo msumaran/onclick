@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import FusePageSimple from '@fuse/core/FusePageSimple';
@@ -12,6 +12,9 @@ import sample from './sample.json';
 // import { obtenerPokemonesAccion } from '../redux/pokeDucks'
 import * as userActions from "../../auth/store/actions"
 
+import moment from 'moment'
+import { truncate } from 'lodash';
+
 const useStyles = makeStyles(theme => ({
     page: {}
 }))
@@ -21,7 +24,7 @@ const EditorPage = (props) => {
     const userUID = useSelector(({ auth }) => auth.user.uid);
 
     // const useEditor = useSelector(({ auth }) => auth.user.useEditor);
-    const useEditor = true;
+    const [useEditor, setuseEditor] = useState(false)
 
     const dispatch =  useDispatch()
 
@@ -30,6 +33,25 @@ const EditorPage = (props) => {
     const emailEditorRef = useRef(null)
 
     const landing = useSelector(({ auth }) => auth.user.landing.code ? JSON.parse( auth.user.landing.code ) : sample ) ;
+
+    const timeservice = useSelector(({ auth }) => auth.user.timeservice);
+
+    const checkSubscription = (lastDateUnix) => {
+        const now = Date.now() / 1000
+        var a = moment( moment.unix(lastDateUnix).format('D MMM YYYY h:mm') );
+        var b = moment( moment.unix(now).format('D MMM YYYY h:mm') );
+        var dif = a.diff(b, "minutes", true)
+        if( dif > 0 ){
+            setuseEditor(true);
+            return;
+        }
+        setuseEditor(false);
+        return;
+    }
+
+    useEffect(() => {
+        checkSubscription(timeservice);
+    }, [useEditor, setuseEditor])
 
     const onLoad = () => {
         emailEditorRef.current.editor.loadDesign( landing )

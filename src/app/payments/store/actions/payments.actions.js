@@ -2,6 +2,7 @@ import firebaseService from 'app/services/firebaseService';
 import _ from '@lodash';
 
 import moment from 'moment'
+import ClientsDialog from 'app/clients/ClientsDialog';
 
 export const GET_PAYMENTS = '[PAYMENTS APP] GET PAYMENTS';
 export const SET_SEARCH_TEXT = '[PAYMENTS APP] SET SEARCH TEXT';
@@ -129,10 +130,42 @@ export function makePaymentLog(snapshot, payment, dataUser) {
                     })
 
                 ]).then(() => {
-                    dispatch(getPayments(routeParams, dataUser.id))
+                    dispatch(makeLogTimeService(payment.endAt, dataUser))
                 });
             });
 
+    }
+}
+
+export function makeLogTimeService( paymentEndAt, dataUser ){
+
+    return (dispatch, getState) => {
+
+        const { routeParams } = getState().paymentsApp.payments;
+
+        firebaseService.db.ref(`users/${dataUser.id}`)
+            .update( 
+                { 
+                    timeservice: paymentEndAt
+                }
+            )
+            .then(() => {
+                Promise.all([
+                    dispatch({
+                        type: ADD_PAYMENT
+                    })
+
+                ]).then(() => {
+                    dispatch(getPayments(routeParams, dataUser.id))
+                });
+                console.log("TIMESERVICE DONE")
+            })
+            .catch(error => {
+                return {
+                    errorCode: error.code,
+                    errorMessage: error.message
+                }
+            });
     }
 }
 

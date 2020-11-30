@@ -33,6 +33,9 @@ function PaymentsApp(props) {
 
 	const userUID = useSelector(({ auth }) => auth.user.uid);
 
+	const timeservice = useSelector(({ auth }) => auth.user.timeservice);
+	console.log("timeservice ", timeservice)
+
 	useEffect(() => {
 		dispatch(Actions.getPayments(props.match.params, userUID));
 		dispatch(Actions.getUserData());
