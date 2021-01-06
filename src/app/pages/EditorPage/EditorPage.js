@@ -21,6 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 const EditorPage = (props) => {
 
+    const formUrl = "http://onclick.com/somaething"
+
     const userUID = useSelector(({ auth }) => auth.user.uid);
 
     // const useEditor = useSelector(({ auth }) => auth.user.useEditor);
@@ -33,8 +35,11 @@ const EditorPage = (props) => {
     const emailEditorRef = useRef(null)
 
     const landing = useSelector(({ auth }) => auth.user.landing.code ? JSON.parse( auth.user.landing.code ) : sample ) ;
+    const html = useSelector(({ auth }) => auth.user.landing.html ? auth.user.landing.html : "" ) ;
 
     const timeservice = useSelector(({ auth }) => auth.user.timeservice);
+
+    const email = useSelector(({ auth }) => auth.user.data.email);
 
     const checkSubscription = (lastDateUnix) => {
         const now = Date.now() / 1000
@@ -57,10 +62,52 @@ const EditorPage = (props) => {
         emailEditorRef.current.editor.loadDesign( landing )
     }
 
-    const saveLanding = () => {
+    const saveLanding = () => {         
         emailEditorRef.current.editor.exportHtml((data) => {
-            dispatch( userActions.saveLanding( data, userUID ) )
+            
+            let newDtatita = findTextOnHtml("getForm", data.html);
+            data.html = newDtatita;
+            // console.log("data ",data.html);
+
+            dispatch( userActions.saveLanding( data, userUID ) );
+            
         });
+    }
+
+    const findTextOnHtml = (id, htmlData)=>{
+
+        const idFind = `[${id}]`; // "[getForm]"
+        let html = String( htmlData );
+
+        const form = `<form action="${formUrl}" method="POST" > <div class="form-group" ><input name="id" value="${email}" /></div> <div class="form-group" style=" margin-bottom: 10px;"> <label for="nameField">Nombre completo</label> <input type="text" class="form-control" id="nameField" aria-describedby="emailHelp" placeholder="Ingrese su nombre completo" style=" width: 100%;"> </div> <div class="form-group" style=" margin-bottom: 10px;"> <label for="emailField">Correo electrónico</label> <input type="password" class="form-control" id="emailField" placeholder="Ingrese su correo electrónico" style=" width: 100%;"> </div> <button type="submit" class="btn btn-primary">Enviar</button></form>`;
+
+        html = html.replace(idFind, form);
+
+        return html;
+
+    } 
+
+    const findTextOnArray = (id, newData)=>{ 
+        const idFind = `[${id}]`; // "[getForm]"   
+        newData.design.body.rows.map(row => {
+            row.columns.map(column => { 
+                if( column.contents.length >= 1 ){
+                    column.contents.map(content => { 
+                        if( content.type = "text" ){
+                            if( content.values.text ){
+                                if( content.values.text.includes(idFind) ){
+                                    console.log("1 content.values.text: ",content.values.text);  
+                                    let newText = String( content.values.text ); 
+                                    newText = newText.replace(idFind, idFind); 
+                                    content.values.text = newText; 
+                                }
+                            }
+                        } 
+                    }); 
+                }
+            }); 
+        });   
+        return newData;
     }
 
     // const exportLanding = () => {
