@@ -1,0 +1,80 @@
+.custom-tags {
+    .tags-group {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: .75rem;
+        &.tags-group-multiline {
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            margin-right: .75rem;
+            margin-bottom: .75rem;
+
+            [class^="tag-is"]:not(body) {
+                align-items: center;
+                background-color: $secondary;
+                border-radius: 0.25rem;
+                color: #23282c;
+                display: inline-flex;
+                font-size: .75rem;
+                height: 2em;
+                justify-content: center;
+                line-height: 1.5;
+                padding-left: .75em;
+                padding-right: .75em;
+                white-space: nowrap;
+            }
+
+            .tag-is-link:not(body) {
+                background-color: $primary;
+                color: $white;
+            }
+
+            .tag-is-delete:not(body) {
+                padding: 0;
+                position: relative;
+                width: 24px;
+                border: 0;
+                &::before,
+                &::after {
+                    background-color: currentColor;
+                    content: "";
+                    display: block;
+                    left: 50%;
+                    position: absolute;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+                    transform-origin: center center;
+                }
+                &::before {
+                    height: 1px;
+                    width: 50%;
+                }
+                &::after {
+                    height: 50%;
+                    width: 1px;
+                }
+                &:focus,
+                &:hover {
+                    background-color: #b3bbc2;
+                }
+            }
+
+            &.has-addons {
+                .tag-is-link {
+                    border-bottom-right-radius: 0;
+                    border-top-right-radius: 0;
+                }
+                .tag-is-delete {
+                    border-bottom-left-radius: 0;
+                    border-top-left-radius: 0;
+                }
+            }
+        }
+    }
+}

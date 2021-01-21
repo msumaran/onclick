@@ -1,0 +1,564 @@
+.Toastify__toast-container {
+    z-index: 9999;
+    transform: translate3d(0, 0, 9999px);
+    position: fixed;
+    padding: 4px;
+    width: 320px;
+    box-sizing: border-box;
+    color: #fff;
+
+    &--top-left {
+          top: 1em;
+          left: 1rem;
+    }
+    &--top-center {
+          top: 1rem;
+          left: 50%;
+          margin-left: -160px;
+    }
+    &--top-right {
+          top: 1em;
+          right: 1rem;
+    }
+    &--bottom-left {
+          bottom: 1em;
+          left: 1rem;
+    }
+    &--bottom-center {
+          bottom: 1rem;
+          left: 50%;
+          margin-left: -160px;
+    }
+    &--bottom-right {
+          bottom: 1em;
+          right: 1rem;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .Toastify__toast-container {
+          width: 100vw;
+          padding: 0;
+          left: 0;
+          margin: 0;
+
+          &--top-left,
+          &--top-center,
+          &--top-right {
+        top: 0;
+          }
+
+          &--bottom-left,
+          &--bottom-center,
+        &--bottom-right {
+            bottom: 0;
+        }
+
+        &--rtl {
+            right: 0;
+            left: initial;
+        }
+    }
+}
+
+.Toastify__toast {
+    position: relative;
+    min-height: 64px;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
+    padding: 8px;
+    border-radius: 1px;
+    display: flex;
+    justify-content: space-between;
+    max-height: 800px;
+    overflow: hidden;
+    font-family: inherit;
+    cursor: pointer;
+    direction: ltr;
+
+    &--rtl {
+        direction: rtl;
+    }
+    &--default {
+        background-color: #c8ced3;
+        color: #23282c;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(#c8ced3,.4);
+    }
+    &--info {
+        background-color: #63c2de;
+        color: #23282c;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(#63c2de,.4);
+    }
+    &--success {
+        background-color: #4dbd74;
+        color: #fff;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(#4dbd74,.4);
+    }
+    &--warning {
+        background-color: #ffc107;
+        color: #23282c;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(#ffc107,.4);
+    }
+    &--error {
+        background-color: #f86c6b;
+        color: #fff;
+        box-shadow: 0 4px 20px 0 rgba(0,0,0,.14), 0 7px 10px -5px rgba(#f86c6b,.4);
+    }
+    &-body {
+        margin: auto 0;
+        flex: 1;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .Toastify__toast {
+        margin-bottom: 0;
+    }
+}
+
+.Toastify__close-button {
+    color: #000;
+    font-weight: 500;
+    font-size: 11px;
+    background: transparent;
+    outline: none !important;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: .7;
+    transition: .3s ease;
+    align-self: flex-start;
+
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+@keyframes Toastify__trackProgress {
+    0% {
+        transform: scaleX(1);
+    }
+    100% {
+        transform: scaleX(0);
+    }
+}
+
+.Toastify__progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    z-index: 9999;
+    opacity: .5;
+    background-color: rgba(#fff, .15);
+    transform-origin: left;
+
+    &--animated {
+        animation: Toastify__trackProgress linear 1 forwards;
+    }
+    &--controlled {
+        transition: tranform .2s;
+    }
+    &--rtl {
+        right: 0;
+        left: initial;
+        transform-origin: right;
+    }
+}
+
+@keyframes Toastify__bounceInRight {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    from {
+        opacity: 0;
+        transform: translate3d(3000px, 0, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(-25px, 0, 0);
+    }
+    75% {
+        transform: translate3d(10px, 0, 0);
+    }
+    90% {
+        transform: translate3d(-5px, 0, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutRight {
+    20% {
+        opacity: 1;
+        transform: translate3d(-20px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(2000px, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceInLeft {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        transform: translate3d(-3000px, 0, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(25px, 0, 0);
+    }
+    75% {
+        transform: translate3d(-10px, 0, 0);
+    }
+    90% {
+        transform: translate3d(5px, 0, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutLeft {
+    20% {
+        opacity: 1;
+        transform: translate3d(20px, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(-2000px, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceInUp {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    from {
+        opacity: 0;
+        transform: translate3d(0, 3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, -20px, 0);
+    }
+    75% {
+        transform: translate3d(0, 10px, 0);
+    }
+    90% {
+        transform: translate3d(0, -5px, 0);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes Toastify__bounceOutUp {
+    20% {
+        transform: translate3d(0, -10px, 0);
+    }
+    40%,
+    45% {
+        opacity: 1;
+        transform: translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, -2000px, 0);
+    }
+}
+
+@keyframes Toastify__bounceInDown {
+    from,
+    60%,
+    75%,
+    90%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    0% {
+        opacity: 0;
+        transform: translate3d(0, -3000px, 0);
+    }
+    60% {
+        opacity: 1;
+        transform: translate3d(0, 25px, 0);
+    }
+    75% {
+        transform: translate3d(0, -10px, 0);
+    }
+    90% {
+        transform: translate3d(0, 5px, 0);
+    }
+    to {
+        transform: none;
+    }
+}
+
+@keyframes Toastify__bounceOutDown {
+    20% {
+        transform: translate3d(0, 10px, 0);
+    }
+    40%,
+    45% {
+        opacity: 1;
+        transform: translate3d(0, -20px, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, 2000px, 0);
+    }
+}
+
+.Toastify__bounce-enter {
+    &--top-left,
+    &--bottom-left {
+        animation-name: Toastify__bounceInLeft;
+    }
+
+    &--top-right,
+    &--bottom-right {
+        animation-name: Toastify__bounceInRight;
+    }
+
+    &--top-center {
+        animation-name: Toastify__bounceInDown;
+    }
+
+    &--bottom-right {
+        animation-name: Toastify__bounceInUp;
+    }
+}
+
+.Toastify__bounce-exit {
+    &--top-left,
+    &--bottom-left {
+        animation-name: Toastify__bounceOutLeft;
+    }
+
+    &--top-right,
+    &--bottom-right {
+        animation-name: Toastify__bounceOutRight;
+    }
+
+    &--top-center {
+        animation-name: Toastify__bounceOutUp;
+    }
+
+    &--bottom-center {
+        animation-name: Toastify__bounceOutDown;
+    }
+}
+
+@keyframes Toastify__zoomIn {
+    from {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes Toastify__zoomOut {
+    from {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.Toastify__zoom-enter {
+    animation-name: Toastify__zoomIn;
+}
+
+.Toastify__zoom-exit {
+    animation-name: Toastify__zoomOut;
+}
+
+@keyframes Toastify__flipIn {
+    from {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        animation-timing-function: ease-in;
+    }
+    60% {
+        transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+        opacity: 1;
+    }
+    80% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    }
+    to {
+        transform: perspective(400px);
+    }
+}
+
+@keyframes Toastify__flipOut {
+    from {
+        transform: perspective(400px);
+    }
+    30% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        opacity: 1;
+    }
+    to {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        opacity: 0;
+    }
+}
+
+.Toastify__flip-enter {
+    animation-name: Toastify__flipIn;
+}
+
+.Toastify__flip-exit {
+    animation-name: Toastify__flipOut;
+}
+
+@keyframes Toastify__slideInRight {
+    from {
+        transform: translate3d(110%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideInLeft {
+    from {
+        transform: translate3d(-110%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideInUp {
+    from {
+        transform: translate3d(0, 110%, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideInDown {
+    from {
+        transform: translate3d(0, -110%, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideOutRight {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(110%, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideOutLeft {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(-110%, 0, 0);
+    }
+}
+  
+@keyframes Toastify__slideOutDown {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(0, 500px, 0);
+    }
+}
+  
+@keyframes Toastify__slideOutUp {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(0, -500px, 0);
+    }
+}
+
+.Toastify__slide-enter {
+    &--top-left,
+    &--bottom-left {
+        animation-name: Toastify__slideInLeft;
+    }
+
+    &--top-right,
+    &--bottom-right {
+        animation-name: Toastify__slideInRight;
+    }
+
+    &--top-center {
+        animation-name: Toastify__slideInDown;
+    }
+
+    &--bottom-center {
+        animation-name: Toastify__slideInUp;
+    }
+}
+
+.Toastify__slide-exit {
+    &--top-left,
+    &--bottom-left {
+        animation-name: Toastify__slideOutLeft;
+    }
+
+    &--top-right,
+    &--bottom-right {
+        animation-name: Toastify__slideOutRight;
+    }
+
+    &--top-center {
+        animation-name: Toastify__slideOutUp;
+    }
+
+    &--bottom-center {
+        animation-name: Toastify__slideOutDown;
+    }
+}

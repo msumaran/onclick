@@ -1,0 +1,94 @@
+// Here you can add other styles
+@import 'plugins/plugin-react-toastify';
+@import 'plugins/plugin-spin-kit';
+@import 'plugins/plugin-react-select-tags';
+
+.custom-select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-control-plaintext {
+    height: calc(1.5em + 0.75rem + 2px);
+}
+
+.input-group.is-invalid {
+    ~ .invalid-feedback {
+        display: block;
+    }
+    .btn {
+        border-color: #f86c6b;
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(248, 108, 107, 0.25);
+        }
+    }
+}
+
+.rt-wrapper {
+    .rt-buttons {
+        float: left;
+        text-align: left;
+        margin-bottom: .75rem;
+        &.right{
+            float: right;
+            text-align: right;
+        }
+    }
+    .rt-filter {
+        float: right;
+        text-align: right;
+        margin-bottom: .75rem;
+        .form-group {
+            display: flex;
+            flex: 0 0 auto;
+            flex-flow: row wrap;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+        .input-group,
+        .custom-select {
+            width: auto;
+        }
+    }
+    .rt-info {
+        float: left;
+        text-align: left;
+        margin-top: .75rem;
+        .input-group,
+        .custom-select {
+            width: auto;
+        }
+    }
+    .rt-pagination {
+        float: right;
+        text-align: right;
+        margin-top: .75rem;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .rt-wrapper {
+        .rt-buttons,
+        .rt-pagination {
+            float: none;
+            text-align: center;
+            &.btn-group {
+                display: block;
+            }
+        }
+        .rt-filter,
+        .rt-info {
+            float: none;
+            text-align: center;
+            .input-group {
+                width: 100%;
+            }
+        }
+    }
+}
