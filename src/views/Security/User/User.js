@@ -108,7 +108,7 @@ const User = () => {
                   <i className="icon-pencil"></i>
                 </Button>
               ) : null}
-              {PermssionHelper('user_change_password', 'u') ? (
+              {PermssionHelper('user_password_change', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline

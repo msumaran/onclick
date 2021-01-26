@@ -6,6 +6,37 @@ const Navigation = () => {
       icon: 'icon-speedometer',
       nameMachine: 'dashboard'
     },
+    {
+      name: 'Admin Clientes',
+      url: '/client',
+      icon: 'icon-speedometer',
+      nameMachine: 'client'
+    },
+    {
+      name: 'Admin Pagos',
+      url: '/payment',
+      icon: 'icon-speedometer',
+      nameMachine: 'payment'
+    },
+
+    {
+      name: 'Cliente Contactos',
+      url: '/contact',
+      icon: 'icon-speedometer',
+      nameMachine: 'contact'
+    },
+    {
+      name: 'Cliente Pagos',
+      url: '/my-payments',
+      icon: 'icon-speedometer',
+      nameMachine: 'user_payments'
+    },
+    {
+      name: 'Cliente Editor',
+      url: '/landing',
+      icon: 'icon-speedometer',
+      nameMachine: 'landing'
+    },
 
     {
       name: 'Seguridad',
@@ -32,20 +63,7 @@ const Navigation = () => {
           nameMachine: 'access'
         }
       ]
-    },
-    {
-      name: 'Participantes',
-      url: '/participant',
-      icon: 'icon-note',
-      nameMachine: 'participant'
-    },
-    {
-      name: 'Suscripciones',
-      url: '/subscription',
-      icon: 'icon-envelope-open',
-      nameMachine: 'subscription'
-    },
-
+    }, 
     {
       name: 'Reportes',
       url: '/report',
