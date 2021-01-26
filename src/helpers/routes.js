@@ -16,9 +16,6 @@ const routes = [
   { path: '/security/access', name: 'Accesos', component: Access },
   { path: '/security/users', name: 'Usuarios', component: User },
   { path: '/security/profiles', name: 'Perfiles', component: Profile },
-  // { path: '/report', name: 'Reportes', component: Report },
-  // { path: '/subscription', name: 'Suscripciones', component: Subscription },
-  // { path: '/participant', name: 'Participantes', component: Inscription },
 ]
 
 export default routes

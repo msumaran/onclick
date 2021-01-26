@@ -9,8 +9,7 @@ import { StripedTable } from 'components/CustomTable'
 
 import userAction from 'redux/actions/userAction'
 
-import ChangePasswordForm from './ChangePasswordForm'
-import RegionForm from './RegionForm'
+import ChangePasswordForm from './ChangePasswordForm' 
 import UserForm from './UserForm'
 
 import { PermssionHelper } from 'helpers/permission'
@@ -223,8 +222,6 @@ const User = () => {
       </Row>
 
       <ChangePasswordForm show={showChangePassword} dismiss={toggleChangePassword} />
-
-      <RegionForm show={showRegion} dismiss={toggleRegion} />
 
       <UserForm show={showNewForm} dismiss={toggleNewForm} isEdit={modeNewForm} />
     </div>
