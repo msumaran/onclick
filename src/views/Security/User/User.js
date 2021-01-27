@@ -121,7 +121,7 @@ const User = () => {
                   <i className="icon-key"></i> Cambiar contraseña
                 </Button>
               ) : null}
-              {PermssionHelper('user_add_region', 'u') ? (
+              {/* {PermssionHelper('user_add_region', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
@@ -133,7 +133,7 @@ const User = () => {
                 >
                   <i className="cil-globe-alt"></i> Asignar regiones
                 </Button>
-              ) : null}
+              ) : null} */}
               {PermssionHelper('user', 'd') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}

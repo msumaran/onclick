@@ -41,7 +41,7 @@ const RegionForm = ({ show, dismiss }) => {
     })
   }, [dispatch])
 
-  useEffect(() => fetchRegions(), [fetchRegions])
+  // useEffect(() => fetchRegions(), [fetchRegions])
 
   if (isLoading) return null
 
