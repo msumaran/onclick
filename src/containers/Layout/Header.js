@@ -50,7 +50,17 @@ const Header = (props) => {
         </NavItem>
         <UncontrolledDropdown nav direction="down">
           <DropdownToggle nav>
-            <img src={avatar} className="img-avatar" alt="" />
+            <span className="img-avatar"
+              style={{
+                border: '1px solid #333',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                width: 35
+              }}
+            >
+              {props.user.name.substring(0, 1).toUpperCase()}
+            </span>
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem href="/security/change-password">
