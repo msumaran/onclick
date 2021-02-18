@@ -4,28 +4,26 @@ const defaultState = {
 }
 
 const accountReducer = (state = defaultState, { type, payload }) => {
+
+  const st = Object.assign({}, state)
+
   switch (type) {
     case 'ACCOUNT_LOGIN':
-      return {
-        ...state,
-        isLogged: true,
-        token: payload.token
-      }
+
+      st.isLogged =  true
+      st.token =  payload.token
+      break
     case 'ACCOUNT_LOGOUT':
-      return {
-        ...state,
-        isLogged: false,
-        token: undefined
-      }
     case 'ACCOUNT_CHANGE_PASSWORD':
-      return {
-        ...state,
-        isLogged: false,
-        token: undefined
-      }
+
+      st.isLogged = false
+      st.token = undefined
+      break
     default:
-      return state
+      // none
   }
+
+  return st
 }
 
 export default accountReducer

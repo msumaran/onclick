@@ -65,10 +65,40 @@ const selfChangePassword = (password) => {
   }
 }
 
+const getPermissions = () => {
+
+  return async (dispatch) => {
+
+    try {
+
+      const res = await api.getPermissions()
+
+      const session = JSON.parse(localStorage.getItem('session'))
+
+      session.permissions = res.content.permissions
+
+      localStorage.setItem('session', JSON.stringify(session))
+
+      dispatch({
+        type: 'PERMISSION_FIND_ALL',
+        payload: session.permissions
+      })
+    } catch (error) {
+
+      if (configApp.env === 'dev') console.log('accountAction.getPermissions', error.message)
+
+      handleCatchNotify(error)
+
+      // toast.error(error.message)
+    }
+  }
+}
+
 const accountAction = {
   login,
   logout,
-  selfChangePassword
+  selfChangePassword,
+  getPermissions
 }
 
 export default accountAction

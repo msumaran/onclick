@@ -47,10 +47,26 @@ const selfChangePassword = async (password) => {
   }
 }
 
+const getPermissions = async () => {
+
+  try {
+
+    const headers = await getHeaders()
+
+    const res = await axios.get(`${baseUrl}/account`, { headers })
+
+    return res.data
+  } catch (error) {
+
+    handleError(error)
+  }
+}
+
 const accountApi = {
   login,
   logout,
-  selfChangePassword
+  selfChangePassword,
+  getPermissions,
 }
 
 export default accountApi

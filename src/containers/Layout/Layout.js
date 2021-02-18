@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback } from 'react'
+import React, { Suspense, lazy, useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import * as router from 'react-router-dom'
@@ -35,6 +35,11 @@ const Layout = (props) => {
 
   const dataUser = JSON.parse(localStorage.getItem('session'))
 
+  useEffect(() => {
+
+    dispatch(accountAction.getPermissions())
+  })
+
   const dispatch = useDispatch()
 
   const signOut = useCallback(
@@ -66,7 +71,7 @@ const Layout = (props) => {
           <Suspense fallback={loading()}>
 
             <AppSidebarNav navConfig={ Navigation() } {...props} router={router} />
-            
+
             {/* <AppSidebarNav navConfig={navigation} {...props} router={router} /> */}
           </Suspense>
           <AppSidebarFooter />
@@ -100,7 +105,7 @@ const Layout = (props) => {
           </Container>
         </main>
       </div>
-      
+
       <AppFooter>
         <Suspense fallback={loading()}>
           <Footer />
