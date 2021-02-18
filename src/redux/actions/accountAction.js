@@ -27,18 +27,15 @@ const login = (username, password) => {
 }
 
 const logout = () => {
-  return async (dispatch) => {
-    try {
-      await api.logout()
+  return (dispatch) => {
 
-      dispatch({
-        type: 'ACCOUNT_LOGOUT'
-      })
+    api.logout()
 
-      window.location.reload()
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('accountAction.logout', err)
-    }
+    dispatch({
+      type: 'ACCOUNT_LOGOUT'
+    })
+
+    window.location.reload()
   }
 }
 

@@ -11,11 +11,11 @@ const login = async (username, password) => {
 
     const res = await axios.post(`${baseUrl}/login_check`, { username, password }, { headers })
 
-    // localStorage.setItem('token', res.data.token)
-    // localStorage.setItem('name', res.data.name)
-    // localStorage.setItem('lastname', res.data.lastname)
-    // localStorage.setItem('permissions', res.data.permissions)
-    localStorage.setItem('session', JSON.stringify(res.data))
+    localStorage.setItem('session', JSON.stringify({
+      name: res.data.name,
+      profileId: res.data.profileId,
+      token: res.data.token
+    }))
 
     return res.data
   } catch (err) {
@@ -23,16 +23,9 @@ const login = async (username, password) => {
   }
 }
 
-const logout = async () => {
-  try {
-    // localStorage.removeItem('token')
-    // localStorage.removeItem('name')
-    // localStorage.removeItem('lastname')
-    // localStorage.removeItem('permissions')
-    localStorage.removeItem('session')
-  } catch (err) {
-    handleError(err)
-  }
+const logout = () => {
+
+  localStorage.removeItem('session')
 }
 
 const selfChangePassword = async (password) => {
