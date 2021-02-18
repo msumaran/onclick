@@ -23,20 +23,20 @@ const Navigation = (permissions) => {
     },
 
     {
-      name: 'Cliente Contactos',
-      url: '/contact',
+      name: 'Mis contactos',
+      url: '/my-contacts',
       icon: 'icon-speedometer',
       nameMachine: 'contact'
     },
     {
-      name: 'Cliente Pagos',
+      name: 'Mis pagos',
       url: '/my-payments',
       icon: 'icon-speedometer',
       nameMachine: 'user_payments'
     },
     {
-      name: 'Cliente Editor',
-      url: '/landing',
+      name: 'Mi landing',
+      url: '/my-landing',
       icon: 'icon-speedometer',
       nameMachine: 'landing'
     },
