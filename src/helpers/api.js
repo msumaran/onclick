@@ -51,15 +51,11 @@ const handleCatchNotify = (err) => {
 
   switch (err.code) {
     case 401:
-      const modalConfirm = require('../components/CustomModal/ModalConfirm')
 
-      modalConfirm.confirm('Session expired', 'Your session has expired. You must login again.', 'Login', 'Cancel', {
-        enableEscape: false,
-        proceed: () => {
-          localStorage.removeItem('session')
-          window.location.reload()
-        }
-      })
+      localStorage.removeItem('session')
+      alert('Sessión expirada')
+      window.location.reload()
+
       return
     default:
       reactToastify.toast.error(err.message)
