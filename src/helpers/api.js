@@ -53,7 +53,8 @@ const handleCatchNotify = (err) => {
     case 401:
 
       localStorage.removeItem('session')
-      alert('Sessión expirada')
+      // alert('Sessión expirada')
+      reactToastify.toast.error('Sessión expirada')
       window.location.reload()
 
       return
