@@ -1,4 +1,6 @@
-const Navigation = () => {
+
+const Navigation = (permissions) => {
+
   const allItems = [
     {
       name: 'Tablero',
@@ -63,7 +65,7 @@ const Navigation = () => {
           nameMachine: 'access'
         }
       ]
-    }, 
+    },
     {
       name: 'Reportes',
       url: '/report',
@@ -72,8 +74,6 @@ const Navigation = () => {
     }
   ]
 
-  const dataUser = JSON.parse(localStorage.getItem('session'))
-  const permissions = dataUser.permissions;
   let modules = [];
   let items = [];
 
@@ -94,7 +94,7 @@ const Navigation = () => {
       }else{
         items.push(menu);
       }
-    }    
+    }
   })
 
   return { items };

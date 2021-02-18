@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useCallback, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import * as router from 'react-router-dom'
 import { Container } from 'reactstrap'
@@ -35,10 +35,16 @@ const Layout = (props) => {
 
   const dataUser = JSON.parse(localStorage.getItem('session'))
 
+  const permissionsLoaded = useSelector((state) => state.permissionReducer.loaded)
+  const permissions = useSelector((state) => state.permissionReducer.permissions)
+
   useEffect(() => {
 
-    dispatch(accountAction.getPermissions())
-  })
+    if (!permissionsLoaded) {
+
+      dispatch(accountAction.getPermissions())
+    }
+  }, [ permissionsLoaded ])
 
   const dispatch = useDispatch()
 
@@ -70,7 +76,7 @@ const Layout = (props) => {
           <AppSidebarForm />
           <Suspense fallback={loading()}>
 
-            <AppSidebarNav navConfig={ Navigation() } {...props} router={router} />
+            <AppSidebarNav navConfig={ Navigation(permissions) } {...props} router={router} />
 
             {/* <AppSidebarNav navConfig={navigation} {...props} router={router} /> */}
           </Suspense>
