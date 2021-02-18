@@ -25,13 +25,18 @@ import { Navigation } from 'helpers/nav'
 // routes config
 import routes from 'helpers/routes'
 
-const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>
+import Preloader from '../../components/Preloader/Preloader'
+
+const loading = () => <div className="animated fadeIn pt-3 text-center">Loading content...</div>
 
 const Header = lazy(() => import('./Header'))
 const Footer = lazy(() => import('./Footer'))
 const ChangePassword = lazy(() => import('../../views/Security/ChangePassword'))
 
+
 const Layout = (props) => {
+
+  const dispatch = useDispatch()
 
   const dataUser = JSON.parse(localStorage.getItem('session'))
 
@@ -45,8 +50,6 @@ const Layout = (props) => {
       dispatch(accountAction.getPermissions())
     }
   }, [ permissionsLoaded ])
-
-  const dispatch = useDispatch()
 
   const signOut = useCallback(
     (e) => {
@@ -64,60 +67,66 @@ const Layout = (props) => {
 
   return (
     <div className="app">
-      <AppHeader fixed>
-        <Suspense fallback={loading()}>
-          <Header onLogout={(e) => signOut(e)} user={ dataUser } />
-        </Suspense>
-      </AppHeader>
-
-      <div className="app-body">
-        <AppSidebar fixed display="lg">
-          <AppSidebarHeader />
-          <AppSidebarForm />
-          <Suspense fallback={loading()}>
-
-            <AppSidebarNav navConfig={ Navigation(permissions) } {...props} router={router} />
-
-            {/* <AppSidebarNav navConfig={navigation} {...props} router={router} /> */}
-          </Suspense>
-          <AppSidebarFooter />
-          <AppSidebarMinimizer />
-        </AppSidebar>
-        <main className="main">
-          <AppBreadcrumb appRoutes={routes} router={router} />
-          <Container fluid>
+      {!permissionsLoaded ? (
+        <Preloader />
+      ) : (
+        <>
+          <AppHeader fixed>
             <Suspense fallback={loading()}>
-              <Switch>
-                {routes.map((route, idx) => {
-                  return route.component ? (
-                    <Route
-                      key={idx}
-                      path={route.path}
-                      exact={route.exact}
-                      name={route.name}
-                      render={(props) => <route.component {...props} />}
-                    />
-                  ) : null
-                })}
-                <Route
-                  path="/security/change-password"
-                  exact
-                  name="Change Password"
-                  render={(props) => <ChangePassword {...props} />}
-                />
-                <Redirect from="/" to="/dashboard" />
-              </Switch>
+              <Header onLogout={(e) => signOut(e)} user={ dataUser } />
             </Suspense>
-          </Container>
-        </main>
-      </div>
+          </AppHeader>
 
-      <AppFooter>
-        <Suspense fallback={loading()}>
-          <Footer />
-        </Suspense>
-      </AppFooter>
-      <ToastContainer />
+          <div className="app-body">
+            <AppSidebar fixed display="lg">
+              <AppSidebarHeader />
+              <AppSidebarForm />
+              <Suspense fallback={loading()}>
+
+                <AppSidebarNav navConfig={ Navigation(permissions) } {...props} router={router} />
+
+                {/* <AppSidebarNav navConfig={navigation} {...props} router={router} /> */}
+              </Suspense>
+              <AppSidebarFooter />
+              <AppSidebarMinimizer />
+            </AppSidebar>
+            <main className="main">
+              <AppBreadcrumb appRoutes={routes} router={router} />
+              <Container fluid>
+                <Suspense fallback={loading()}>
+                  <Switch>
+                    {routes.map((route, idx) => {
+                      return route.component ? (
+                        <Route
+                          key={idx}
+                          path={route.path}
+                          exact={route.exact}
+                          name={route.name}
+                          render={(props) => <route.component {...props} />}
+                        />
+                      ) : null
+                    })}
+                    <Route
+                      path="/security/change-password"
+                      exact
+                      name="Change Password"
+                      render={(props) => <ChangePassword {...props} />}
+                    />
+                    <Redirect from="/" to="/dashboard" />
+                  </Switch>
+                </Suspense>
+              </Container>
+            </main>
+          </div>
+
+          <AppFooter>
+            <Suspense fallback={loading()}>
+              <Footer />
+            </Suspense>
+          </AppFooter>
+          <ToastContainer />
+        </>
+      )}
     </div>
   )
 }

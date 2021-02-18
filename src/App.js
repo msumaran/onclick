@@ -4,11 +4,14 @@ import { Router, Switch } from 'react-router-dom'
 import { PrivateRoute, PublicRoute } from 'components/CustomRoute'
 import store from 'redux/store'
 import history from 'helpers/history'
+
+import Preloader from '../src/components/Preloader/Preloader'
+
 //
 import '@coreui/icons/css/all.css'
 import 'assets/scss/style.scss'
 //
-const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>
+const loading = () => <Preloader />
 //
 const Login = React.lazy(() => import('views/Pages/Login/Login'))
 const Layout = React.lazy(() => import('containers/Layout'))
