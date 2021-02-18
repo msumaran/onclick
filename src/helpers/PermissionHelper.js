@@ -11,39 +11,30 @@ class PermissionHelper {
         this.my_permissions = permissions
     }
 
-    validate(module, permission_necesary) {
-
-        Log('Looking for permission', module, permission_necesary)
+    validate(the_module, permission_necesary) {
 
         let has_permission = false
-        let section = ''
-        let permission = permission_necesary.split('')
+        const permissions_needed = permission_necesary.split('')
 
-        try {
+        const my_modules = this.my_permissions.filter((my_permission) => my_permission.module === the_module)
 
-            for (var i = 0; i < this.my_permissions.length; i++) {
+        const my_module = my_modules.length ? my_modules[0] : undefined
 
-                if (this.my_permissions[i].module === module) {
+        if (!my_module) {
 
-                    section = this.my_permissions[i].section.split()
-                    break
-                }
-            }
+            Log('No module permissions found', the_module, permission_necesary, this.my_permissions)
 
-            if (section.length === 1) {
-
-                section[0].split('').map(function (s) {
-
-                    if (permission.includes(s)) {
-
-                        has_permission = true
-                    }
-                })
-            }
-        } catch (error) {
-
-            Log('PermissionHelper.validate', error.message)
+            return false
         }
+
+        permissions_needed.map((permission_needed) => {
+
+            if (my_module.section.includes(permission_needed)) {
+
+                has_permission = true
+            }
+        })
+
         return has_permission
     }
 }

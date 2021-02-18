@@ -5,7 +5,7 @@ import React from 'react'
 
 const Dashboard = () => {
 
-  // const my_permissions = useSelector((state) => state.permissionReducer.permissions)
+  // const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
   // const permission_helper = new PermissionHelper(my_permissions)
 

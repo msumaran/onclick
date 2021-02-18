@@ -40,8 +40,8 @@ const Layout = (props) => {
 
   const dataUser = JSON.parse(localStorage.getItem('session'))
 
-  const permissionsLoaded = useSelector((state) => state.permissionReducer.loaded)
-  const permissions = useSelector((state) => state.permissionReducer.permissions)
+  const permissionsLoaded = useSelector((state) => state.accountReducer.loaded)
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
   useEffect(() => {
 
@@ -83,7 +83,7 @@ const Layout = (props) => {
               <AppSidebarForm />
               <Suspense fallback={loading()}>
 
-                <AppSidebarNav navConfig={ Navigation(permissions) } {...props} router={router} />
+                <AppSidebarNav navConfig={ Navigation(my_permissions) } {...props} router={router} />
 
                 {/* <AppSidebarNav navConfig={navigation} {...props} router={router} /> */}
               </Suspense>

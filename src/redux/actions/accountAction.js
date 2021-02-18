@@ -71,7 +71,7 @@ const getPermissions = () => {
       const res = await api.getPermissions()
 
       dispatch({
-        type: 'PERMISSION_FIND_ALL',
+        type: 'SET_MY_PERMISSIONS',
         payload: res.content.permissions
       })
     } catch (error) {

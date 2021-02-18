@@ -12,8 +12,7 @@ import PermissionHelper from '../../../helpers/PermissionHelper'
 
 const Profile = () => {
 
-  const my_permissions = useSelector((state) => state.permissionReducer.permissions)
-
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
   const permission_helper = new PermissionHelper(my_permissions)
 
   const [loading, setLoading] = useState(true)
