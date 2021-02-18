@@ -9,7 +9,7 @@ import { StripedTable } from 'components/CustomTable'
 
 import userAction from 'redux/actions/userAction'
 
-import ChangePasswordForm from './ChangePasswordForm' 
+import ChangePasswordForm from './ChangePasswordForm'
 import UserForm from './UserForm'
 
 import PermissionHelper from '../../../helpers/PermissionHelper'

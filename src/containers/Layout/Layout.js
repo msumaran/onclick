@@ -49,7 +49,7 @@ const Layout = (props) => {
 
       dispatch(accountAction.getPermissions())
     }
-  }, [ permissionsLoaded ])
+  }, [ permissionsLoaded, dispatch ])
 
   const signOut = useCallback(
     (e) => {

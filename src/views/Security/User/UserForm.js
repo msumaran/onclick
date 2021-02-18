@@ -53,7 +53,7 @@ const UserForm = ({ show, dismiss, isEdit }) => {
       // console.log('fetchprofiles', status)
       setProfileLoading(!profileLoading)
     })
-  }, [dispatch])
+  }, [ dispatch, profileLoading ])
 
   useEffect(() => fetchProfiles(), [fetchProfiles])
 

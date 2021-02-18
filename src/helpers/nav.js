@@ -1,3 +1,4 @@
+/*eslint array-callback-return: "off" */
 
 const Navigation = (permissions) => {
 
@@ -77,21 +78,29 @@ const Navigation = (permissions) => {
   let modules = [];
   let items = [];
 
-  permissions.map((p)=>{ modules.push(p.module) })
+  permissions.map((p)=> modules.push(p.module))
 
-  allItems.map(( menu )=>{
+  allItems.map((menu) => {
+
     if( modules.includes( menu.nameMachine ) || menu.nameMachine === 'dashboard' ){
+
       if( menu.hasOwnProperty('children') ){
+
         let tmpMenu = menu;
         tmpMenu.childrenTmp = [];
+
         menu.children.map((smenu)=>{
+
           if( modules.includes( smenu.nameMachine ) ){
+
             tmpMenu.childrenTmp.push(smenu)
           }
         })
+
         tmpMenu.children = tmpMenu.childrenTmp;
         items.push(tmpMenu);
       }else{
+
         items.push(menu);
       }
     }
