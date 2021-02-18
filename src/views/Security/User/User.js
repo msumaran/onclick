@@ -12,10 +12,14 @@ import userAction from 'redux/actions/userAction'
 import ChangePasswordForm from './ChangePasswordForm' 
 import UserForm from './UserForm'
 
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from '../../../helpers/PermissionHelper'
 
 const User = () => {
   const [loading, setLoading] = useState(true)
+
+  const my_permissions = useSelector((state) => state.permissionReducer.permissions)
+
+  const permission_helper = new PermissionHelper(my_permissions)
 
   // < change password form
   const [showChangePassword, setShowChangePassword] = useState(false)
@@ -24,14 +28,6 @@ const User = () => {
     setShowChangePassword(!showChangePassword)
   }, [showChangePassword])
   // > change password form
-
-  // < region form
-  const [showRegion, setShowRegion] = useState(false)
-
-  const toggleRegion = useCallback(() => {
-    setShowRegion(!showRegion)
-  }, [showRegion])
-  // > region form
 
   // < NEWFORM
   const [modeNewForm, setModeNewForm] = useState(false)
@@ -42,8 +38,8 @@ const User = () => {
     setShowNewForm(!showNewForm)
   }, [showNewForm])
 
-  // const [showEditForm, setEditForm] = useState(false)
   const toggleEditForm = useCallback(() => {
+
     setModeNewForm(true)
     setShowNewForm(!showNewForm)
   }, [showNewForm])
@@ -94,7 +90,7 @@ const User = () => {
 
           return (
             <div className="btn-group btn-group-sm">
-              {PermssionHelper('user', 'u') ? (
+              {permission_helper.validate('user', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
@@ -107,7 +103,7 @@ const User = () => {
                   <i className="icon-pencil"></i>
                 </Button>
               ) : null}
-              {PermssionHelper('user_password_change', 'u') ? (
+              {permission_helper.validate('user_password_change', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
@@ -120,7 +116,7 @@ const User = () => {
                   <i className="icon-key"></i> Cambiar contraseña
                 </Button>
               ) : null}
-              {/* {PermssionHelper('user_add_region', 'u') ? (
+              {/* {permission_helper.validate('user_add_region', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
@@ -133,7 +129,7 @@ const User = () => {
                   <i className="cil-globe-alt"></i> Asignar regiones
                 </Button>
               ) : null} */}
-              {PermssionHelper('user', 'd') ? (
+              {permission_helper.validate('user', 'd') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
@@ -159,7 +155,7 @@ const User = () => {
         }
       }
     ],
-    [dispatch, toggleEditForm, toggleChangePassword, toggleRegion, PermssionHelper]
+    [dispatch, toggleEditForm, toggleChangePassword, permission_helper]
   )
 
   const data = useSelector((store) => store.userReducer.users)
@@ -167,9 +163,8 @@ const User = () => {
   const loaded = useSelector((store) => store.userReducer.loaded)
 
   const fetchUsers = useCallback(() => {
-    dispatch(userAction.findAll()).then((status) => {
-      console.log(status)
-    })
+
+    dispatch(userAction.findAll())
   }, [dispatch])
 
   useEffect(() => {
@@ -191,7 +186,7 @@ const User = () => {
             <CardBody>
               <div className="rt-wrapper">
                 <div className="rt-buttons">
-                  {PermssionHelper('user', 'c') ? (
+                  {permission_helper.validate('user', 'c') ? (
                     <Button
                       color="primary"
                       onClick={() => {
@@ -202,7 +197,7 @@ const User = () => {
                     </Button>
                   ) : null}
                 </div>
-                {PermssionHelper('user', 'r') ? (
+                {permission_helper.validate('user', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}

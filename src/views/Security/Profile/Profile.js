@@ -8,9 +8,14 @@ import profileAction from 'redux/actions/profileAction'
 
 import ProfileForm from './ProfileForm'
 
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from '../../../helpers/PermissionHelper'
 
 const Profile = () => {
+
+  const my_permissions = useSelector((state) => state.permissionReducer.permissions)
+
+  const permission_helper = new PermissionHelper(my_permissions)
+
   const [loading, setLoading] = useState(true)
 
   // < profile form
@@ -25,9 +30,8 @@ const Profile = () => {
   const loaded = useSelector((store) => store.profileReducer.loaded)
 
   const fetchProfile = useCallback(() => {
-    dispatch(profileAction.findAll()).then((status) => {
-      console.log(status)
-    })
+
+    dispatch(profileAction.findAll())
   }, [dispatch])
 
   const columns = useMemo(
@@ -58,7 +62,7 @@ const Profile = () => {
         Cell: ({ row: { original } }) => {
           return (
             <div className="btn-group btn-group-sm">
-              {PermssionHelper('profile', 'u') ? (
+              {permission_helper.validate('profile', 'u') ? (
                 <Button
                   outline
                   color="dark"
@@ -74,14 +78,16 @@ const Profile = () => {
           )
         }
       }
-    ],
-    [dispatch, toggleForm, PermssionHelper]
+    ], [ dispatch, toggleForm, permission_helper ]
   )
 
   useEffect(() => {
+
     if (loaded) {
+
       setLoading(false)
     } else {
+
       fetchProfile()
     }
   }, [loaded, fetchProfile])
@@ -96,7 +102,7 @@ const Profile = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-                {PermssionHelper('profile', 'r') ? (
+                {permission_helper.validate('profile', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}
