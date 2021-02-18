@@ -70,15 +70,9 @@ const getPermissions = () => {
 
       const res = await api.getPermissions()
 
-      const session = JSON.parse(localStorage.getItem('session'))
-
-      session.permissions = res.content.permissions
-
-      localStorage.setItem('session', JSON.stringify(session))
-
       dispatch({
         type: 'PERMISSION_FIND_ALL',
-        payload: session.permissions
+        payload: res.content.permissions
       })
     } catch (error) {
 
