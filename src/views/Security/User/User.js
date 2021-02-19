@@ -25,6 +25,7 @@ const User = () => {
   const [showChangePassword, setShowChangePassword] = useState(false)
 
   const toggleChangePassword = useCallback(() => {
+
     setShowChangePassword(!showChangePassword)
   }, [showChangePassword])
   // > change password form
@@ -34,6 +35,7 @@ const User = () => {
   const [showNewForm, setShowNewForm] = useState(false)
 
   const toggleNewForm = useCallback(() => {
+
     setModeNewForm(false)
     setShowNewForm(!showNewForm)
   }, [showNewForm])
