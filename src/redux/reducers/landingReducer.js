@@ -17,10 +17,10 @@ const landingReducer = (state = initialState, { type, payload }) => {
             st.loaded = true
             break
         case 'LANDING_SAVE_TO_DB_START':
-            st.saveStatus = 'start'
+            st.saveStatus = 'saving'
             break
         case 'LANDING_SAVE_TO_DB_END':
-            st.saveStatus = 'end'
+            st.saveStatus = 'saved'
             break
         case 'LANDING_SAVE_TO_DB_ERROR':
             st.saveStatus = 'error'
