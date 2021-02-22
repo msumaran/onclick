@@ -24,10 +24,21 @@ const MyLanding = () => {
     const landingCode = useSelector((state) => state.landingReducer.code)
     const landingHtml = useSelector((state) => state.landingReducer.html)
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
+    const landingSaveStatus = useSelector((state) => state.landingReducer.saveStatus)
 
     const loadMyLanding = () => {
 
         dispatch(landingActions.getMyLanding())
+    }
+
+    const getSaveStatus = () => {
+
+        switch(landingSaveStatus) {
+            case 'saving':
+                return 'Guardando...'
+            default:
+                return 'Guardar'
+        }
     }
 
     useEffect(() => {
@@ -66,7 +77,7 @@ const MyLanding = () => {
                             <div className="rt-buttons">
                                 {permission_helper.validate('landing', 'u') ? (
                                     <Button color="primary" onClick={() => save()}>
-                                        Guardar
+                                        {getSaveStatus()}
                                     </Button>
                                 ) : null}
                             </div>
