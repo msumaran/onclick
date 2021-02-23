@@ -8,13 +8,16 @@ import profileReducer from 'redux/reducers/profileReducer'
 import permissionReducer from 'redux/reducers/permissionReducer' 
 import dashboardReducer from 'redux/reducers/dashboardReducer'
 
+import clientReducer from 'redux/reducers/clientReducer'
+
 const reducers = combineReducers({
   accountReducer,
   userReducer, 
   accessReducer,
   profileReducer,  
   permissionReducer, 
-  dashboardReducer
+  dashboardReducer,
+  clientReducer,
 })
 
 export default reducers
