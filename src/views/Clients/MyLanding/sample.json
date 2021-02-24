@@ -594,37 +594,6 @@
           "draggable": true,
           "deletable": true
         }
-      }, {
-        "cells": [1],
-        "columns": [{
-          "contents": [{
-            "type": "text",
-            "values": {
-              "containerPadding": "20px",
-              "selectable": false,
-              "draggable": false,
-              "deletable": false,
-              "color": "#000",
-              "textAlign": "left",
-              "text": "[Mi formulario de contactos]"
-            }
-          }]
-        }],
-        "values": {
-          "backgroundColor": "#f0f0f0",
-          "backgroundImage": {
-            "url": "",
-            "fullWidth": true,
-            "repeat": false,
-            "center": false,
-            "cover": false
-          },
-          "padding": "30px",
-          "columnsBackgroundColor": "rgba(255,255,255,0)",
-          "selectable": true,
-          "draggable": true,
-          "deletable": false
-        }
       }],
       "values": {
         "backgroundColor": "#ffffff",

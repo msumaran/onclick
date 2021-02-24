@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Card, CardBody, Col, Row } from 'reactstrap'
 
 import Preloader from '../../../components/Preloader/Preloader'
@@ -10,7 +10,8 @@ import landingActions from 'redux/actions/landingActions'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 
-import EmailEditor from 'react-email-editor'
+import HtmlEditor from '../../../components/HtmlEditor/HtmlEditor'
+
 import sample from './sample.json'
 
 const MyLanding = () => {
@@ -22,14 +23,38 @@ const MyLanding = () => {
     const permission_helper = new PermissionHelper(my_permissions)
 
     const landingCode = useSelector((state) => state.landingReducer.code)
-    const landingHtml = useSelector((state) => state.landingReducer.html)
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
     const landingSaveStatus = useSelector((state) => state.landingReducer.saveStatus)
+
+    const [ state, setState ] = useState({
+        design: sample,
+        designLoaded: false,
+    })
+
+    const editor_ref = useRef()
 
     const loadMyLanding = () => {
 
         dispatch(landingActions.getMyLanding())
     }
+
+    useEffect(() => {
+
+        if (!landingLoaded) {
+
+            loadMyLanding()
+        } else {
+
+            if (!state.designLoaded && landingCode !== '{}') {
+
+                setState({
+                    ...state,
+                    design: JSON.parse(landingCode),
+                    designLoaded: true
+                })
+            }
+        }
+    }, [ landingLoaded, loadMyLanding ])
 
     const getSaveStatus = () => {
 
@@ -41,27 +66,20 @@ const MyLanding = () => {
         }
     }
 
-    useEffect(() => {
-
-        if (!landingLoaded) {
-
-            loadMyLanding()
-        }
-    }, [ loadMyLanding, landingLoaded ])
-
-    const editor_ref = useRef()
-
     const onLoadEditor = () => {
 
-        const json = landingHtml === "" ? sample : JSON.parse(landingCode)
-
-        editor_ref.current.editor.loadDesign(json)
+        console.log('onLoad')
     }
 
     const save = () => {
         editor_ref.current.editor.exportHtml((data) => {
 
             const { design, html } = data
+
+            setState({
+                ...state,
+                design: design
+            })
 
             dispatch(landingActions.saveMyLanding({ body: design.body }, html))
         })
@@ -86,12 +104,65 @@ const MyLanding = () => {
                     </Card>
                 </Col>
             </Row>
-            {!landingLoaded ? (
-                <Preloader />
-            ) : (
-                <EmailEditor
+            {!landingLoaded ? <Preloader /> : (
+                <HtmlEditor
                     ref={editor_ref}
-                    onLoad={onLoadEditor}
+                    design={state.design}
+                    onLoad={() => onLoadEditor()}
+                    options={{
+                        locale: 'es-ES',
+                        tools: {
+                            form: {
+                                usageLimit: 1,
+                                properties: {
+                                    buttonText: 'Enviar',
+                                    fields: {
+                                        editor: {
+                                            data: {
+                                                allowCustomUrl: false,
+                                                allowAddNewField: false,
+                                                defaultFields: [
+                                                    {name: "fullname", label: "Nombres y apellidos", type: "text"},
+                                                    {name: "email", label: "Correo electrónico", type: "email"}
+                                                ],
+                                            }
+                                        },
+                                        value: [
+                                            {
+                                                name: 'fullname',
+                                                type: 'text',
+                                                label: 'Nombres y apellidos',
+                                                placeholder_text: 'Nombres y apellidos',
+                                                show_label: true,
+                                                required: true,
+                                            },
+                                            {
+                                                name: 'email',
+                                                type: 'email',
+                                                label: 'Correo electrónico',
+                                                placeholder_text: 'Correo electrónico',
+                                                show_label: true,
+                                                required: true,
+                                            },
+                                        ]
+                                    },
+                                    action: {
+                                        editor: {
+                                            data: {
+                                                actions: [
+                                                    {
+                                                        label: 'Marketing',
+                                                        method: 'POST',
+                                                        url: '',
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }}
                 />
             )}
         </div>
