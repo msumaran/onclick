@@ -9,6 +9,8 @@ import permissionReducer from 'redux/reducers/permissionReducer'
 import dashboardReducer from 'redux/reducers/dashboardReducer'
 
 import clientReducer from 'redux/reducers/clientReducer'
+import paymentReducer from 'redux/reducers/paymentReducer'
+import packReducer from 'redux/reducers/packReducer'
 
 const reducers = combineReducers({
   accountReducer,
@@ -18,6 +20,8 @@ const reducers = combineReducers({
   permissionReducer, 
   dashboardReducer,
   clientReducer,
+  paymentReducer,
+  packReducer,
 })
 
 export default reducers
