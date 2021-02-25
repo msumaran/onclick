@@ -19,7 +19,6 @@ const MyLanding = () => {
     const dispatch = useDispatch()
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
-
     const permission_helper = new PermissionHelper(my_permissions)
 
     const landingCode = useSelector((state) => state.landingReducer.code)

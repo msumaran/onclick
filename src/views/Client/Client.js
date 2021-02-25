@@ -9,22 +9,26 @@ import { StripedTable } from 'components/CustomTable'
 
 import clientAction from 'redux/actions/clientAction'
 
-import ClientCode from './ClientCode' 
+import ClientCode from './ClientCode'
 
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from 'helpers/PermissionHelper'
 
 const Client = () => {
 
-  const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT 
+  const dispatch = useDispatch()
+
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
+  const permission_helper = new PermissionHelper(my_permissions)
+
+  const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT
   const [loading, setLoading] = useState(true)
- 
+
   const [showClientCode, setClientCode] = useState(false)
   const toggleClientCode = useCallback(() => {
     setOpenModeModal(true)
     setClientCode(!showClientCode)
   }, [showClientCode])
-  
-  const dispatch = useDispatch()
+
   const columns = useMemo(
     () => [
       {
@@ -38,7 +42,7 @@ const Client = () => {
       {
         Header: 'Usuario',
         accessor: 'username'
-      }, 
+      },
       {
         Header: 'Status',
         accessor: 'isActive',
@@ -49,7 +53,7 @@ const Client = () => {
         Header: 'Registro',
         accessor: 'createdAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
-      }, 
+      },
       {
         Header: 'Actions',
         width: 300,
@@ -58,28 +62,28 @@ const Client = () => {
 
           return (
             <div className="btn-group btn-group-sm">
-               
-              {PermssionHelper('user_password_change', 'u') ? (
+
+              {permission_helper.validate('user_password_change', 'u') ? (
                 <Button
                   disabled={deleting[`row_id_${original.id}`]}
                   outline
                   color="dark"
                   onClick={() => {
                     dispatch(clientAction.find(original.id))
-                    toggleClientCode() 
+                    toggleClientCode()
                   }}
                 >
                   <i className="icon-key"></i> Code GA
                 </Button>
               ) : null}
-               
-               
+
+
             </div>
           )
         }
       }
     ],
-    [dispatch, toggleClientCode, PermssionHelper]
+    [dispatch, toggleClientCode, permission_helper]
   )
 
   const data = useSelector((store) => store.clientReducer.clients)
@@ -110,8 +114,8 @@ const Client = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-                 
-                {PermssionHelper('user', 'r') ? (
+
+                {permission_helper.validate('user', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}
@@ -130,10 +134,10 @@ const Client = () => {
         </Col>
       </Row>
 
-      <ClientCode 
-        show={showClientCode} 
-        dismiss={toggleClientCode} 
-        isEdit={openModeModal} 
+      <ClientCode
+        show={showClientCode}
+        dismiss={toggleClientCode}
+        isEdit={openModeModal}
         />
 
     </div>

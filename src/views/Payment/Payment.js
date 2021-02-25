@@ -9,28 +9,30 @@ import { StripedTable } from 'components/CustomTable'
 
 import paymentAction from 'redux/actions/paymentAction'
 
-// import ClientCode from './ClientCode' 
-
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from 'helpers/PermissionHelper'
 
 const Payment = () => {
 
-  // const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT 
+  const dispatch = useDispatch()
+
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
+  const permission_helper = new PermissionHelper(my_permissions)
+
+  // const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT
   const [loading, setLoading] = useState(true)
- 
+
   // const [showClientCode, setClientCode] = useState(false)
   // const toggleClientCode = useCallback(() => {
   //   setOpenModeModal(true)
   //   setClientCode(!showClientCode)
   // }, [showClientCode])
-  
-  const dispatch = useDispatch()
+
   const columns = useMemo(
     () => [
       {
         Header: 'Usuario',
         accessor: 'username'
-      }, 
+      },
       {
         Header: 'Pack',
         accessor: 'pack.name'
@@ -39,15 +41,14 @@ const Payment = () => {
         Header: 'Inicia',
         accessor: 'startAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
-      }, 
+      },
       {
         Header: 'Termina',
         accessor: 'endAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
       }
     ],
-    // [dispatch, toggleClientCode, PermssionHelper]
-    [dispatch, PermssionHelper]
+    [dispatch]
   )
 
   const data = useSelector((store) => store.paymentReducer.payments)
@@ -78,8 +79,8 @@ const Payment = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-                 
-                {PermssionHelper('user', 'r') ? (
+
+                {permission_helper.validate('user', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}
@@ -98,10 +99,10 @@ const Payment = () => {
         </Col>
       </Row>
 
-      {/* <ClientCode 
-        show={showClientCode} 
-        dismiss={toggleClientCode} 
-        isEdit={openModeModal} 
+      {/* <ClientCode
+        show={showClientCode}
+        dismiss={toggleClientCode}
+        isEdit={openModeModal}
         /> */}
 
     </div>

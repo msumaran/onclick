@@ -7,27 +7,30 @@ import { SpinCircle } from 'components/Spin'
 import { confirm } from 'components/CustomModal/ModalConfirm'
 import { StripedTable } from 'components/CustomTable'
 
-import paymentAction from 'redux/actions/paymentAction' 
+import paymentAction from 'redux/actions/paymentAction'
 
-// import ClientCode from './ClientCode' 
-import MyPaymentForm from './MyPaymentForm' 
+import MyPaymentForm from './MyPaymentForm'
 
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from 'helpers/PermissionHelper'
 
 const MyPayment = () => {
 
-  const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT 
+  const dispatch = useDispatch()
+
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
+  const permission_helper = new PermissionHelper(my_permissions)
+
+  const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT
   const [loading, setLoading] = useState(true)
- 
+
   const [showPaymentForm, setPaymentForm] = useState(false)
   const toggleNewPayment = useCallback(() => {
     setOpenModeModal(false)
     setPaymentForm(!showPaymentForm)
   }, [showPaymentForm])
-  
-  const dispatch = useDispatch()
+
   const columns = useMemo(
-    () => [ 
+    () => [
       {
         Header: 'Pack',
         accessor: 'pack.name'
@@ -36,15 +39,14 @@ const MyPayment = () => {
         Header: 'Inicia',
         accessor: 'startAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
-      }, 
+      },
       {
         Header: 'Termina',
         accessor: 'endAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
       }
     ],
-    // [dispatch, toggleClientCode, PermssionHelper]
-    [dispatch, PermssionHelper]
+    [dispatch]
   )
 
   const data = useSelector((store) => store.paymentReducer.payments)
@@ -64,7 +66,7 @@ const MyPayment = () => {
       fetchPayments()
     }
   }, [loaded, fetchPayments])
-  
+
   return (
     <div className="animated fadeIn">
       <Row>
@@ -75,9 +77,9 @@ const MyPayment = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-                 
+
               <div className="rt-buttons">
-                  {PermssionHelper('user', 'c') ? (
+                  {permission_helper.validate('user', 'c') ? (
                     <Button
                       color="primary"
                       onClick={() => {
@@ -89,7 +91,7 @@ const MyPayment = () => {
                   ) : null}
                 </div>
 
-                {PermssionHelper('user', 'r') ? (
+                {permission_helper.validate('user', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}
@@ -108,10 +110,10 @@ const MyPayment = () => {
         </Col>
       </Row>
 
-      <MyPaymentForm 
-        show={showPaymentForm} 
-        dismiss={toggleNewPayment} 
-        isEdit={openModeModal} 
+      <MyPaymentForm
+        show={showPaymentForm}
+        dismiss={toggleNewPayment}
+        isEdit={openModeModal}
         />
 
     </div>
