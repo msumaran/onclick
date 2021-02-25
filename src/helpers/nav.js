@@ -1,3 +1,4 @@
+/*eslint array-callback-return: "off" */
 
 const Navigation = (permissions) => {
 
@@ -22,20 +23,20 @@ const Navigation = (permissions) => {
     },
 
     {
-      name: 'Cliente Contactos',
-      url: '/contact',
+      name: 'Mis contactos',
+      url: '/my-contacts',
       icon: 'icon-speedometer',
       nameMachine: 'contact'
     },
     {
-      name: 'Cliente Pagos',
+      name: 'Mis pagos',
       url: '/my-payments',
       icon: 'icon-speedometer',
       nameMachine: 'user_payments'
     },
     {
-      name: 'Cliente Editor',
-      url: '/landing',
+      name: 'Mi landing',
+      url: '/my-landing',
       icon: 'icon-speedometer',
       nameMachine: 'landing'
     },
@@ -77,21 +78,29 @@ const Navigation = (permissions) => {
   let modules = [];
   let items = [];
 
-  permissions.map((p)=>{ modules.push(p.module) })
+  permissions.map((p)=> modules.push(p.module))
 
-  allItems.map(( menu )=>{
+  allItems.map((menu) => {
+
     if( modules.includes( menu.nameMachine ) || menu.nameMachine === 'dashboard' ){
+
       if( menu.hasOwnProperty('children') ){
+
         let tmpMenu = menu;
         tmpMenu.childrenTmp = [];
+
         menu.children.map((smenu)=>{
+
           if( modules.includes( smenu.nameMachine ) ){
+
             tmpMenu.childrenTmp.push(smenu)
           }
         })
+
         tmpMenu.children = tmpMenu.childrenTmp;
         items.push(tmpMenu);
       }else{
+
         items.push(menu);
       }
     }

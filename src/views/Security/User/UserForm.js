@@ -45,17 +45,25 @@ const UserForm = ({ show, dismiss, isEdit }) => {
   const data = useSelector((store) => store.userReducer.user)
 
   const profiles = useSelector((store) => store.profileReducer.profiles)
+  const profilesLoaded = useSelector((store) => store.profileReducer.loaded)
 
   const dispatch = useDispatch()
 
   const fetchProfiles = useCallback(() => {
+
     dispatch(profileAction.findAll()).then((status) => {
-      // console.log('fetchprofiles', status)
+
       setProfileLoading(!profileLoading)
     })
-  }, [dispatch])
+  }, [ dispatch, profileLoading ])
 
-  useEffect(() => fetchProfiles(), [fetchProfiles])
+  useEffect(() => {
+
+    if (!profilesLoaded) {
+
+      fetchProfiles()
+    }
+  }, [fetchProfiles, profilesLoaded])
 
   return (
     <Modal isOpen={show} toggle={dismiss} backdrop="static" keyboard={true} centered>

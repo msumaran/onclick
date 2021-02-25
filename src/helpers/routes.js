@@ -1,6 +1,11 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('views/Dashboard/Dashboard'))
+
+const MyContacts = React.lazy(() => import('views/Clients/MyContacts/MyContacts'))
+const MyPayments = React.lazy(() => import('views/Clients/MyPayments/MyPayments'))
+const MyLanding = React.lazy(() => import('views/Clients/MyLanding/MyLanding'))
+
 const User = React.lazy(() => import('views/Security/User/User'))
 const Profile = React.lazy(() => import('views/Security/Profile/Profile'))
 
@@ -17,6 +22,10 @@ const MyPayment = React.lazy(() => import('views/Client/Payment/MyPayment'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Tablero', component: Dashboard },
+  { path: '/my-contacts', name: 'Mis contactos', component: MyContacts },
+  { path: '/my-payments', name: 'Mis pagos', component: MyPayments },
+  { path: '/my-landing', name: 'Mis pagos', component: MyLanding },
+
   { path: '/security/access', name: 'Accesos', component: Access },
   { path: '/security/users', name: 'Usuarios', component: User },
   { path: '/security/profiles', name: 'Perfiles', component: Profile },

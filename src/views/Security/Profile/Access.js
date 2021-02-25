@@ -6,19 +6,22 @@ import moment from 'moment'
 
 import accessAction from 'redux/actions/accessAction'
 
-import { PermssionHelper } from 'helpers/permission'
+import PermissionHelper from '../../../helpers/PermissionHelper'
 
 const Access = () => {
   const [loading, setLoading] = useState(true)
+
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
+
+  const permission_helper = new PermissionHelper(my_permissions)
 
   const data = useSelector((store) => store.accessReducer.access)
   const loaded = useSelector((store) => store.accessReducer.loaded)
   const dispatch = useDispatch()
 
   const fetchAccess = useCallback(() => {
-    dispatch(accessAction.findAll()).then((status) => {
-      console.log(status)
-    })
+
+    dispatch(accessAction.findAll())
   }, [dispatch])
 
   const columns = useMemo(
@@ -64,7 +67,7 @@ const Access = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-                {PermssionHelper('access', 'r') ? (
+                {permission_helper.validate('access', 'r') ? (
                   <StripedTable
                     columns={columns}
                     data={data}

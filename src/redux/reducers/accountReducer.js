@@ -1,6 +1,8 @@
 const defaultState = {
   isLogged: false,
-  token: undefined
+  token: undefined,
+  permissions: [],
+  loaded: false,
 }
 
 const accountReducer = (state = defaultState, { type, payload }) => {
@@ -12,6 +14,10 @@ const accountReducer = (state = defaultState, { type, payload }) => {
 
       st.isLogged =  true
       st.token =  payload.token
+      break
+    case 'SET_MY_PERMISSIONS':
+      st.permissions = payload
+      st.loaded = true
       break
     case 'ACCOUNT_LOGOUT':
     case 'ACCOUNT_CHANGE_PASSWORD':

@@ -27,18 +27,15 @@ const login = (username, password) => {
 }
 
 const logout = () => {
-  return async (dispatch) => {
-    try {
-      await api.logout()
+  return (dispatch) => {
 
-      dispatch({
-        type: 'ACCOUNT_LOGOUT'
-      })
+    api.logout()
 
-      window.location.reload()
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('accountAction.logout', err)
-    }
+    dispatch({
+      type: 'ACCOUNT_LOGOUT'
+    })
+
+    window.location.reload()
   }
 }
 
@@ -73,15 +70,9 @@ const getPermissions = () => {
 
       const res = await api.getPermissions()
 
-      const session = JSON.parse(localStorage.getItem('session'))
-
-      session.permissions = res.content.permissions
-
-      localStorage.setItem('session', JSON.stringify(session))
-
       dispatch({
-        type: 'PERMISSION_FIND_ALL',
-        payload: session.permissions
+        type: 'SET_MY_PERMISSIONS',
+        payload: res.content.permissions
       })
     } catch (error) {
 
