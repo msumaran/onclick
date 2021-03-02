@@ -36,8 +36,8 @@ const MyPaymentForm = (props) => {
 
     const validationSchema = yup.object().shape({
         cardname: yup.string().required('Field required'),
-        cardnumber: yup.string().required('Field required').length(19),
-        carddate: yup.string().required('Field required'),
+        cardnumber: yup.string().required('Field required').length(19, 'Debe de tener 16 digitos.'),
+        carddate: yup.string().required('Field required').length(7, 'Debe de tener 6 digitos.'),
         cardcvv: yup.string().required('Field required'),
         pack_id: yup.string().required('Field required'),
     })
@@ -90,7 +90,7 @@ const MyPaymentForm = (props) => {
                                     invalid={formik.errors.cardnumber ? true : false}
                                 /> */}
 
-                                <InputMask mask="9999-9999-9999-9999" maskChar="_" alwaysShowMask="true" value={formik.values.cardnumber} onChange={formik.handleChange} invalid={formik.errors.cardnumber ? true : false} >
+                                <InputMask mask="9999-9999-9999-9999" maskChar="" alwaysShowMask="true" value={formik.values.cardnumber} onChange={formik.handleChange} invalid={formik.errors.cardnumber ? true : false} >
                                     {(inputProps) => <Input {...inputProps}  type="text" name="cardnumber"  /> }
                                 </InputMask>
 
@@ -101,7 +101,7 @@ const MyPaymentForm = (props) => {
                                     <FormGroup>
                                         <Label>Expiración</Label>
 
-                                        <InputMask mask="99/9999" maskChar="_" alwaysShowMask="true" value={formik.values.carddate} onChange={formik.handleChange} invalid={formik.errors.carddate ? true : false} >
+                                        <InputMask mask="99/9999" maskChar="" alwaysShowMask="true" value={formik.values.carddate} onChange={formik.handleChange} invalid={formik.errors.carddate ? true : false} >
                                             {(inputProps) => <Input {...inputProps}  type="text" name="carddate"  /> }
                                         </InputMask>
 
