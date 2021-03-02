@@ -36,7 +36,7 @@ const MyPaymentForm = (props) => {
 
     const validationSchema = yup.object().shape({
         cardname: yup.string().required('Field required'),
-        cardnumber: yup.string().required('Field required'),
+        cardnumber: yup.string().required('Field required').length(19),
         carddate: yup.string().required('Field required'),
         cardcvv: yup.string().required('Field required'),
         pack_id: yup.string().required('Field required'),
@@ -66,6 +66,9 @@ const MyPaymentForm = (props) => {
                             Nuevo Pago
                         </ModalHeader>
                         <ModalBody>
+
+                            {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
+
                             <FormGroup>
                                 <Label>Nombre en tarjeta</Label>
                                 <Input
@@ -88,7 +91,7 @@ const MyPaymentForm = (props) => {
                                 /> */}
 
                                 <InputMask mask="9999-9999-9999-9999" maskChar="_" alwaysShowMask="true" value={formik.values.cardnumber} onChange={formik.handleChange} invalid={formik.errors.cardnumber ? true : false} >
-                                    {(inputProps) => <Input {...inputProps} disableUnderline type="text" name="cardnumber"  /> }
+                                    {(inputProps) => <Input {...inputProps}  type="text" name="cardnumber"  /> }
                                 </InputMask>
 
                                 <FormFeedback>{formik.errors.cardnumber}</FormFeedback>
@@ -99,7 +102,7 @@ const MyPaymentForm = (props) => {
                                         <Label>Expiración</Label>
 
                                         <InputMask mask="99/9999" maskChar="_" alwaysShowMask="true" value={formik.values.carddate} onChange={formik.handleChange} invalid={formik.errors.carddate ? true : false} >
-                                            {(inputProps) => <Input {...inputProps} disableUnderline type="text" name="carddate"  /> }
+                                            {(inputProps) => <Input {...inputProps}  type="text" name="carddate"  /> }
                                         </InputMask>
 
                                         <FormFeedback>{formik.errors.carddate}</FormFeedback>
