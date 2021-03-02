@@ -21,6 +21,8 @@ import * as yup from 'yup'
 
 import { SpinCircle } from '../../../components/Spin'
 
+import InputMask from 'react-input-mask';
+
 const MyPaymentForm = (props) => {
 
     const initialValues = {
@@ -77,26 +79,29 @@ const MyPaymentForm = (props) => {
                             </FormGroup>
                             <FormGroup>
                                 <Label>Número de tarjeta</Label>
-                                <Input
+                                {/* <Input
                                     type="text"
                                     name="cardnumber"
                                     value={formik.values.cardnumber}
                                     onChange={formik.handleChange}
                                     invalid={formik.errors.cardnumber ? true : false}
-                                />
+                                /> */}
+
+                                <InputMask mask="9999-9999-9999-9999" maskChar="_" alwaysShowMask="true" value={formik.values.cardnumber} onChange={formik.handleChange} invalid={formik.errors.cardnumber ? true : false} >
+                                    {(inputProps) => <Input {...inputProps} disableUnderline type="text" name="cardnumber"  /> }
+                                </InputMask>
+
                                 <FormFeedback>{formik.errors.cardnumber}</FormFeedback>
                             </FormGroup>
                             <Row>
                                 <Col xs={3}>
                                     <FormGroup>
                                         <Label>Expiración</Label>
-                                        <Input
-                                            type="text"
-                                            name="carddate"
-                                            value={formik.values.carddate}
-                                            onChange={formik.handleChange}
-                                            invalid={formik.errors.carddate ? true : false}
-                                        />
+
+                                        <InputMask mask="99/9999" maskChar="_" alwaysShowMask="true" value={formik.values.carddate} onChange={formik.handleChange} invalid={formik.errors.carddate ? true : false} >
+                                            {(inputProps) => <Input {...inputProps} disableUnderline type="text" name="carddate"  /> }
+                                        </InputMask>
+
                                         <FormFeedback>{formik.errors.carddate}</FormFeedback>
                                     </FormGroup>
                                 </Col>
