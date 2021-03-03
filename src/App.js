@@ -20,7 +20,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <React.Suspense fallback={loading()}>
-        <Router history={history}>
+        <Router history={history} basename={process.env.PUBLIC_URL} >
           <Switch>
             <PublicRoute restricted path="/login" name="Login" component={Login} exact />
             <PrivateRoute path="/" name="Admin" component={Layout} />

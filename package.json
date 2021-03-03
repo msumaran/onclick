@@ -2,6 +2,7 @@
   "name": "onclick",
   "version": "1.0.0",
   "private": true,
+  "homepage": "http://onclick.nativosdigitales.pe/admin",
   "dependencies": {
     "@coreui/coreui": "^2.1.16",
     "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.1",
