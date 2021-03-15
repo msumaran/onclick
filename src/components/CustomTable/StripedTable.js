@@ -124,14 +124,14 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
             ) : (
               <tr>
                 <td align="center" colSpan="1000">
-                  No data available in table
+                  No se encontraron registros
                 </td>
               </tr>
             )
           ) : (
             <tr>
               <td align="center" colSpan="1000">
-                Loading...
+                Cargando...
               </td>
             </tr>
           )}
@@ -172,12 +172,12 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
           >
             {[10, 20, 30, 40, 50].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Show {pageSize}
+                Mostrar {pageSize}
               </option>
             ))}
           </CustomInput>
           <Label className="ml-2">
-            Page {pageIndex + 1} to {pageOptions.length}
+            Página {pageIndex + 1} al {pageOptions.length}
           </Label>
         </FormGroup>
       </div>
