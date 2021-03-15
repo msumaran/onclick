@@ -42,13 +42,19 @@ const Header = (props) => {
         </NavItem>
       </Nav>
       <Nav className="ml-auto" navbar>
-        <NavItem className="d-md-down-none">
-          <NavLink to="#" className="nav-link">
-            {props.user.name}
-          </NavLink>
-        </NavItem>
         <UncontrolledDropdown nav direction="down">
-          <DropdownToggle nav>
+          <DropdownToggle nav
+            style={{
+              display: 'flex',
+            }}
+          >
+            <span style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}>
+              {props.user.name}
+            </span>
             <span className="img-avatar"
               style={{
                 border: '1px solid #333',

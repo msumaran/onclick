@@ -37,7 +37,7 @@ const MyContacts = () => {
                 <Col xs={12}>
                     <Card>
                         <CardHeader>
-                            <strong>Mis contactos</strong>
+                            <strong>Gestor de Leads</strong>
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
