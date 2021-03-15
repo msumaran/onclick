@@ -26,13 +26,13 @@ const Navigation = (permissions) => {
       name: 'Mis contactos',
       url: '/my-contacts',
       icon: 'icon-speedometer',
-      nameMachine: 'contact'
+      nameMachine: 'my_contacts'
     },
     {
       name: 'Mis pagos',
       url: '/my-payments',
       icon: 'icon-speedometer',
-      nameMachine: 'user_payments'
+      nameMachine: 'my_payments'
     },
     {
       name: 'Mi landing',

@@ -58,6 +58,15 @@ const MyContacts = () => {
                                             {
                                                 Header: 'Landing',
                                                 accessor: 'origin',
+                                                Cell: ({ cell: { value } }) => (
+                                                    <>
+                                                        {value}
+                                                        &nbsp;
+                                                        <a href={value} target="_blank">
+                                                            <i className="icons icon-link"></i>
+                                                        </a>
+                                                    </>
+                                                )
                                             },
                                             {
                                                 Header: 'Fecha de registro',
