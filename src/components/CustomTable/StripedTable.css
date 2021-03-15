@@ -1,0 +1,13 @@
+
+.table-filter-input {
+    border-color: #c6c8ca;
+}
+
+.table-filter-input:focus {
+    border-color: #c6c8ca;
+    box-shadow: none;
+}
+
+.table-filter-btn {
+    border-color: #c6c8ca;
+}

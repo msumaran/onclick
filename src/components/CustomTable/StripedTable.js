@@ -12,6 +12,8 @@ import {
   Label
 } from 'reactstrap'
 
+import './StripedTable.css'
+
 const propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,

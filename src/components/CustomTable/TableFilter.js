@@ -17,6 +17,7 @@ const TableFilter = (props) => {
         <FormGroup>
           <InputGroup>
             <Input
+                className="table-filter-input"
               value={props.value}
               onChange={(e) => {
                 props.onChange(e.target.value || undefined) // Set undefined to remove the filter entirely
@@ -24,7 +25,7 @@ const TableFilter = (props) => {
               placeholder={props.placeholder}
             />
             <InputGroupAddon addonType="append">
-              <InputGroupText>
+              <InputGroupText className="table-filter-btn">
                 <i className="icon-magnifier"></i>
               </InputGroupText>
             </InputGroupAddon>
