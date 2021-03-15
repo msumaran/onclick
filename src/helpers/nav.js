@@ -23,7 +23,7 @@ const Navigation = (permissions) => {
     },
 
     {
-      name: 'Mis contactos',
+      name: 'Gestor de Leads',
       url: '/my-contacts',
       icon: 'icon-speedometer',
       nameMachine: 'my_contacts'
