@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
+
+import TableFilter from './TableFilter'
+
 import {
   Table,
   Button,
   CustomInput,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   FormGroup,
   Label
 } from 'reactstrap'
@@ -26,32 +25,8 @@ const defaultProps = {
   defaultSorted: []
 }
 
-// Define a default UI for filtering
-const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
-  return (
-    <div className="rt-filter">
-      <FormGroup>
-        <InputGroup>
-          <Input
-            value={globalFilter || ''}
-            onChange={(e) => {
-              setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-            }}
-            placeholder="Buscar..."
-          />
-          <InputGroupAddon addonType="append">
-            <InputGroupText>
-              <i className="icon-magnifier"></i>
-            </InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-      </FormGroup>
-    </div>
-  )
-}
-
-// Our table component
 const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }) => {
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -83,7 +58,11 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
   )
   return (
     <React.Fragment>
-      <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+      <TableFilter
+        value={globalFilter}
+        placeholder="Buscar..."
+        onChange={setGlobalFilter}
+      />
       <Table striped hover responsive {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
