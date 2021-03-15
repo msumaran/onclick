@@ -40,6 +40,12 @@ const Navigation = (permissions) => {
       icon: 'icon-speedometer',
       nameMachine: 'landing'
     },
+    {
+      name: 'Mi kanban',
+      url: '/my-kanban',
+      icon: 'icon-speedometer',
+      nameMachine: 'landing'
+    },
 
     {
       name: 'Seguridad',
