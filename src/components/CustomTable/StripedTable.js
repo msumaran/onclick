@@ -4,28 +4,9 @@ import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table
 
 import TableFilter from './TableFilter'
 
-import {
-  Table,
-  Button,
-  CustomInput,
-  FormGroup,
-  Label
-} from 'reactstrap'
+import { Table, Button, CustomInput, FormGroup, Label } from 'reactstrap'
 
 import './StripedTable.css'
-
-const propTypes = {
-  columns: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
-  loading: PropTypes.bool,
-  defaultPageSize: PropTypes.number,
-  defaultSorted: PropTypes.array
-}
-
-const defaultProps = {
-  defaultPageSize: 10,
-  defaultSorted: []
-}
 
 const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }) => {
 
@@ -45,19 +26,15 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
     setPageSize,
     setGlobalFilter,
     state: { pageIndex, pageSize, globalFilter }
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: {
-        pageSize: defaultPageSize,
-        sortBy: defaultSorted
-      }
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  )
+  } = useTable({
+    columns,
+    data,
+    initialState: {
+      pageSize: defaultPageSize,
+      sortBy: defaultSorted
+    }
+  }, useGlobalFilter, useSortBy, usePagination)
+
   return (
     <React.Fragment>
       <TableFilter
@@ -182,7 +159,17 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
   )
 }
 
-StripedTable.propTypes = propTypes
-StripedTable.defaultProps = defaultProps
+StripedTable.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+  defaultPageSize: PropTypes.number,
+  defaultSorted: PropTypes.array
+}
+
+StripedTable.defaultProps = {
+  defaultPageSize: 10,
+  defaultSorted: []
+}
 
 export { StripedTable }
