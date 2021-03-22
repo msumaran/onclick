@@ -139,7 +139,7 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, 
               setPageSize(Number(e.target.value))
             }}
           >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {[100, 200, 300, 400, 500].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
                 Mostrar {pageSize}
               </option>
