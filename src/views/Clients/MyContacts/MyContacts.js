@@ -21,6 +21,7 @@ const MyContacts = () => {
 
     const contacts = useSelector(state => state.myContactsReducer.contacts)
     const contactsLoaded = useSelector(state => state.myContactsReducer.loaded)
+    const contactsReloading = useSelector(state => state.myContactsReducer.reloading)
 
     useEffect(() => {
 
@@ -81,6 +82,25 @@ const MyContacts = () => {
                                                 desc: true
                                             }
                                         ]}
+                                        options={{
+                                            toolbar: {
+                                                leftButtons: [
+                                                    (
+                                                        <button className="btn btn-custom-default" onClick={() => dispatch(myContactsActions.findAll(true))}>
+                                                            {contactsReloading ? (
+                                                                <>
+                                                                    <i className="icon-refresh"></i> Actualizando...
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <i className="icon-refresh"></i> Actualizar
+                                                                </>
+                                                            )}
+                                                        </button>
+                                                    )
+                                                ]
+                                            }
+                                        }}
                                     />
                                 )}
                             </div>

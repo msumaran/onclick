@@ -6,9 +6,17 @@ import { Log } from 'helpers/DebugHelper'
 
 import api from 'services/myContactsApi'
 
-export const findAll = () => {
+
+export const findAll = (reload = false) => {
 
     return async (dispatch) => {
+
+        if (reload) {
+
+            dispatch({
+                type: 'MY_CONTACTS_RELOAD_ALL',
+            })
+        }
 
         try {
 
