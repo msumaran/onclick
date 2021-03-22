@@ -87,6 +87,7 @@ const MyContacts = () => {
                                                 refreshButton: {
                                                     enabled: true,
                                                     refreshing: contactsReloading,
+                                                    autoDispatchInSeconds: 60,
                                                     dispatch: () => dispatch(myContactsActions.findAll(true))
                                                 },
                                             }
