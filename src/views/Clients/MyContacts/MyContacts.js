@@ -84,21 +84,11 @@ const MyContacts = () => {
                                         ]}
                                         options={{
                                             toolbar: {
-                                                leftButtons: [
-                                                    (
-                                                        <button className="btn btn-custom-default" onClick={() => dispatch(myContactsActions.findAll(true))}>
-                                                            {contactsReloading ? (
-                                                                <>
-                                                                    <i className="icon-refresh"></i> Actualizando...
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <i className="icon-refresh"></i> Actualizar
-                                                                </>
-                                                            )}
-                                                        </button>
-                                                    )
-                                                ]
+                                                refreshButton: {
+                                                    enabled: true,
+                                                    refreshing: contactsReloading,
+                                                    dispatch: () => dispatch(myContactsActions.findAll(true))
+                                                },
                                             }
                                         }}
                                     />

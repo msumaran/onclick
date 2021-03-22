@@ -6,9 +6,24 @@ import TableFilter from './TableFilter'
 
 const TableToolbar = (props) => {
 
+    const refreshButton = props.options.refreshButton
+
     return (
         <div className="table-toolbar">
             <div className="table-toolbar-left">
+                {!refreshButton ? null : (
+                    <button className="btn btn-custom-default" onClick={() => refreshButton.dispatch()}>
+                        {refreshButton.refreshing ? (
+                            <>
+                                <i className="icon-refresh"></i> Actualizando...
+                            </>
+                        ) : (
+                            <>
+                                <i className="icon-refresh"></i> Actualizar
+                            </>
+                        )}
+                    </button>
+                )}
                 {!props.options.leftButtons ? null : (
                     <>
                         {React.Children.map(props.options.leftButtons, (btn) => (

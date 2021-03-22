@@ -12,6 +12,9 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, 
 
   const defaultOptions = {
     toolbar: {
+      refreshButton: {
+        enabled: false,
+      },
       leftButtons: [],
       rightButtons: [],
     }
