@@ -11,3 +11,21 @@
 .table-filter-btn {
     border-color: #c6c8ca;
 }
+
+.table-toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-toolbar-left {
+    flex: 1;
+}
+.table-toolbar-right {
+    align-self: flex-end;
+}
+
+.btn-custom-default {
+    background-color: #fff;
+    border: 1px solid #c6c8ca;
+    color: #5c6873;
+}

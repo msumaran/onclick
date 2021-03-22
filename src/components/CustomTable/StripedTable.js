@@ -2,13 +2,22 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
 
-import TableFilter from './TableFilter'
+import TableToolbar from './TableToolbar'
 
 import { Table, Button, CustomInput, FormGroup, Label } from 'reactstrap'
 
 import './StripedTable.css'
 
-const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }) => {
+const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, options = {} }) => {
+
+  const defaultOptions = {
+    toolbar: {
+      leftButtons: [],
+      rightButtons: [],
+    }
+  }
+
+  const _options = Object.assign(defaultOptions, options)
 
   const {
     getTableProps,
@@ -37,10 +46,9 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
 
   return (
     <React.Fragment>
-      <TableFilter
-        value={globalFilter}
-        placeholder="Buscar..."
-        onChange={setGlobalFilter}
+      <TableToolbar
+        options={_options.toolbar}
+        onFilter={setGlobalFilter}
       />
       <Table striped hover responsive {...getTableProps()}>
         <thead>
@@ -67,7 +75,13 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {!loading ? (
+          {loading ? (
+            <tr>
+              <td align="center" colSpan="1000">
+                Cargando...
+              </td>
+            </tr>
+          ) : (
             data.length > 0 ? (
               page.map((row) => {
                 prepareRow(row)
@@ -86,12 +100,6 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
                 </td>
               </tr>
             )
-          ) : (
-            <tr>
-              <td align="center" colSpan="1000">
-                Cargando...
-              </td>
-            </tr>
           )}
         </tbody>
         <tfoot>
