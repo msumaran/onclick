@@ -35,7 +35,7 @@ const Navigation = (permissions) => {
       nameMachine: 'my_payments'
     },
     {
-      name: 'Mi landing',
+      name: 'Editor de landing',
       url: '/my-landing',
       icon: 'icon-speedometer',
       nameMachine: 'landing'
