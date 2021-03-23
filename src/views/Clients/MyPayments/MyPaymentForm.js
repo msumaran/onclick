@@ -35,11 +35,11 @@ const MyPaymentForm = (props) => {
     }
 
     const validationSchema = yup.object().shape({
-        cardname: yup.string().required('Field required'),
-        cardnumber: yup.string().required('Field required').length(19, 'Debe de tener 16 digitos.'),
-        carddate: yup.string().required('Field required').length(7, 'Debe de tener 6 digitos.'),
-        cardcvv: yup.string().required('Field required'),
-        pack_id: yup.string().required('Field required'),
+        cardname: yup.string().required('Este dato es necesario'),
+        cardnumber: yup.string().required('Este dato es necesario').length(19, 'Debe de tener 16 digitos.'),
+        carddate: yup.string().required('Este dato es necesario').length(7, 'Debe de tener 6 digitos.'),
+        cardcvv: yup.string().required('Este dato es necesario'),
+        pack_id: yup.string().required('Este dato es necesario'),
     })
 
     return (
@@ -70,7 +70,7 @@ const MyPaymentForm = (props) => {
                             {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
 
                             <FormGroup>
-                                <Label>Nombre en tarjeta</Label>
+                                <Label>Titular de la tarjeta</Label>
                                 <Input
                                     type="text"
                                     name="cardname"
@@ -137,7 +137,7 @@ const MyPaymentForm = (props) => {
                                         onChange={formik.handleChange}
                                         invalid={formik.errors.pack_id ? true : false}
                                     >
-                                        <option disabled label="Select..." />
+                                        <option disabled label="Seleccione" />
                                         {props.packs.map((pack, i) => (
                                             <option key={i} value={pack.id} label={pack.name} />
                                         ))}
