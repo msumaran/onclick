@@ -64,7 +64,7 @@ const TableToolbar = (props) => {
     return (
         <div className="table-toolbar">
             <div className="table-toolbar-left">
-                {!refreshButton ? null : (
+                {!refreshButton.enabled ? null : (
                     <button className="btn btn-custom-default"
                         onClick={() => runDispatch()}
                         disabled={refreshButton.refreshing}
