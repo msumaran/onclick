@@ -86,7 +86,7 @@ const MyLanding = () => {
 
     return (
         <div className="animated fadeIn">
-            <Row>
+            {/* <Row>
                 <Col xs={12}>
                     <Card>
                         <CardBody>
@@ -102,7 +102,7 @@ const MyLanding = () => {
                         </CardBody>
                     </Card>
                 </Col>
-            </Row>
+            </Row> */}
             {!landingLoaded ? <Preloader /> : (
                 <HtmlEditor
                     ref={editor_ref}
