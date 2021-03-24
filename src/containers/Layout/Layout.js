@@ -119,11 +119,6 @@ const Layout = (props) => {
             </main>
           </div>
 
-          <AppFooter>
-            <Suspense fallback={loading()}>
-              <Footer />
-            </Suspense>
-          </AppFooter>
           <ToastContainer />
         </>
       )}

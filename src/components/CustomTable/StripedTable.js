@@ -51,6 +51,7 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, 
     <React.Fragment>
       <TableToolbar
         options={_options.toolbar}
+        filterCriteria={globalFilter}
         onFilter={setGlobalFilter}
       />
       <Table striped hover responsive {...getTableProps()}>

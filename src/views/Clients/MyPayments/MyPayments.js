@@ -16,6 +16,11 @@ import MyPaymentForm from './MyPaymentForm'
 
 const MyPayments = () => {
 
+    moment.locale('es', {
+        months: 'Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Setiembre, Octubre, Noviembre, Diciembre'.split(', '),
+        weekdays: 'Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado'.split(', '),
+    })
+
     const dispatch = useDispatch()
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
@@ -39,12 +44,12 @@ const MyPayments = () => {
         {
             Header: 'Inicia',
             accessor: 'startAt',
-            Cell: ({ cell: { value } }) => moment(value).format('LLL')
+            Cell: ({ cell: { value } }) => moment(value).format('DD/MM/YYYY H:mm a')
         },
         {
             Header: 'Termina',
             accessor: 'endAt',
-            Cell: ({ cell: { value } }) => moment(value).format('LLL')
+            Cell: ({ cell: { value } }) => moment(value).format('DD/MM/YYYY H:mm a')
         }
     ]
 
