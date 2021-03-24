@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Button, Card, CardBody, Col, Row } from 'reactstrap'
+import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 
 import Preloader from '../../../components/Preloader/Preloader'
 
@@ -26,6 +26,7 @@ const MyLanding = () => {
     const landingSaveStatus = useSelector((state) => state.landingReducer.saveStatus)
 
     const [ state, setState ] = useState({
+        activeTab: 'editor',
         design: sample,
         designLoaded: false,
     })
@@ -85,7 +86,7 @@ const MyLanding = () => {
     }
 
     return (
-        <div className="animated fadeIn">
+        <div className="module-editor animated fadeIn">
             {/* <Row>
                 <Col xs={12}>
                     <Card>
@@ -104,65 +105,157 @@ const MyLanding = () => {
                 </Col>
             </Row> */}
             {!landingLoaded ? <Preloader /> : (
-                <HtmlEditor
-                    ref={editor_ref}
-                    design={state.design}
-                    onLoad={() => onLoadEditor()}
-                    options={{
-                        locale: 'es-ES',
-                        tools: {
-                            form: {
-                                usageLimit: 1,
-                                properties: {
-                                    buttonText: 'Enviar',
-                                    fields: {
-                                        editor: {
-                                            data: {
-                                                allowCustomUrl: false,
-                                                allowAddNewField: false,
-                                                defaultFields: [
-                                                    {name: "fullname", label: "Nombres y apellidos", type: "text"},
-                                                    {name: "email", label: "Correo electrónico", type: "email"}
-                                                ],
-                                            }
-                                        },
-                                        value: [
-                                            {
-                                                name: 'fullname',
-                                                type: 'text',
-                                                label: 'Nombres y apellidos',
-                                                placeholder_text: 'Nombres y apellidos',
-                                                show_label: true,
-                                                required: true,
-                                            },
-                                            {
-                                                name: 'email',
-                                                type: 'email',
-                                                label: 'Correo electrónico',
-                                                placeholder_text: 'Correo electrónico',
-                                                show_label: true,
-                                                required: true,
-                                            },
-                                        ]
-                                    },
-                                    action: {
-                                        editor: {
-                                            data: {
-                                                actions: [
-                                                    {
-                                                        label: 'Marketing',
-                                                        method: 'POST',
-                                                        url: '',
+                <>
+                    <Nav tabs>
+                        <NavItem>
+                            <NavLink
+                                className={state.activeTab === 'editor' ? 'active' : ''}
+                                onClick={() => setState({ ...state, activeTab: 'editor'})}
+                            >
+                                Editor
+                            </NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink
+                                className={state.activeTab === 'seo' ? 'active' : ''}
+                                onClick={() => setState({ ...state, activeTab: 'seo'})}
+                            >
+                                SEO
+                            </NavLink>
+                        </NavItem>
+                    </Nav>
+                    <TabContent activeTab={state.activeTab}>
+                        <TabPane tabId='editor' className="tab-pane-editor">
+                            <HtmlEditor
+                                ref={editor_ref}
+                                design={state.design}
+                                onLoad={() => onLoadEditor()}
+                                style={{
+                                    border: '1px solid #c8ced3'
+                                }}
+                                options={{
+                                    locale: 'es-ES',
+                                    tools: {
+                                        form: {
+                                            usageLimit: 1,
+                                            properties: {
+                                                buttonText: 'Enviar',
+                                                fields: {
+                                                    editor: {
+                                                        data: {
+                                                            allowCustomUrl: false,
+                                                            allowAddNewField: false,
+                                                            defaultFields: [
+                                                                {name: "fullname", label: "Nombres y apellidos", type: "text"},
+                                                                {name: "email", label: "Correo electrónico", type: "email"}
+                                                            ],
+                                                        }
+                                                    },
+                                                    value: [
+                                                        {
+                                                            name: 'fullname',
+                                                            type: 'text',
+                                                            label: 'Nombres y apellidos',
+                                                            placeholder_text: 'Nombres y apellidos',
+                                                            show_label: true,
+                                                            required: true,
+                                                        },
+                                                        {
+                                                            name: 'email',
+                                                            type: 'email',
+                                                            label: 'Correo electrónico',
+                                                            placeholder_text: 'Correo electrónico',
+                                                            show_label: true,
+                                                            required: true,
+                                                        },
+                                                    ]
+                                                },
+                                                action: {
+                                                    editor: {
+                                                        data: {
+                                                            actions: [
+                                                                {
+                                                                    label: 'Marketing',
+                                                                    method: 'POST',
+                                                                    url: '',
+                                                                }
+                                                            ]
+                                                        }
                                                     }
-                                                ]
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            }
-                        }
-                    }}
-                />
+                                }}
+                            />
+                        </TabPane>
+                        <TabPane tabId='seo'>
+                            <form>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        Título:
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        Meta description:
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <textarea rows="4" className="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        og:title
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        og:description
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <textarea rows="4" className="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        og:type
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        og:url
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                        og:site_name
+                                    </label>
+                                    <div className="col-sm-10">
+                                        <input type="text" className="form-control" />
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <div className="offset-sm-2 col-sm-10">
+                                        <button className="btn btn-primary">Guardar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </TabPane>
+                    </TabContent>
+                </>
             )}
         </div>
     )

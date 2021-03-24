@@ -59,12 +59,15 @@ class HtmlEditor extends React.Component {
 
     render() {
 
+        const style = this.props.style || {}
+
         return (
             <div
                 style={{
+                    ...style,
                     display: 'flex',
                     flex: 1,
-                    minHeight: 500,
+                    height: '100%',
                 }}
             >
                 <div id={this.editorId} style={{ flex: 1}} />
