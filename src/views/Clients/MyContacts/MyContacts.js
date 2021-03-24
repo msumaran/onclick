@@ -49,12 +49,20 @@ const MyContacts = () => {
                                     <StripedTable
                                         columns={[
                                             {
-                                                Header: 'Nombres y apellidos',
-                                                accessor: 'fullname'
+                                                Header: 'Nombres',
+                                                accessor: 'name'
+                                            },
+                                            {
+                                                Header: 'Apellidos',
+                                                accessor: 'lastname'
                                             },
                                             {
                                                 Header: 'Email',
                                                 accessor: 'email'
+                                            },
+                                            {
+                                                Header: 'Estado',
+                                                accessor: 'status'
                                             },
                                             {
                                                 Header: 'Landing',
