@@ -39,7 +39,17 @@ class HtmlEditor extends React.Component {
             //     colorPicker: {
             //       presets: ['#D9E3F0']
             //     }
-            // }
+            // },
+            fonts: {
+                showDefaultFonts: true,
+                customFonts: [
+                    {
+                        label: "Train One",
+                        value: "'Train One',cursive",
+                        url: "https://fonts.googleapis.com/css2?family=Train+One"
+                      }
+                ]
+              },
         })
 
         this.editor.loadDesign(props.design)
