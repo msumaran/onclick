@@ -110,6 +110,12 @@ const MyLanding = () => {
                     onLoad={() => onLoadEditor()}
                     options={{
                         locale: 'es-ES',
+                        // translations: {
+                        //     'es-ES': {
+                        //         "content_tools.button": "El botón",
+                        //         "option_groups.responsive_design.title": "Ver diseño adaptativo",
+                        //     }
+                        // },
                         tools: {
                             form: {
                                 usageLimit: 1,
@@ -157,7 +163,7 @@ const MyLanding = () => {
                                                 ]
                                             }
                                         }
-                                    }
+                                    },
                                 }
                             }
                         }

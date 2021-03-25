@@ -35,6 +35,11 @@ class HtmlEditor extends React.Component {
             id: this.editorId,
             displayMode,
             ...options,
+            // features: {
+            //     colorPicker: {
+            //       presets: ['#D9E3F0']
+            //     }
+            // }
         })
 
         this.editor.loadDesign(props.design)
