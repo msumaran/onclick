@@ -11,6 +11,12 @@
         height: calc((100% - 46px) - 1.5rem);
         padding: 0 15px;
 
+        &.no-breadcrumb {
+            height: 100%;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
         .module-editor {
             height: 100%;
 
@@ -20,6 +26,20 @@
 
             .tab-pane {
                 height: 100%;
+            }
+
+            .tab-pane-toolbar {
+                margin-bottom: 8px;
+                margin-top: -8px;
+            }
+
+            .tab-pane-content {
+                height: 100%;
+
+                &.less-toolbar {
+
+                    height: calc(100% - 35px)
+                }
             }
         }
     }

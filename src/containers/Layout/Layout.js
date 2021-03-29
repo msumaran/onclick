@@ -91,8 +91,8 @@ const Layout = (props) => {
               <AppSidebarMinimizer />
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb appRoutes={routes} router={router} />
-              <Container fluid>
+              <AppBreadcrumb className="main-breadcrumb" appRoutes={routes} router={router} />
+              <Container fluid className="main-container">
                 <Suspense fallback={loading()}>
                   <Switch>
                     {routes.map((route, idx) => {

@@ -21,12 +21,9 @@ const getMyLanding = async () => {
     }
 }
 
-const saveMyLanding = async (code, html) => {
+const saveMyLanding = async (data, publish = false) => {
 
-    const data = {
-        code: JSON.stringify(code),
-        html
-    }
+    data.publish = publish
 
     try {
 
