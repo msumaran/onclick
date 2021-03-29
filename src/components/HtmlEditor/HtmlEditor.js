@@ -27,8 +27,16 @@ class HtmlEditor extends React.Component {
             props,
         } = this
 
+        const default_options = {
+            features: {
+                preview: false,
+                undoRedo: false,
+
+            }
+        }
+
         const displayMode = props.displayMode || 'web'
-        const options = Object.assign({}, props.options)
+        const options = Object.assign(default_options, props.options)
         const onLoad = props.onLoad
 
         this.editor = window.unlayer.createEditor({
@@ -74,12 +82,16 @@ class HtmlEditor extends React.Component {
 
     render() {
 
+        const style = this.props.style || {}
+
         return (
             <div
                 style={{
+                    ...style,
                     display: 'flex',
                     flex: 1,
-                    minHeight: 500,
+                    height: '100%',
+                    // minHeight: 800,
                 }}
             >
                 <div id={this.editorId} style={{ flex: 1}} />
