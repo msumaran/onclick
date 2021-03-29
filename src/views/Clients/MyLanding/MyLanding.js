@@ -192,6 +192,12 @@ const MyLanding = () => {
                                     }}
                                     options={{
                                         locale: 'es-ES',
+                                        translations: {
+                                            'es-ES': {
+                                                "modals.delete.confirmation": "¿Estás seguro de que quieres eliminar esto?",
+                                                "editor.font_family.label": "Familia tipográfica",
+                                            }
+                                        },
                                         tools: {
                                             form: {
                                                 usageLimit: 1,
