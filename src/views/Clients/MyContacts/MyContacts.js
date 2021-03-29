@@ -37,10 +37,6 @@ const MyContacts = () => {
 
     const [submitting, setSubmitting] = useState(false)
 
-    const showPaymentForm = () => {
-        console.log("demo");
-    }
-
     return (
         <div className="animated fadeIn">
             <Row>
@@ -52,30 +48,7 @@ const MyContacts = () => {
                         <CardBody>
                             <div className="rt-wrapper">
                                 <div className="rt-buttons">
-                                    {!permission_helper.validate('contact_export', 'c') ? null : (
-                                        <Button
-                                            color="primary"
-                                            onClick={() =>{
-                                                setSubmitting(true)
-                                                dispatch(reportAction.make('get_contacts')).then((res) => {
-                                                    setSubmitting(false)
-                              
-                                                    if (res.path) window.open(res.path)
-                                                    else window.open(res)
-                                                })
-                                            }}
-                                        >
-                                            {submitting ? (
-                                            <>
-                                                <SpinCircle /> Procesando...
-                                            </>
-                                            ) : (
-                                            <>
-                                                <i className="icon-cloud-download"></i> Exportar
-                                            </>
-                                            )}
-                                        </Button>
-                                    )}
+                                    
                                 </div>
                                 {!permission_helper.validate('my_contacts', 'r') ? null : (
                                     <StripedTable
@@ -129,7 +102,37 @@ const MyContacts = () => {
                                                     refreshing: contactsReloading,
                                                     autoDispatchInSeconds: 60,
                                                     dispatch: () => dispatch(myContactsActions.findAll(true))
-                                                },
+                                                }, 
+                                                leftButtons:[
+                                                    (
+                                                        <>
+                                                         
+                                                            <Button
+                                                                color="primary"
+                                                                onClick={() =>{
+                                                                    setSubmitting(true)
+                                                                    dispatch(reportAction.make('get_contacts')).then((res) => {
+                                                                        setSubmitting(false)
+                                                
+                                                                        if (res.path) window.open(res.path)
+                                                                        else window.open(res)
+                                                                    })
+                                                                }}
+                                                            >
+                                                                {submitting ? (
+                                                                <>
+                                                                    <SpinCircle /> Procesando...
+                                                                </>
+                                                                ) : (
+                                                                <>
+                                                                    <i className="icon-cloud-download"></i> Exportar
+                                                                </>
+                                                                )}
+                                                            </Button>
+                                                                                                              
+                                                        </>
+                                                    )
+                                                ]
                                             }
                                         }}
                                     />
