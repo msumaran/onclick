@@ -14,6 +14,9 @@ import {
      ModalHeader,
      CustomInput,
      ModalFooter,
+     Card, 
+     CardText,  
+     CardTitle,
 } from 'reactstrap'
 
 import { Formik } from 'formik'
@@ -83,6 +86,22 @@ const MyPaymentForm = (props) => {
         }
     }
 
+    const [showPackData, setShowPackData] = useState(false);
+    const [packData, setPackData] = useState(
+        { name:"", description:"", cover:"", price:"", }
+    );
+
+    const showDataPack = (value) => {
+        if(value){
+            setShowPackData(true);
+            var data = (props.packs.filter((pack) => pack.id == value ))[0]; 
+            setPackData(data);
+        }else{
+            setShowPackData(true);
+            setPackData();
+        }
+    }
+
     return (
         <Modal
             isOpen={props.show}
@@ -137,7 +156,7 @@ const MyPaymentForm = (props) => {
                                         (e) => {
                                             showPaymentForm(e.target.value)
                                             formik.handleChange(e)
-                                       }
+                                        }
                                     } 
                                     invalid={formik.errors.cardnumber ? true : false} 
                                 >
@@ -179,7 +198,7 @@ const MyPaymentForm = (props) => {
                                 </Col>
                             </Row>
                             <FormGroup>
-                                <Label>Pack</Label>
+                                <Label>Paquete</Label>
                                 {!props.packs.length ? (
                                     <div className="form-control-plaintext animated fadeIn">
                                         <SpinCircle /> Cargando...
@@ -190,7 +209,12 @@ const MyPaymentForm = (props) => {
                                         type="select"
                                         name="pack_id"
                                         value={formik.values.pack}
-                                        onChange={formik.handleChange}
+                                        onChange={
+                                            (e) => {
+                                                showDataPack(e.target.value)
+                                                formik.handleChange(e)
+                                            }
+                                        }
                                         invalid={formik.errors.pack_id ? true : false}
                                     >
                                         <option disabled label="Seleccione" />
@@ -200,6 +224,22 @@ const MyPaymentForm = (props) => {
                                     </CustomInput>
                                 )}
                                 <FormFeedback>{formik.errors.pack_id}</FormFeedback>
+                                
+                                <br/>
+                                <br/>
+
+                                { 
+                                    showPackData && 
+                                    <Card body>
+                                        <CardTitle tag="h5">Paquete: { packData.name }</CardTitle>
+                                        <CardText>
+                                            Precio: { packData.price }
+                                            <br/>
+                                            { packData.description }
+                                        </CardText> 
+                                    </Card>
+                                }
+
                             </FormGroup>
                         </ModalBody>
                         <ModalFooter>
