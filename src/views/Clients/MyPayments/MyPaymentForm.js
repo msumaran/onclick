@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 import {
     Button,
     Row,
@@ -23,6 +23,10 @@ import { SpinCircle } from '../../../components/Spin'
 
 import InputMask from 'react-input-mask';
 
+import ccvisa from 'assets/img/cc-visa.svg';
+import ccmastercard from 'assets/img/cc-mastercard.svg';
+import ccamericanexpres from 'assets/img/cc-americanexpress.svg';
+
 const MyPaymentForm = (props) => {
 
     const initialValues = {
@@ -41,6 +45,43 @@ const MyPaymentForm = (props) => {
         cardcvv: yup.string().required('Este dato es necesario'),
         pack_id: yup.string().required('Este dato es necesario'),
     })
+
+    const [cards, setCards] = useState(
+        [
+            {id:"visa", img: ccvisa, opacity:true, status:"disabled"},
+            {id:"master", img: ccmastercard, opacity:true, status:"disabled"},
+            {id:"american", img: ccamericanexpres, opacity:true, status:"disabled"},
+        ]
+    );
+ 
+    const showPaymentForm = (value) => {
+        
+        var firstLetter = value.split("");
+
+        let cards = [
+            {id:"visa", img: ccvisa, opacity:true, status:"disabled"},
+            {id:"master", img: ccmastercard, opacity:true, status:"disabled"},
+            {id:"american", img: ccamericanexpres, opacity:true, status:"disabled"},
+        ];
+
+        switch (firstLetter[0]) {
+            case "3":
+                cards[2] = {id:"american", img: ccamericanexpres, opacity:true, status:""};
+                setCards(cards); 
+                break;
+            case "4":
+                cards[0] = {id:"visa", img: ccvisa, opacity:true, status:""};
+                setCards(cards); 
+                break;
+            case "5":
+                cards[1] = {id:"master", img: ccmastercard, opacity:true, status:""};
+                setCards(cards); 
+                break;
+            default:
+                setCards(cards); 
+                break;
+        }
+    }
 
     return (
         <Modal
@@ -90,9 +131,24 @@ const MyPaymentForm = (props) => {
                                     invalid={formik.errors.cardnumber ? true : false}
                                 /> */}
 
-                                <InputMask mask="9999-9999-9999-9999" maskChar="" alwaysShowMask="true" value={formik.values.cardnumber} onChange={formik.handleChange} invalid={formik.errors.cardnumber ? true : false} >
+                                <InputMask 
+                                    mask="9999-9999-9999-9999" maskChar="" alwaysShowMask="true" value={formik.values.cardnumber} 
+                                    onChange={
+                                        (e) => {
+                                            showPaymentForm(e.target.value)
+                                            formik.handleChange(e)
+                                       }
+                                    } 
+                                    invalid={formik.errors.cardnumber ? true : false} 
+                                >
                                     {(inputProps) => <Input {...inputProps}  type="text" name="cardnumber"  /> }
                                 </InputMask>
+                                
+                                <div className="cards">
+                                {cards.map((card, i) => {    
+                                    return ( <img className={card.status} src={card.img}  key={card.id} /> ) 
+                                })}
+                                </div>
 
                                 <FormFeedback>{formik.errors.cardnumber}</FormFeedback>
                             </FormGroup>
