@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 
 import moment from 'moment'
 
@@ -10,7 +10,10 @@ import PermissionHelper from 'helpers/PermissionHelper'
 
 import { StripedTable } from 'components/CustomTable'
 import { useEffect } from 'react'
-import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
+
+import { SpinCircle } from 'components/Spin'
+import reportAction from 'redux/actions/reportAction'
 
 const MyContacts = () => {
 
@@ -32,6 +35,12 @@ const MyContacts = () => {
 
     }, [ contactsLoaded ])
 
+    const [submitting, setSubmitting] = useState(false)
+
+    const showPaymentForm = () => {
+        console.log("demo");
+    }
+
     return (
         <div className="animated fadeIn">
             <Row>
@@ -43,7 +52,30 @@ const MyContacts = () => {
                         <CardBody>
                             <div className="rt-wrapper">
                                 <div className="rt-buttons">
-
+                                    {!permission_helper.validate('contact_export', 'c') ? null : (
+                                        <Button
+                                            color="primary"
+                                            onClick={() =>{
+                                                setSubmitting(true)
+                                                dispatch(reportAction.make('get_contacts')).then((res) => {
+                                                    setSubmitting(false)
+                              
+                                                    if (res.path) window.open(res.path)
+                                                    else window.open(res)
+                                                })
+                                            }}
+                                        >
+                                            {submitting ? (
+                                            <>
+                                                <SpinCircle /> Procesando...
+                                            </>
+                                            ) : (
+                                            <>
+                                                <i className="icon-cloud-download"></i> Exportar
+                                            </>
+                                            )}
+                                        </Button>
+                                    )}
                                 </div>
                                 {!permission_helper.validate('my_contacts', 'r') ? null : (
                                     <StripedTable
@@ -64,19 +96,19 @@ const MyContacts = () => {
                                                 Header: 'Estado',
                                                 accessor: 'status'
                                             },
-                                            {
-                                                Header: 'Landing',
-                                                accessor: 'origin',
-                                                Cell: ({ cell: { value } }) => (
-                                                    <>
-                                                        {value}
-                                                        &nbsp;
-                                                        <a href={value} target="_blank">
-                                                            <i className="icons icon-link"></i>
-                                                        </a>
-                                                    </>
-                                                )
-                                            },
+                                            // {
+                                            //     Header: 'Landing',
+                                            //     accessor: 'origin',
+                                            //     Cell: ({ cell: { value } }) => (
+                                            //         <>
+                                            //             {value}
+                                            //             &nbsp;
+                                            //             <a href={value} target="_blank">
+                                            //                 <i className="icons icon-link"></i>
+                                            //             </a>
+                                            //         </>
+                                            //     )
+                                            // },
                                             {
                                                 Header: 'Fecha de registro',
                                                 accessor: 'startAt',
