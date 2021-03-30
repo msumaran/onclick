@@ -52,6 +52,8 @@ const items = [
 
 const Dashboard = (props) => {
 
+  const session = JSON.parse(localStorage.getItem('session'))
+  let tutorialShow = session.tutorial || false;
   // const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
   // const permission_helper = new PermissionHelper(my_permissions)
@@ -60,13 +62,13 @@ const Dashboard = (props) => {
 
   const next = () => {
     if (animating) return;
-    const nextIndex = activeIndex === items.length - 1 ? 0 : activeIndex + 1;
+    const nextIndex = activeIndex === items.length - 1 ? activeIndex : activeIndex + 1;
     setActiveIndex(nextIndex);
   }
 
   const previous = () => {
     if (animating) return;
-    const nextIndex = activeIndex === 0 ? items.length - 1 : activeIndex - 1;
+    const nextIndex = activeIndex === 0 ? 0 : activeIndex - 1;
     setActiveIndex(nextIndex);
   }
 
@@ -75,11 +77,15 @@ const Dashboard = (props) => {
     setActiveIndex(newIndex);
   }
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(session.tutorial);
 
   const toggle = () => setModal(!modal);
-  const closeModal = () => setModal(!modal);
-  
+  const closeModal = () => {
+    session.tutorial = false;
+    localStorage.setItem('session', JSON.stringify(session))
+    setModal(!modal);
+  } 
+
   const slides = items.map((item) => {
     return (
       <CarouselItem
@@ -102,11 +108,12 @@ const Dashboard = (props) => {
     <div className="animated fadeIn">
       <h1>Bienvenido a OnClick.la</h1>
       <p>
-        ¿Deseas ver el uso de la plataforma nuevamente? <a type="button" onClick={toggle} >Mira el minitutorial.</a>
+        ¿Deseas ver el uso de la plataforma nuevamente? 
+        <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
       </p>
  
 
-      <Modal isOpen={modal} toggle={toggle} size="lg" backdrop="false" > 
+      <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} > 
         <ModalBody> 
           <Carousel activeIndex={activeIndex} next={next} previous={previous} className="sliderTutorial"  autoPlay={false} interval={false}  >
             <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
