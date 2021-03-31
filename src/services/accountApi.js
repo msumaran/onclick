@@ -14,7 +14,8 @@ const login = async (username, password) => {
     localStorage.setItem('session', JSON.stringify({
       name: res.data.name,
       profileId: res.data.profileId,
-      token: res.data.token
+      token: res.data.token,
+      tutorial: true,
     }))
 
     return res.data

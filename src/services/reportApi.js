@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getHeaders, handleError } from 'helpers/api'
 import { configApp } from 'helpers/config'
 
-const baseUrl = `${configApp.baseUrl}/report/inscription`
+const baseUrl = `${configApp.baseUrl}/report`
 
 const make = async (type, params = false) => {
   try {
