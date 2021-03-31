@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useEffect } from 'react'
+import React, { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import * as router from 'react-router-dom'
@@ -26,13 +26,13 @@ import { Navigation } from 'helpers/nav'
 import routes from 'helpers/routes'
 
 import Preloader from '../../components/Preloader/Preloader'
+import Feedback from 'components/Feedback/Feedback'
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading content...</div>
 
 const Header = lazy(() => import('./Header'))
 const Footer = lazy(() => import('./Footer'))
 const ChangePassword = lazy(() => import('../../views/Security/ChangePassword'))
-
 
 const Layout = (props) => {
 
@@ -118,6 +118,9 @@ const Layout = (props) => {
               </Container>
             </main>
           </div>
+          <Footer>
+            <Feedback dispatch={(data) => console.log('dispatched', data)} />
+          </Footer>
 
           <ToastContainer />
         </>

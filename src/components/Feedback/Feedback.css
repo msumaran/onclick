@@ -1,0 +1,22 @@
+
+.app-feedback {
+    position: relative;
+}
+
+.app-feedback .feedback-window {
+    background-color: #f1efef;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 4px 0px #b6b6b6;
+    padding: 10px;
+    position: absolute;
+    bottom: 34px;
+    right: 0;
+    width: 420px;
+}
+
+.app-feedback .feedback-close {
+    border: 0 none;
+    float: right;
+    outline: none;
+}
+

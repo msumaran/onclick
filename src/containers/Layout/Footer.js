@@ -1,22 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-const propTypes = {
-  children: PropTypes.node
-}
-
-const defaultProps = {}
-
-const Footer = () => {
+const Footer = (props) => {
   return (
-    <React.Fragment>
+    <div className="app-footer">
       <span>&copy; 2021 OnClick.</span>
-      <span className="ml-auto">Version 1.0.0</span>
-    </React.Fragment>
+      <div className="ml-auto">
+        {React.Children.map(props.children, (child) => (
+          <>
+            {child}
+          </>
+        ))}
+      </div>
+    </div>
   )
 }
-
-Footer.propTypes = propTypes
-Footer.defaultProps = defaultProps
 
 export default Footer
