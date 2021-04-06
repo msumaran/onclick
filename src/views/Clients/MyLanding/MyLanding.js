@@ -13,8 +13,6 @@ import PermissionHelper from 'helpers/PermissionHelper'
 
 import HtmlEditor from '../../../components/HtmlEditor/HtmlEditor'
 
-import sample from './sample.json'
-
 const MyLanding = () => {
 
     const dispatch = useDispatch()
@@ -23,31 +21,20 @@ const MyLanding = () => {
     const permission_helper = new PermissionHelper(my_permissions)
 
     const landingCode = useSelector((state) => state.landingReducer.code)
-    const landingTitle = useSelector((state) => state.landingReducer.title)
-    const landingDescription = useSelector((state) => state.landingReducer.description)
-    const landingOgTitle = useSelector((state) => state.landingReducer.og_title)
-    const landingOgDescription = useSelector((state) => state.landingReducer.og_description)
-    const landingOgType = useSelector((state) => state.landingReducer.og_type)
-    const landingOgSiteName = useSelector((state) => state.landingReducer.og_site_name)
+    const landingSeo = useSelector((state) => state.landingReducer.seo)
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
-    const landingSaveStatus = useSelector((state) => state.landingReducer.saveStatus)
-
-    const [ edited, setEdited ] = useState(false)
+    const landingSaveDraftStatus = useSelector((state) => state.landingReducer.saveDraftStatus)
+    const landingPublishStatus = useSelector((state) => state.landingReducer.publishStatus)
 
     const [ state, setState ] = useState({
-        design: sample,
+        design: JSON.parse(landingCode),
         designLoaded: false,
     })
 
+    const [ draftModified, setDraftModified ] = useState(false)
+
     const [ activeTab, setActiveTab ] = useState('editor')
-    const [ seo, setSeo ] = useState({
-        title: landingTitle,
-        description: landingDescription,
-        og_title: landingOgTitle,
-        og_description: landingOgDescription,
-        og_type: landingOgType,
-        og_site_name: landingOgSiteName,
-    })
+    const [ seo, setSeo ] = useState(landingSeo)
 
     const editor_ref = useRef()
 
@@ -63,7 +50,7 @@ const MyLanding = () => {
             loadMyLanding()
         } else {
 
-            if (!state.designLoaded && landingCode !== '{}') {
+            if (!state.designLoaded) {
 
                 setState({
                     ...state,
@@ -72,11 +59,11 @@ const MyLanding = () => {
                 })
             }
         }
-    }, [ landingLoaded, loadMyLanding ])
+    }, [ landingCode, landingLoaded, loadMyLanding ])
 
     const getSaveDraftStatus = () => {
 
-        switch(landingSaveStatus) {
+        switch(landingSaveDraftStatus) {
             case 'saving':
                 return 'Guardando...'
             default:
@@ -84,14 +71,29 @@ const MyLanding = () => {
         }
     }
 
-    const onLoadEditor = () => {
+    const getPublishStatus = () => {
 
-        console.log('onLoad')
+        switch(landingPublishStatus) {
+            case 'publishing':
+                return 'Publicando...'
+            default:
+                return 'Publicar'
+        }
+    }
+
+    const onLoadDesign = () => {
+
+        console.log('Design loaded')
+    }
+
+    const onUpdateDesign = () => {
+
+        console.log('Design updated')
+
+        setDraftModified(true)
     }
 
     const handleSeoInputsChange = (field, value) => {
-
-        setEdited(true)
 
         setSeo({
             ...seo,
@@ -104,28 +106,38 @@ const MyLanding = () => {
         editor_ref.current.editor.showPreview(device)
     }
 
-    const checkIsModified = () => {
+    const saveDraft = () => {
 
-        
+        setDraftModified(false)
+
+        editor_ref.current.editor.exportHtml((editor_data) => {
+
+            const { design } = editor_data
+
+            const data = {
+                seo,
+                code: JSON.stringify({ body: design.body }),
+            }
+
+            dispatch(landingActions.saveDraft(data))
+        })
     }
 
-    const save = (publish = false) => {
+    const publish = () => {
+
+        setDraftModified(false)
+
         editor_ref.current.editor.exportHtml((editor_data) => {
 
             const { design, html } = editor_data
 
-            setState({
-                ...state,
-                design: design
-            })
-
             const data = {
-                title: seo.title,
+                seo,
                 code: JSON.stringify({ body: design.body }),
-                html
+                html,
             }
 
-            dispatch(landingActions.saveMyLanding(data, publish))
+            dispatch(landingActions.publish(data))
         })
     }
 
@@ -142,6 +154,10 @@ const MyLanding = () => {
 
     return (
         <>
+            <Prompt
+                when={draftModified}
+                message='¿Estás seguro de continuar sin guardar? Algunos cambios podrian perderse.'
+            />
             <div className="module-editor animated fadeIn">
                 {!landingLoaded ? <Preloader /> : (
                     <>
@@ -158,8 +174,6 @@ const MyLanding = () => {
                                 <NavLink
                                     className={activeTab === 'seo' ? 'active' : ''}
                                     onClick={() => {
-
-                                        // save()
 
                                         setActiveTab('seo')
                                     }}
@@ -180,90 +194,93 @@ const MyLanding = () => {
                                     </div>
                                     <div className="btn-group mr-1">
                                         <button className="btn btn-secondary"
-                                            onClick={() => save()}
+                                            onClick={() => saveDraft()}
                                         >
-                                            <i className="icon-disc"></i> {getSaveDraftStatus()}
+                                            <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
                                         </button>
                                     </div>
                                     <div className="btn-group">
                                         <button className="btn btn-primary"
-                                            onClick={() => save(true)}
+                                            onClick={() => publish()}
                                         >
-                                            <i className="icon-globe"></i> Publicar
+                                            <i className="icon-globe"></i> {getPublishStatus()}
                                         </button>
                                     </div>
                                 </div>
                                 <div className="tab-pane-content less-toolbar">
-                                    <HtmlEditor
-                                        ref={editor_ref}
-                                        design={state.design}
-                                        onLoad={() => onLoadEditor()}
-                                        style={{
-                                            border: '1px solid #c8ced3'
-                                        }}
-                                        options={{
-                                            locale: 'es-ES',
-                                            translations: {
-                                                'es-ES': {
-                                                    "modals.delete.confirmation": "¿Estás seguro de que quieres eliminar esto?",
-                                                    "editor.font_family.label": "Familia tipográfica",
-                                                }
-                                            },
-                                            tools: {
-                                                form: {
-                                                    usageLimit: 1,
-                                                    properties: {
-                                                        buttonText: 'Enviar',
-                                                        fields: {
-                                                            editor: {
-                                                                data: {
-                                                                    allowCustomUrl: false,
-                                                                    allowAddNewField: false,
-                                                                    defaultFields: [
-                                                                        {name: "fullname", label: "Nombres y apellidos", type: "text"},
-                                                                        {name: "email", label: "Correo electrónico", type: "email"}
-                                                                    ],
-                                                                }
+                                    {!state.designLoaded ? null : (
+                                        <HtmlEditor
+                                            ref={editor_ref}
+                                            design={state.design}
+                                            onDesignLoaded={onLoadDesign}
+                                            onDesignUpdated={onUpdateDesign}
+                                            style={{
+                                                border: '1px solid #c8ced3'
+                                            }}
+                                            options={{
+                                                locale: 'es-ES',
+                                                translations: {
+                                                    'es-ES': {
+                                                        "modals.delete.confirmation": "¿Estás seguro de que quieres eliminar esto?",
+                                                        "editor.font_family.label": "Familia tipográfica",
+                                                    }
+                                                },
+                                                tools: {
+                                                    form: {
+                                                        usageLimit: 1,
+                                                        properties: {
+                                                            buttonText: 'Enviar',
+                                                            fields: {
+                                                                editor: {
+                                                                    data: {
+                                                                        allowCustomUrl: false,
+                                                                        allowAddNewField: false,
+                                                                        defaultFields: [
+                                                                            {name: "fullname", label: "Nombres y apellidos", type: "text"},
+                                                                            {name: "email", label: "Correo electrónico", type: "email"}
+                                                                        ],
+                                                                    }
+                                                                },
+                                                                value: [
+                                                                    {
+                                                                        name: 'fullname',
+                                                                        type: 'text',
+                                                                        label: 'Nombres y apellidos',
+                                                                        placeholder_text: 'Nombres y apellidos',
+                                                                        show_label: true,
+                                                                        required: true,
+                                                                    },
+                                                                    {
+                                                                        name: 'email',
+                                                                        type: 'email',
+                                                                        label: 'Correo electrónico',
+                                                                        placeholder_text: 'Correo electrónico',
+                                                                        show_label: true,
+                                                                        required: true,
+                                                                    },
+                                                                ]
                                                             },
-                                                            value: [
-                                                                {
-                                                                    name: 'fullname',
-                                                                    type: 'text',
-                                                                    label: 'Nombres y apellidos',
-                                                                    placeholder_text: 'Nombres y apellidos',
-                                                                    show_label: true,
-                                                                    required: true,
-                                                                },
-                                                                {
-                                                                    name: 'email',
-                                                                    type: 'email',
-                                                                    label: 'Correo electrónico',
-                                                                    placeholder_text: 'Correo electrónico',
-                                                                    show_label: true,
-                                                                    required: true,
-                                                                },
-                                                            ]
-                                                        },
-                                                        action: {
-                                                            editor: {
-                                                                data: {
-                                                                    allowCustomUrl: false,
-                                                                    actions: [
-                                                                        {
-                                                                            label: 'Marketing',
-                                                                            method: 'POST',
-                                                                            target: '_blank',
-                                                                            url: '',
-                                                                        }
-                                                                    ]
+                                                            action: {
+                                                                editor: {
+                                                                    data: {
+                                                                        allowCustomUrl: false,
+                                                                        actions: [
+                                                                            {
+                                                                                label: 'Marketing',
+                                                                                method: 'POST',
+                                                                                target: '_blank',
+                                                                                url: '',
+                                                                            }
+                                                                        ]
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
-                                            }
-                                        }}
-                                    />
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             </TabPane>
                             <TabPane tabId='seo'>
@@ -284,7 +301,10 @@ const MyLanding = () => {
                                             Meta description:
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea rows="4" className="form-control"></textarea>
+                                            <textarea rows="4" className="form-control"
+                                                value={seo.description}
+                                                onChange={(e) => handleSeoInputsChange('description', e.target.value)}
+                                            ></textarea>
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -292,7 +312,10 @@ const MyLanding = () => {
                                             og:title
                                         </label>
                                         <div className="col-sm-10">
-                                            <input type="text" className="form-control" />
+                                            <input type="text" className="form-control"
+                                                value={seo.og_title}
+                                                onChange={(e) => handleSeoInputsChange('og_title', e.target.value)}
+                                            />
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -300,15 +323,10 @@ const MyLanding = () => {
                                             og:description
                                         </label>
                                         <div className="col-sm-10">
-                                            <textarea rows="4" className="form-control"></textarea>
-                                        </div>
-                                    </div>
-                                    <div className="form-group row">
-                                        <label htmlFor="" className="col-sm-2 col-form-label text-right">
-                                            og:type
-                                        </label>
-                                        <div className="col-sm-10">
-                                            <input type="text" className="form-control" />
+                                            <textarea rows="4" className="form-control"
+                                                value={seo.og_description}
+                                                onChange={(e) => handleSeoInputsChange('og_description', e.target.value)}
+                                            > </textarea>
                                         </div>
                                     </div>
                                     <div className="form-group row">
@@ -316,22 +334,25 @@ const MyLanding = () => {
                                             og:site_name
                                         </label>
                                         <div className="col-sm-10">
-                                            <input type="text" className="form-control" />
+                                            <input type="text" className="form-control"
+                                                value={seo.og_site_name}
+                                                onChange={(e) => handleSeoInputsChange('og_site_name', e.target.value)}
+                                            />
                                         </div>
                                     </div>
-                                    <div className="form-group row">
+                                    {/* <div className="form-group row">
                                         <div className="offset-sm-2 col-sm-10">
                                             <button className="btn btn-primary"
                                                 onClick={(e) => {
                                                     e.preventDefault()
 
-                                                    save()
+                                                    saveDraft()
                                                 }}
                                             >
                                                 {getSaveDraftStatus()}
                                             </button>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </form>
                             </TabPane>
                         </TabContent>

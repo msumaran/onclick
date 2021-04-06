@@ -21,9 +21,7 @@ const getMyLanding = async () => {
     }
 }
 
-const saveMyLanding = async (data, publish = false) => {
-
-    data.publish = publish
+const saveMyLanding = async (data) => {
 
     try {
 

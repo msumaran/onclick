@@ -9,6 +9,11 @@ class HtmlEditor extends React.Component {
         super(props)
 
         this.editorId = `editor-${++lastEditorNum}`
+
+        this.state = {
+            loaded: false,
+            updated: false
+        }
     }
 
     componentDidMount() {
@@ -18,7 +23,10 @@ class HtmlEditor extends React.Component {
 
     componentDidUpdate() {
 
-        this.editor.loadDesign(this.props.design)
+        if (!this.state.loaded) {
+
+            // this.editor.loadDesign(this.props.design)
+        }
     }
 
     loadEditor() {
@@ -31,7 +39,6 @@ class HtmlEditor extends React.Component {
             features: {
                 preview: false,
                 undoRedo: false,
-
             }
         }
 
@@ -62,22 +69,15 @@ class HtmlEditor extends React.Component {
 
         this.editor.loadDesign(props.design)
 
+        this.editor.addEventListener('design:loaded', () => {
+
+            // console.log('design loaded')
+
+            this.props.onDesignLoaded()
+        })
+        this.editor.addEventListener('design:updated', this.props.onDesignUpdated)
+
         onLoad && onLoad()
-    }
-
-    loadDesign = (design) => {
-
-        this.editor.loadDesign(design);
-    }
-
-    saveDesign = (callback) => {
-
-        this.editor.saveDesign(callback);
-    };
-
-    exportHtml = (callback) => {
-
-        this.editor.exportHtml(callback);
     }
 
     render() {
