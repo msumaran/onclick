@@ -93,7 +93,7 @@ const User = () => {
       },
       {
         Header: 'Actions',
-        width: 300,
+        width: 250,
         Cell: ({ row: { original } }) => {
           const [deleting, setDeleting] = useState({ [`row_id_${original.id}`]: false })
 

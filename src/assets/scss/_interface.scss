@@ -239,16 +239,28 @@ body {
 
                 th {
                     color: #1d5cc1;
+                    font-size: 14px;
                 }
             }
 
             tbody {
 
+                td {
+                    font-size: 14px
+                }
+
                 .status-badge {
                     background-color: gray;
-                    font-size: 14px;
+                    border-radius: 3px;
                     font-weight: 700;
                     text-align: center;
+
+                    &.badge-success {
+                        background-color: #78d732;
+                    }
+                    &.badge-danger {
+                        background-color: #db143c;
+                    }
                 }
             }
 
