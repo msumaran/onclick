@@ -25,6 +25,9 @@ import './Login.css';
 import bgImage from 'assets/img/bg.png';
 import logoImage from 'assets/img/logo.svg';
 
+import iconUser from 'assets/img/icon-user.png';
+import iconPass from 'assets/img/icon-password.png';
+
 const Login = () => {
   const dispatch = useDispatch()
 
@@ -55,7 +58,7 @@ const Login = () => {
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="icon-user"></i>
+                              <img src={iconUser} className="icon-user" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
@@ -69,7 +72,7 @@ const Login = () => {
                         <InputGroup className="mb-4">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <i className="icon-lock"></i>
+                            <img src={iconPass} />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
