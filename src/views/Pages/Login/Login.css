@@ -1,0 +1,52 @@
+.login{
+    background-size: cover;
+}
+
+.login .card{
+    border:none;
+}
+
+.login h1{
+    font-size: 18px;
+}
+
+.login img{
+    max-width: 230px;
+    margin:20px auto 45px auto;
+    position: relative;
+    display: block;
+}
+
+.login .btn.btn-primary{
+    border:solid #a69617 3px;
+    background:#ffe400;
+    color:#000;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0.275rem 0.75rem;
+}
+.login .input-group-text{
+    background: none;
+    width: 50px;
+}
+.login .input-group-text img{
+    width: 28px;
+    margin: 0px auto;
+    padding:0px;
+}
+.login .input-group-text img.icon-user{
+    width: 16px;
+}
+
+.login .back-to-home{
+    color:#8a8a8a;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin-top: 15px;
+    position: relative;
+    display: block;
+}
+
+
+.icon-user{}
