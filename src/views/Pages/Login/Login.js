@@ -21,11 +21,15 @@ import { SpinCircle } from 'components/Spin'
 
 import accountAction from 'redux/actions/accountAction'
 
+import './Login.css';
+import bgImage from 'assets/img/bg.png';
+import logoImage from 'assets/img/logo.svg';
+
 const Login = () => {
   const dispatch = useDispatch()
 
   return (
-    <div className="app flex-row align-items-center">
+    <div className="app flex-row align-items-center login" style={{backgroundImage: `url(${bgImage})`}}>
       <Container>
         <Row className="justify-content-center">
           <Col md={6} lg={5}>
@@ -45,8 +49,9 @@ const Login = () => {
                   >
                     {({ values, isSubmitting, handleChange, handleSubmit }) => (
                       <Form onSubmit={handleSubmit}>
-                        <h1>Login</h1>
-                        <p className="text-muted">Sign In to you account</p>
+                        <img src={logoImage} />
+                        <h1>Ingresa con tu cuenta</h1>
+                        
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
@@ -58,7 +63,7 @@ const Login = () => {
                             name="username"
                             value={values.username}
                             onChange={handleChange}
-                            placeholder="Username"
+                            placeholder="Usuario"
                           />
                         </InputGroup>
                         <InputGroup className="mb-4">
@@ -72,20 +77,25 @@ const Login = () => {
                             name="password"
                             value={values.password}
                             onChange={handleChange}
-                            placeholder="Password"
+                            placeholder="Contraseña"
                           />
                         </InputGroup>
                         <Row>
-                          <Col xs={6}>
+                          <Col xs={12} className="text-center" >
                             <Button type="submit" color="primary" disabled={isSubmitting} className="px-4">
                               {isSubmitting ? (
                                 <Fragment>
                                   <SpinCircle /> Logging
                                 </Fragment>
                               ) : (
-                                'Login'
+                                'Ingresar'
                               )}
                             </Button>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col xs={12} className="text-center">
+                            <a href="#" className="back-to-home" >Volver a la página inicial</a>
                           </Col>
                         </Row>
                       </Form>

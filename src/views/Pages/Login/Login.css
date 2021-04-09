@@ -1,0 +1,22 @@
+.login{
+    background-size: cover;
+}
+
+.login h1{
+    font-size: 18px;
+}
+
+.login img{
+    max-width: 230px;
+    margin:15px auto;
+    position: relative;
+    display: block;
+}
+
+.login .btn.btn-primary{
+    border:solid #a69617 3px;
+    background:#ffe400;
+    color:#000;
+}
+
+.icon-user{}
