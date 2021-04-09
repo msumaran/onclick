@@ -1,10 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import * as router from 'react-router-dom'
+
 import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap'
 import PropTypes from 'prop-types'
-import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
-//
+import { AppNavbarBrand, AppSidebarToggler, AppBreadcrumb } from '@coreui/react'
+
+import routes from 'helpers/routes'
+
 import logo from 'assets/img/brand/logo.png'
+import toggler from 'assets/img/brand/navbar-toggler.png'
 import iso from 'assets/img/brand/iso.png'
 
 const propTypes = {
@@ -21,8 +26,8 @@ const Header = (props) => {
       <AppNavbarBrand
         full={{
           src: logo,
-          width: 88,
-          height: 25,
+          width: 155,
+          height: 55,
           alt: 'Logo'
         }}
         minimized={{
@@ -32,15 +37,11 @@ const Header = (props) => {
           alt: 'ISO'
         }}
       />
+
       <AppSidebarToggler className="d-md-down-none" display="lg" />
 
-      <Nav className="d-md-down-none" navbar>
-        <NavItem className="px-3">
-          <NavLink to="/dashboard" className="nav-link">
-            Dashboard
-          </NavLink>
-        </NavItem>
-      </Nav>
+      <AppBreadcrumb className="d-none d-lg-block" appRoutes={routes} router={router} />
+
       <Nav className="ml-auto" navbar>
         <UncontrolledDropdown nav direction="down">
           <DropdownToggle nav
@@ -48,7 +49,7 @@ const Header = (props) => {
               display: 'flex',
             }}
           >
-            <span style={{
+            <span className="d-none d-sm-flex" style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center'

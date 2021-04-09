@@ -81,6 +81,7 @@ const Layout = (props) => {
             <AppSidebar fixed display="lg">
               <AppSidebarHeader />
               <AppSidebarForm />
+              <div className="space-top d-none d-md-block"></div>
               <Suspense fallback={loading()}>
 
                 <AppSidebarNav navConfig={ Navigation(my_permissions) } {...props} router={router} />
@@ -91,7 +92,7 @@ const Layout = (props) => {
               <AppSidebarMinimizer />
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb className="main-breadcrumb" appRoutes={routes} router={router} />
+              <AppBreadcrumb className="main-breadcrumb d-block d-lg-none" appRoutes={routes} router={router} />
               <Container fluid className="main-container">
                 <Suspense fallback={loading()}>
                   <Switch>

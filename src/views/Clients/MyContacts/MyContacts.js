@@ -48,7 +48,7 @@ const MyContacts = () => {
                         <CardBody>
                             <div className="rt-wrapper">
                                 <div className="rt-buttons">
-                                    
+
                                 </div>
                                 {!permission_helper.validate('my_contacts', 'r') ? null : (
                                     <StripedTable
@@ -102,18 +102,19 @@ const MyContacts = () => {
                                                     refreshing: contactsReloading,
                                                     autoDispatchInSeconds: 60,
                                                     dispatch: () => dispatch(myContactsActions.findAll(true))
-                                                }, 
+                                                },
                                                 leftButtons:[
                                                     (
                                                         <>
-                                                         
+
                                                             <Button
+                                                                className="ml-1"
                                                                 color="primary"
                                                                 onClick={() =>{
                                                                     setSubmitting(true)
                                                                     dispatch(reportAction.make('get_contacts')).then((res) => {
                                                                         setSubmitting(false)
-                                                
+
                                                                         if (res.path) window.open(res.path)
                                                                         else window.open(res)
                                                                     })
@@ -129,7 +130,7 @@ const MyContacts = () => {
                                                                 </>
                                                                 )}
                                                             </Button>
-                                                                                                              
+
                                                         </>
                                                     )
                                                 ]

@@ -71,8 +71,15 @@ const User = () => {
       {
         Header: 'Status',
         accessor: 'isActive',
-        Cell: ({ cell: { value } }) =>
-          value ? <Badge color="success">Activo</Badge> : <Badge color="danger">Inactivo</Badge>
+        Cell: ({ cell: { value } }) => (
+          <>
+            {value ? (
+              <div className="status-badge badge-success">Activo</div>
+            ) : (
+              <div className="status-badge badge-danger">Inactivo</div>
+            )}
+          </>
+        )
       },
       {
         Header: 'Registro',
@@ -91,51 +98,38 @@ const User = () => {
           const [deleting, setDeleting] = useState({ [`row_id_${original.id}`]: false })
 
           return (
-            <div className="btn-group btn-group-sm">
+            <div className="">
               {permission_helper.validate('user', 'u') ? (
-                <Button
+                <button
+                  className="btn btn-primary"
                   disabled={deleting[`row_id_${original.id}`]}
-                  outline
-                  color="dark"
                   onClick={() => {
                     dispatch(userAction.find(original.id))
                     toggleEditForm()
                   }}
                 >
-                  <i className="icon-pencil"></i>
-                </Button>
+                  <i className="oc oc-edit"></i>
+                </button>
               ) : null}
               {permission_helper.validate('user_password_change', 'u') ? (
-                <Button
+                <button
+                  className="btn btn-light"
                   disabled={deleting[`row_id_${original.id}`]}
-                  outline
-                  color="dark"
                   onClick={() => {
                     dispatch(userAction.find(original.id))
                     toggleChangePassword()
                   }}
                 >
-                  <i className="icon-key"></i> Cambiar contraseña
-                </Button>
+                  <i className="oc oc-password mr-1" style={{
+                    fontSize: '1.4rem',
+                    verticalAlign: -6
+                  }}></i> Cambiar contraseña
+                </button>
               ) : null}
-              {/* {permission_helper.validate('user_add_region', 'u') ? (
-                <Button
-                  disabled={deleting[`row_id_${original.id}`]}
-                  outline
-                  color="dark"
-                  onClick={() => {
-                    dispatch(userAction.find(original.id))
-                    toggleRegion()
-                  }}
-                >
-                  <i className="cil-globe-alt"></i> Asignar regiones
-                </Button>
-              ) : null} */}
               {permission_helper.validate('user', 'd') ? (
-                <Button
+                <button
+                  className="btn btn-danger"
                   disabled={deleting[`row_id_${original.id}`]}
-                  outline
-                  color="danger"
                   onClick={() =>
                     confirm('Delete', 'Are you sure you want to delete this record?').then(() => {
                       setDeleting({ [`row_id_${original.id}`]: true })
@@ -148,9 +142,11 @@ const User = () => {
                       <SpinCircle /> Deleting...
                     </Fragment>
                   ) : (
-                    <i className="icon-trash"></i>
+                    <i className="oc oc-trash" style={{
+                      fontSize: '1.2rem',
+                    }}></i>
                   )}
-                </Button>
+                </button>
               ) : null}
             </div>
           )
