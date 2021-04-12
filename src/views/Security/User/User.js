@@ -113,7 +113,7 @@ const User = () => {
               ) : null}
               {permission_helper.validate('user_password_change', 'u') ? (
                 <button
-                  className="btn btn-light"
+                  className="btn btn-secondary"
                   disabled={deleting[`row_id_${original.id}`]}
                   onClick={() => {
                     dispatch(userAction.find(original.id))
