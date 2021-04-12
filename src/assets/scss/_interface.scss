@@ -86,25 +86,31 @@
     }
 }
 
-.Toastify__toast {
-    border-left: 11px solid transparent;
-    border-radius: 0.5rem;
-    font-weight: 700;
-}
-.Toastify__toast--success {
-    background-color: #3272d8;
-    border-color: #143e83;
-}
-.Toastify__toast--error {
-    background-color: #db143b;
-    border-color: #8f001c;
-}
-.Toastify__close-button {
-    background-color: rgba(0, 0, 0, .58);
-    border-radius: 0.5rem;
-    color: white;
-    height: 1rem;
-    width: 1rem;
+.Toastify {
+
+    &__toast {
+        border-left: 11px solid transparent;
+        border-radius: 0.5rem;
+        font-weight: 700;
+
+        &--success {
+            background-color: #3272d8;
+            border-color: #143e83;
+        }
+
+        &--error {
+            background-color: #db143b;
+            border-color: #8f001c;
+        }
+    }
+
+    &__close-button {
+        background-color: rgba(0, 0, 0, .58);
+        border-radius: 0.5rem;
+        color: white;
+        height: 1rem;
+        width: 1rem;
+    }
 }
 
 body {
