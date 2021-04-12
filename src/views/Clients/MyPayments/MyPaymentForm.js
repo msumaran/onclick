@@ -14,8 +14,8 @@ import {
      ModalHeader,
      CustomInput,
      ModalFooter,
-     Card, 
-     CardText,  
+     Card,
+     CardText,
      CardTitle,
 } from 'reactstrap'
 
@@ -56,9 +56,9 @@ const MyPaymentForm = (props) => {
             {id:"american", img: ccamericanexpres, opacity:true, status:"disabled"},
         ]
     );
- 
+
     const showPaymentForm = (value) => {
-        
+
         var firstLetter = value.split("");
 
         let cards = [
@@ -70,18 +70,18 @@ const MyPaymentForm = (props) => {
         switch (firstLetter[0]) {
             case "3":
                 cards[2] = {id:"american", img: ccamericanexpres, opacity:true, status:""};
-                setCards(cards); 
+                setCards(cards);
                 break;
             case "4":
                 cards[0] = {id:"visa", img: ccvisa, opacity:true, status:""};
-                setCards(cards); 
+                setCards(cards);
                 break;
             case "5":
                 cards[1] = {id:"master", img: ccmastercard, opacity:true, status:""};
-                setCards(cards); 
+                setCards(cards);
                 break;
             default:
-                setCards(cards); 
+                setCards(cards);
                 break;
         }
     }
@@ -94,7 +94,7 @@ const MyPaymentForm = (props) => {
     const showDataPack = (value) => {
         if(value){
             setShowPackData(true);
-            var data = (props.packs.filter((pack) => pack.id == value ))[0]; 
+            var data = (props.packs.filter((pack) => pack.id == value ))[0];
             setPackData(data);
         }else{
             setShowPackData(true);
@@ -150,22 +150,22 @@ const MyPaymentForm = (props) => {
                                     invalid={formik.errors.cardnumber ? true : false}
                                 /> */}
 
-                                <InputMask 
-                                    mask="9999-9999-9999-9999" maskChar="" alwaysShowMask="true" value={formik.values.cardnumber} 
+                                <InputMask
+                                    mask="9999-9999-9999-9999" maskChar="" alwaysShowMask="true" value={formik.values.cardnumber}
                                     onChange={
                                         (e) => {
                                             showPaymentForm(e.target.value)
                                             formik.handleChange(e)
                                         }
-                                    } 
-                                    invalid={formik.errors.cardnumber ? true : false} 
+                                    }
+                                    invalid={formik.errors.cardnumber ? true : false}
                                 >
                                     {(inputProps) => <Input {...inputProps}  type="text" name="cardnumber"  /> }
                                 </InputMask>
-                                
+
                                 <div className="cards">
-                                {cards.map((card, i) => {    
-                                    return ( <img className={card.status} src={card.img}  key={card.id} /> ) 
+                                {cards.map((card, i) => {
+                                    return ( <img className={card.status} src={card.img}  key={card.id} /> )
                                 })}
                                 </div>
 
@@ -217,26 +217,26 @@ const MyPaymentForm = (props) => {
                                         }
                                         invalid={formik.errors.pack_id ? true : false}
                                     >
-                                        <option disabled label="Seleccione" />
+                                        <option value="" label="Seleccione" />
                                         {props.packs.map((pack, i) => (
                                             <option key={i} value={pack.id} label={pack.name} />
                                         ))}
                                     </CustomInput>
                                 )}
                                 <FormFeedback>{formik.errors.pack_id}</FormFeedback>
-                                
+
                                 <br/>
                                 <br/>
 
-                                { 
-                                    showPackData && 
+                                {
+                                    showPackData &&
                                     <Card body>
                                         <CardTitle tag="h5">Paquete: { packData.name }</CardTitle>
                                         <CardText>
                                             Precio: { packData.price }
                                             <br/>
                                             { packData.description }
-                                        </CardText> 
+                                        </CardText>
                                     </Card>
                                 }
 
