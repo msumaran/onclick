@@ -5,6 +5,8 @@ import { configApp } from 'helpers/config'
 
 import api from 'services/accountApi'
 
+import { toastDefaults } from '../../helpers/config'
+
 const login = (username, password) => {
   return async (dispatch) => {
     try {
@@ -21,7 +23,7 @@ const login = (username, password) => {
     } catch (err) {
       if (configApp.env === 'dev') console.log('accountAction.login', err)
 
-      toast.error(err.message)
+      toast.error(err.message, toastDefaults)
     }
   }
 }
