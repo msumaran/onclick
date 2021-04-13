@@ -99,6 +99,7 @@ const MyContacts = () => {
                                             toolbar: {
                                                 refreshButton: {
                                                     enabled: true,
+                                                    classNames: 'btn btn-secondary',
                                                     refreshing: contactsReloading,
                                                     autoDispatchInSeconds: 60,
                                                     dispatch: () => dispatch(myContactsActions.findAll(true))

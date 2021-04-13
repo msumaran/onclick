@@ -10,18 +10,6 @@ import './StripedTable.css'
 
 const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, options = {} }) => {
 
-  const defaultOptions = {
-    toolbar: {
-      refreshButton: {
-        enabled: false,
-      },
-      leftButtons: [],
-      rightButtons: [],
-    }
-  }
-
-  const _options = Object.assign(defaultOptions, options)
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -50,7 +38,7 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, 
   return (
     <React.Fragment>
       <TableToolbar
-        options={_options.toolbar}
+        options={options.toolbar}
         filterCriteria={globalFilter}
         onFilter={setGlobalFilter}
       />

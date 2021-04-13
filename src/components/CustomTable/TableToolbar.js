@@ -6,9 +6,23 @@ import TableFilter from './TableFilter'
 
 const TableToolbar = (props) => {
 
-    const refreshButton = props.options.refreshButton
+    const defaultOptions = {
+        refreshButton: {
+            enabled: false,
+            classNames: 'btn btn-custom-default'
+        },
+        leftButtons: [],
+        rightButtons: [],
+    }
 
-    const refresh_delay = refreshButton.autoDispatchInSeconds || 0
+    const options = {
+        refreshButton: Object.assign(defaultOptions.refreshButton, props.options.refreshButton),
+        leftButtons: Object.assign(defaultOptions.leftButtons, props.options.leftButtons),
+        rightButtons: Object.assign(defaultOptions.rightButtons, props.options.rightButtons),
+    }
+
+
+    const refresh_delay = options.refreshButton.autoDispatchInSeconds || 0
 
     const [ state, setState ] = useState({
         delay: refresh_delay,
@@ -21,12 +35,12 @@ const TableToolbar = (props) => {
             delay: refresh_delay,
         })
 
-        refreshButton.dispatch()
+        options.refreshButton.dispatch()
     }
 
     const check_delay = () => {
 
-        if (refreshButton.refreshing) {
+        if (options.refreshButton.refreshing) {
 
             setState({
                 ...state,
@@ -59,17 +73,26 @@ const TableToolbar = (props) => {
 
             check_delay()
         }
-    }, [ refresh_delay, state.delay, refreshButton.refreshing ])
+    }, [ refresh_delay, state.delay, options.refreshButton.refreshing ])
 
     return (
         <div className="table-toolbar">
             <div className="table-toolbar-left">
-                {!refreshButton.enabled ? null : (
-                    <button className="btn btn-custom-default"
+                {!options.leftButtons ? null : (
+                    <>
+                        {React.Children.map(options.leftButtons, (btn) => (
+                            <>
+                                {btn}
+                            </>
+                        ))}
+                    </>
+                )}
+                {!options.refreshButton.enabled ? null : (
+                    <button className={options.refreshButton.classNames}
                         onClick={() => runDispatch()}
-                        disabled={refreshButton.refreshing}
+                        disabled={options.refreshButton.refreshing}
                     >
-                        {refreshButton.refreshing ? (
+                        {options.refreshButton.refreshing ? (
                             <>
                                 <i className="icon-refresh"></i> Actualizando...
                             </>
@@ -79,15 +102,6 @@ const TableToolbar = (props) => {
                             </>
                         )}
                     </button>
-                )}
-                {!props.options.leftButtons ? null : (
-                    <>
-                        {React.Children.map(props.options.leftButtons, (btn) => (
-                            <>
-                                {btn}
-                            </>
-                        ))}
-                    </>
                 )}
             </div>
             <div className="table-toolbar-right">
