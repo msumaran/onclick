@@ -83,9 +83,10 @@ const create = (data) => {
 }
 
 const update = (id, data) => {
+
   return async (dispatch) => {
+
     try {
-      console.log("data: ", data);
 
       const res = await clientApi.update(id, data)
 
@@ -97,19 +98,19 @@ const update = (id, data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.update', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const changePassword = (id, data) => {
+
   return async (dispatch) => {
+
     try {
+
       const res = await clientApi.updatePassword(id, data)
 
       dispatch({
@@ -120,19 +121,19 @@ const changePassword = (id, data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.updatePassword', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const editRegions = (data) => {
+
   return async (dispatch) => {
+
     try {
+
       const res = await clientApi.editRegions(data)
 
       dispatch({
@@ -143,19 +144,19 @@ const editRegions = (data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.editRegions', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const remove = (id) => {
+
   return async (dispatch) => {
+
     try {
+
       const res = await clientApi.remove(id)
 
       dispatch({
@@ -166,12 +167,9 @@ const remove = (id) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.remove', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
