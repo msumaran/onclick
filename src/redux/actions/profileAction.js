@@ -1,14 +1,17 @@
 import { toast } from 'react-toastify'
 
 import { handleCatchNotify } from 'helpers/api'
-import { configApp } from 'helpers/config'
+import { configApp, toastDefaults } from 'helpers/config'
 
-import api from 'services/profileApi'
+import profileApi from 'services/profileApi'
 
 const findAll = () => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.findAll()
+
+      const res = await profileApi.findAll()
 
       dispatch({
         type: 'PROFILE_FIND_ALL',
@@ -16,11 +19,8 @@ const findAll = () => {
       })
 
       return res.code
-      
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.findAll', err)
 
-      handleCatchNotify(err)
+    } catch (err) {
     }
   }
 }
@@ -28,7 +28,7 @@ const findAll = () => {
 const findBy = (criteria = [], orderBy = false, limit = false, offset = false) => {
   return async (dispatch) => {
     try {
-      const res = await api.findBy(criteria, orderBy, limit, offset)
+      const res = await profileApi.findBy(criteria, orderBy, limit, offset)
 
       dispatch({
         type: 'PROFILE_FIND_BY',
@@ -37,9 +37,6 @@ const findBy = (criteria = [], orderBy = false, limit = false, offset = false) =
 
       return res.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.findBy', err)
-
-      handleCatchNotify(err)
     }
   }
 }
@@ -52,9 +49,6 @@ const find = (id) => {
         payload: id
       })
     } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.find', err)
-
-      handleCatchNotify(err)
     }
   }
 }
@@ -62,7 +56,7 @@ const find = (id) => {
 const create = (data) => {
   return async (dispatch) => {
     try {
-      const res = await api.create(data)
+      const res = await profileApi.create(data)
 
       dispatch({
         type: 'PROFILE_CREATE',
@@ -73,11 +67,6 @@ const create = (data) => {
 
       return res.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.create', err)
-
-      handleCatchNotify(err)
-
-      return err.code
     }
   }
 }
@@ -85,30 +74,28 @@ const create = (data) => {
 const update = (id, data) => {
   return async (dispatch) => {
     try {
-      const res = await api.update(id, data)
+      const res = await profileApi.update(id, data)
 
       dispatch({
         type: 'PROFILE_UPDATE',
         payload: res.content
       })
 
-      toast.success(res.message)
+      toast.success(res.message, toastDefaults)
 
       return res.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.update', err)
-
-      handleCatchNotify(err)
-
-      return err.code
     }
   }
 }
 
 const remove = (id) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.remove(id)
+
+      const res = await profileApi.remove(id)
 
       dispatch({
         type: 'PROFILE_REMOVE',
@@ -119,11 +106,7 @@ const remove = (id) => {
 
       return res.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('profileAction.remove', err)
 
-      handleCatchNotify(err)
-
-      return err.code
     }
   }
 }

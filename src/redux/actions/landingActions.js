@@ -1,7 +1,8 @@
 
-import { handleCatchNotify } from 'helpers/api'
-import { configApp } from 'helpers/config'
-import api from 'services/landingApi'
+import { toast } from 'react-toastify'
+
+import { toastDefaults } from 'helpers/config'
+import landingApi from 'services/landingApi'
 
 const getMyLanding = () => {
 
@@ -9,7 +10,7 @@ const getMyLanding = () => {
 
         try {
 
-            const data = await api.getMyLanding()
+            const data = await landingApi.getMyLanding()
 
             dispatch({
                 type: 'LANDING_LOAD_FROM_DB',
@@ -20,9 +21,6 @@ const getMyLanding = () => {
                 }
             })
         } catch (error) {
-            if (configApp.env === 'dev') console.log('landingAction.findAll', error)
-
-            handleCatchNotify(error)
         }
     }
 }
@@ -36,11 +34,13 @@ const saveDraft = (data) => {
         })
 
         try {
-            await api.saveMyLanding(data)
+            const _data = await landingApi.saveMyLanding(data)
 
             dispatch({
                 type: 'LANDING_SAVE_DRAFT_TO_DB_END',
             })
+
+            toast.success(_data.message, toastDefaults)
         } catch (error) {
 
             dispatch({
@@ -59,11 +59,13 @@ const publish = (data) => {
         })
 
         try {
-            await api.saveMyLanding(data)
+            const _data = await landingApi.saveMyLanding(data)
 
             dispatch({
                 type: 'LANDING_PUBLISH_END',
             })
+
+            toast.success(_data.message, toastDefaults)
         } catch (error) {
 
             dispatch({

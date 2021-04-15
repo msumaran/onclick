@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "off" */
+
 import React, { useState, useEffect, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -12,15 +14,12 @@ import {
   Label,
   Input,
   CustomInput,
-  InputGroup,
-  InputGroupAddon
 } from 'reactstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
 import { SpinCircle } from 'components/Spin'
 
-// import profileAction from 'redux/actions/profileAction'
 import paymentAction from 'redux/actions/paymentAction'
 import packAction from 'redux/actions/packAction'
 
@@ -34,11 +33,6 @@ const initialValues = {
 }
 
 const UserForm = ({ show, dismiss, isEdit }) => {
-//   const [profileLoading, setProfileLoading] = useState(true)
-
-//   const [isPassword, setIsPassword] = useState(true)
-
-//   const togglePassword = () => setIsPassword(!isPassword)
 
   const data = useSelector((store) => store.userReducer.user)
 
@@ -48,13 +42,13 @@ const UserForm = ({ show, dismiss, isEdit }) => {
   const packs = useSelector((store) => store.packReducer.packs)
 
   const fetchPacks = useCallback(() => {
-    dispatch(packAction.findAll()).then((status) => { 
+    dispatch(packAction.findAll()).then((status) => {
       setPackLoading(!packLoading)
     })
-  }, [dispatch])
+  }, [dispatch, packLoading])
 
   useEffect(() => fetchPacks(), [fetchPacks])
-  
+
   return (
     <Modal isOpen={show} toggle={dismiss} backdrop="static" keyboard={true} centered>
       <Formik
@@ -163,9 +157,9 @@ const UserForm = ({ show, dismiss, isEdit }) => {
                 />
                 <FormFeedback>{formik.errors.cardcvv}</FormFeedback>
               </FormGroup>
-  
+
               {!isEdit ? (
-                <> 
+                <>
                 </>
               ) : null}
               <FormGroup>

@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Row, Col, Card, CardHeader, CardBody, Button, Badge } from 'reactstrap'
+import { Row, Col, Card, CardHeader, CardBody } from 'reactstrap'
 import moment from 'moment'
 
-import { SpinCircle } from 'components/Spin'
-import { confirm } from 'components/CustomModal/ModalConfirm'
 import { StripedTable } from 'components/CustomTable'
 
 import paymentAction from 'redux/actions/paymentAction'
@@ -18,14 +16,7 @@ const Payment = () => {
   const my_permissions = useSelector((state) => state.accountReducer.permissions)
   const permission_helper = new PermissionHelper(my_permissions)
 
-  // const [openModeModal, setOpenModeModal] = useState(false) //FALSE(NEW) TRUE(EDIT
   const [loading, setLoading] = useState(true)
-
-  // const [showClientCode, setClientCode] = useState(false)
-  // const toggleClientCode = useCallback(() => {
-  //   setOpenModeModal(true)
-  //   setClientCode(!showClientCode)
-  // }, [showClientCode])
 
   const columns = useMemo(
     () => [
@@ -47,8 +38,7 @@ const Payment = () => {
         accessor: 'endAt',
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
       }
-    ],
-    [dispatch]
+    ], []
   )
 
   const data = useSelector((store) => store.paymentReducer.payments)
@@ -98,13 +88,6 @@ const Payment = () => {
           </Card>
         </Col>
       </Row>
-
-      {/* <ClientCode
-        show={showClientCode}
-        dismiss={toggleClientCode}
-        isEdit={openModeModal}
-        /> */}
-
     </div>
   )
 }

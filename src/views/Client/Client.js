@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
+/*eslint no-unused-vars: "off" */
+
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Card, CardHeader, CardBody, Button, Badge } from 'reactstrap'
 import moment from 'moment'
 
-import { SpinCircle } from 'components/Spin'
-import { confirm } from 'components/CustomModal/ModalConfirm'
 import { StripedTable } from 'components/CustomTable'
 
 import clientAction from 'redux/actions/clientAction'
@@ -62,12 +62,10 @@ const Client = () => {
 
           return (
             <div className="btn-group btn-group-sm">
-
               {permission_helper.validate('user_password_change', 'u') ? (
                 <Button
+                  className="btn btn-secondary"
                   disabled={deleting[`row_id_${original.id}`]}
-                  outline
-                  color="dark"
                   onClick={() => {
                     dispatch(clientAction.find(original.id))
                     toggleClientCode()
@@ -76,8 +74,6 @@ const Client = () => {
                   <i className="icon-key"></i> Code GA
                 </Button>
               ) : null}
-
-
             </div>
           )
         }

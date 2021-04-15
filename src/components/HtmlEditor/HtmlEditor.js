@@ -1,8 +1,7 @@
 
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 let lastEditorNum = 0
-
 class HtmlEditor extends React.Component {
 
     constructor(props) {

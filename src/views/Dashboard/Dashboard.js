@@ -1,3 +1,5 @@
+/*eslint no-unused-vars: "off" */
+
 import React, {useState} from 'react'
 // import { useSelector } from 'react-redux'
 import {
@@ -84,7 +86,7 @@ const Dashboard = (props) => {
     session.tutorial = false;
     localStorage.setItem('session', JSON.stringify(session))
     setModal(!modal);
-  } 
+  }
 
   const slides = items.map((item) => {
     return (
@@ -108,20 +110,20 @@ const Dashboard = (props) => {
     <div className="animated fadeIn">
       <h1>Bienvenido a OnClick.la</h1>
       <p>
-        ¿Deseas ver el uso de la plataforma nuevamente? 
+        ¿Deseas ver el uso de la plataforma nuevamente?
         <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
       </p>
- 
 
-      <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} > 
-        <ModalBody> 
+
+      <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} >
+        <ModalBody>
           <Carousel activeIndex={activeIndex} next={next} previous={previous} className="sliderTutorial"  autoPlay={false} interval={false}  >
             <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
             {slides}
             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
           </Carousel>
-        </ModalBody> 
+        </ModalBody>
       </Modal>
 
 

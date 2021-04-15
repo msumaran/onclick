@@ -1,5 +1,6 @@
+/*eslint no-unused-vars: "off" */
 
-import React, { Fragment, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 import { Prompt } from 'react-router'
 
@@ -18,7 +19,6 @@ const MyLanding = () => {
     const dispatch = useDispatch()
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
-    const permission_helper = new PermissionHelper(my_permissions)
 
     const landingCode = useSelector((state) => state.landingReducer.code)
     const landingSeo = useSelector((state) => state.landingReducer.seo)

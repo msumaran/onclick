@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
-import { Formik } from 'formik'
 import moment from 'moment'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -83,7 +82,7 @@ const MyPayments = () => {
 
             dispatch(myPaymentsActions.findAll())
         }
-    }, [ paymentsLoaded ])
+    }, [ paymentsLoaded, dispatch ])
 
     useEffect(() => {
 

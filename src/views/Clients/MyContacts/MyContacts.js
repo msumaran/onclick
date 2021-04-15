@@ -33,7 +33,7 @@ const MyContacts = () => {
             dispatch(myContactsActions.findAll())
         }
 
-    }, [ contactsLoaded ])
+    }, [ contactsLoaded, dispatch ])
 
     const [submitting, setSubmitting] = useState(false)
 

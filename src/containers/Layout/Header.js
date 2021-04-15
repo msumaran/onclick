@@ -1,15 +1,13 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import * as router from 'react-router-dom'
 
-import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap'
+import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav } from 'reactstrap'
 import PropTypes from 'prop-types'
 import { AppNavbarBrand, AppSidebarToggler, AppBreadcrumb } from '@coreui/react'
 
 import routes from 'helpers/routes'
 
 import logo from 'assets/img/brand/logo.png'
-import toggler from 'assets/img/brand/navbar-toggler.png'
 import iso from 'assets/img/brand/iso.png'
 
 const propTypes = {

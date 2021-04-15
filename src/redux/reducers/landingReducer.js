@@ -58,6 +58,8 @@ const landingReducer = (state = initialState, { type, payload }) => {
         case 'LANDING_PUBLISH_ERROR':
             st.publishStatus = 'error'
             break
+        default:
+            //
     }
 
     return st

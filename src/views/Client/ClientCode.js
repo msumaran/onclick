@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   Modal,
@@ -11,9 +11,6 @@ import {
   FormFeedback,
   Label,
   Input,
-  CustomInput,
-  InputGroup,
-  InputGroupAddon
 } from 'reactstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
@@ -24,12 +21,12 @@ import clientAction from 'redux/actions/clientAction'
 
 const initialValues = {
   id: '',
-  code_ga: '', 
+  code_ga: '',
 }
 
 const ClientCode = ({ show, dismiss, isEdit }) => {
 
-  const data = useSelector((store) => store.clientReducer.client) 
+  const data = useSelector((store) => store.clientReducer.client)
 
   const dispatch = useDispatch()
 
@@ -46,18 +43,18 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
         validationSchema={
           isEdit
             ? yup.object().shape({
-                code_ga: yup.string().required('This field is required.'), 
+                code_ga: yup.string().required('This field is required.'),
               })
             : yup.object().shape({
-                code_ga: yup.string().required('This field is required.'),  
+                code_ga: yup.string().required('This field is required.'),
               })
         }
         onSubmit={(values, { setSubmitting, resetForm }) => {
           if (isEdit) {
             //  EDIT
-            const sendData = { 
-              id: values.id, 
-              code_ga: values.code_ga 
+            const sendData = {
+              id: values.id,
+              code_ga: values.code_ga
             }
             dispatch(clientAction.update(values.id, sendData)).then((status) => {
               setSubmitting(false)
@@ -83,8 +80,6 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
           <Form onSubmit={formik.handleSubmit} className="form-horizontal">
             <ModalHeader toggle={dismiss}>{isEdit ? 'Editar CA' : 'Nuevo CA'}</ModalHeader>
             <ModalBody>
-              {/* <pre>{JSON.stringify(formik.values, null, 2)}</pre> */}
-
               <FormGroup>
                 <Label htmlFor="code_ga">Codigo Analitycs</Label>
                 <Input
@@ -96,7 +91,6 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
                 />
                 <FormFeedback>{formik.errors.code_ga}</FormFeedback>
               </FormGroup>
-
             </ModalBody>
             <ModalFooter>
               {!isEdit ? (

@@ -52,13 +52,13 @@ const Login = () => {
                   >
                     {({ values, isSubmitting, handleChange, handleSubmit }) => (
                       <Form onSubmit={handleSubmit}>
-                        <img src={logoImage} />
+                        <img src={logoImage} alt="logo" />
                         <h1>Ingresa con tu cuenta</h1>
-                        
+
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                              <img src={iconUser} className="icon-user" />
+                              <img src={iconUser} className="icon-user" alt="" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
@@ -72,7 +72,7 @@ const Login = () => {
                         <InputGroup className="mb-4">
                           <InputGroupAddon addonType="prepend">
                             <InputGroupText>
-                            <img src={iconPass} />
+                            <img src={iconPass} alt="" />
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input

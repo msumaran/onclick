@@ -18,6 +18,8 @@ const myContactsReducer = (state = defaultState, action) => {
             st.loaded = true
             st.reloading = false
             break
+        default:
+            //
     }
 
     return st

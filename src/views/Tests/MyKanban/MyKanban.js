@@ -1,4 +1,6 @@
 
+/*eslint no-unused-vars: "off" */
+
 import React, { useState } from 'react'
 import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
 

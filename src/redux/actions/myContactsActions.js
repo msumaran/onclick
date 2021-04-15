@@ -1,10 +1,8 @@
 
-import { toast } from 'react-toastify'
-
 import { handleCatchNotify } from 'helpers/api'
 import { Log } from 'helpers/DebugHelper'
 
-import api from 'services/myContactsApi'
+import myContactsApi from 'services/myContactsApi'
 
 
 export const findAll = (reload = false) => {
@@ -20,7 +18,7 @@ export const findAll = (reload = false) => {
 
         try {
 
-            const data = await api.findAll()
+            const data = await myContactsApi.findAll()
 
             dispatch({
                 type: 'MY_CONTACTS_FIND_ALL',
