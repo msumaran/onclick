@@ -15,7 +15,7 @@ const login = (username, password) => {
         payload: res
       })
 
-      window.location.replace('/')
+      window.location.replace(window.location.pathname)
     } catch (error) {
 
       throw error

@@ -1,5 +1,6 @@
 {
   "name": "onclick",
+  "homepage": "http://localhost:3000/admin/",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
