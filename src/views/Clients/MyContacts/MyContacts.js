@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useState} from 'react'
 
 import moment from 'moment'
 
@@ -10,7 +10,10 @@ import PermissionHelper from 'helpers/PermissionHelper'
 
 import { StripedTable } from 'components/CustomTable'
 import { useEffect } from 'react'
-import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
+
+import { SpinCircle } from 'components/Spin'
+import reportAction from 'redux/actions/reportAction'
 
 const MyContacts = () => {
 
@@ -21,6 +24,7 @@ const MyContacts = () => {
 
     const contacts = useSelector(state => state.myContactsReducer.contacts)
     const contactsLoaded = useSelector(state => state.myContactsReducer.loaded)
+    const contactsReloading = useSelector(state => state.myContactsReducer.reloading)
 
     useEffect(() => {
 
@@ -29,7 +33,9 @@ const MyContacts = () => {
             dispatch(myContactsActions.findAll())
         }
 
-    }, [ contactsLoaded ])
+    }, [ contactsLoaded, dispatch ])
+
+    const [submitting, setSubmitting] = useState(false)
 
     return (
         <div className="animated fadeIn">
@@ -37,7 +43,7 @@ const MyContacts = () => {
                 <Col xs={12}>
                     <Card>
                         <CardHeader>
-                            <strong>Mis contactos</strong>
+                            <strong>Gestor de Leads</strong>
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
@@ -48,17 +54,34 @@ const MyContacts = () => {
                                     <StripedTable
                                         columns={[
                                             {
-                                                Header: 'Nombres y apellidos',
-                                                accessor: 'fullname'
+                                                Header: 'Nombres',
+                                                accessor: 'name'
+                                            },
+                                            {
+                                                Header: 'Apellidos',
+                                                accessor: 'lastname'
                                             },
                                             {
                                                 Header: 'Email',
                                                 accessor: 'email'
                                             },
                                             {
-                                                Header: 'Landing',
-                                                accessor: 'origin',
+                                                Header: 'Estado',
+                                                accessor: 'status'
                                             },
+                                            // {
+                                            //     Header: 'Landing',
+                                            //     accessor: 'origin',
+                                            //     Cell: ({ cell: { value } }) => (
+                                            //         <>
+                                            //             {value}
+                                            //             &nbsp;
+                                            //             <a href={value} target="_blank">
+                                            //                 <i className="icons icon-link"></i>
+                                            //             </a>
+                                            //         </>
+                                            //     )
+                                            // },
                                             {
                                                 Header: 'Fecha de registro',
                                                 accessor: 'startAt',
@@ -72,6 +95,48 @@ const MyContacts = () => {
                                                 desc: true
                                             }
                                         ]}
+                                        options={{
+                                            toolbar: {
+                                                refreshButton: {
+                                                    enabled: true,
+                                                    classNames: 'btn btn-secondary',
+                                                    refreshing: contactsReloading,
+                                                    autoDispatchInSeconds: 60,
+                                                    dispatch: () => dispatch(myContactsActions.findAll(true))
+                                                },
+                                                leftButtons:[
+                                                    (
+                                                        <>
+
+                                                            <Button
+                                                                className="ml-1"
+                                                                color="primary"
+                                                                onClick={() =>{
+                                                                    setSubmitting(true)
+                                                                    dispatch(reportAction.make('get_contacts')).then((res) => {
+                                                                        setSubmitting(false)
+
+                                                                        if (res.path) window.open(res.path)
+                                                                        else window.open(res)
+                                                                    })
+                                                                }}
+                                                            >
+                                                                {submitting ? (
+                                                                <>
+                                                                    <SpinCircle /> Procesando...
+                                                                </>
+                                                                ) : (
+                                                                <>
+                                                                    <i className="icon-cloud-download"></i> Exportar
+                                                                </>
+                                                                )}
+                                                            </Button>
+
+                                                        </>
+                                                    )
+                                                ]
+                                            }
+                                        }}
                                     />
                                 )}
                             </div>

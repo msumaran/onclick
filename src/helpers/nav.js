@@ -6,63 +6,69 @@ const Navigation = (permissions) => {
     {
       name: 'Tablero',
       url: '/dashboard',
-      icon: 'icon-speedometer',
+      icon: 'oc oc-dashboard',
       nameMachine: 'dashboard'
     },
     {
       name: 'Admin Clientes',
       url: '/client',
-      icon: 'icon-speedometer',
+      icon: 'oc oc-clients',
       nameMachine: 'client'
     },
     {
       name: 'Admin Pagos',
       url: '/payment',
-      icon: 'icon-speedometer',
+      icon: 'oc oc-payments',
       nameMachine: 'payment'
     },
 
     {
-      name: 'Mis contactos',
+      name: 'Gestor de Leads',
       url: '/my-contacts',
-      icon: 'icon-speedometer',
-      nameMachine: 'contact'
+      icon: 'oc oc-leads',
+      nameMachine: 'my_contacts'
     },
     {
       name: 'Mis pagos',
       url: '/my-payments',
-      icon: 'icon-speedometer',
-      nameMachine: 'user_payments'
+      icon: 'oc oc-payments',
+      nameMachine: 'my_payments'
     },
     {
-      name: 'Mi landing',
+      name: 'Editor de landing',
       url: '/my-landing',
-      icon: 'icon-speedometer',
+      icon: 'oc oc-editor',
       nameMachine: 'landing'
     },
+    // {
+    //   name: 'Mi kanban',
+    //   url: '/my-kanban',
+    //   icon: 'icon-speedometer',
+    //   nameMachine: 'landing'
+    // },
 
     {
       name: 'Seguridad',
       url: '/security',
-      icon: 'icon-lock',
+      icon: 'oc oc-security',
       nameMachine: 'security',
       children: [
         {
           name: 'Usuarios',
           url: '/security/users',
-          icon: 'icon-people',
+          icon: 'oc oc-users',
           nameMachine: 'user'
         },
         {
           name: 'Perfiles',
           url: '/security/profiles',
-          icon: 'cil-fingerprint',
+          icon: 'oc oc-profiles',
           nameMachine: 'profile'
         },
         {
           name: 'Accesos',
           url: '/security/access',
-          icon: 'icon-directions',
+          icon: 'oc oc-access',
           nameMachine: 'access'
         }
       ]
@@ -70,7 +76,7 @@ const Navigation = (permissions) => {
     {
       name: 'Reportes',
       url: '/report',
-      icon: 'icon-chart',
+      icon: 'oc oc-reports',
       nameMachine: 'report'
     }
   ]

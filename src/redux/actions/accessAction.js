@@ -1,12 +1,13 @@
-import { handleCatchNotify } from 'helpers/api'
-import { configApp } from 'helpers/config'
 
-import api from 'services/accessApi'
+import accessApi from 'services/accessApi'
 
 const findAll = () => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.findAll()
+
+      const res = await accessApi.findAll()
 
       dispatch({
         type: 'ACCESS_FIND_ALL',
@@ -14,12 +15,9 @@ const findAll = () => {
       })
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('accessAction.findAll', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }

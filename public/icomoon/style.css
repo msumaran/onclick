@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'icomoon-onclick';
+  src:  url('fonts/icomoon-onclick.eot?rrn640');
+  src:  url('fonts/icomoon-onclick.eot?rrn640#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-onclick.ttf?rrn640') format('truetype'),
+    url('fonts/icomoon-onclick.woff?rrn640') format('woff'),
+    url('fonts/icomoon-onclick.svg?rrn640#icomoon-onclick') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.oc {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon-onclick' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.oc-edit:before {
+  content: "\e90a";
+}
+.oc-password:before {
+  content: "\e90b";
+}
+.oc-trash:before {
+  content: "\e90c";
+}
+.oc-access:before {
+  content: "\e909";
+}
+.oc-editor:before {
+  content: "\e907";
+}
+.oc-leads:before {
+  content: "\e908";
+}
+.oc-payments:before {
+  content: "\e901";
+}
+.oc-profiles:before {
+  content: "\e902";
+}
+.oc-users:before {
+  content: "\e903";
+}
+.oc-security:before {
+  content: "\e904";
+}
+.oc-reports:before {
+  content: "\e905";
+}
+.oc-clients:before {
+  content: "\e906";
+}
+.oc-dashboard:before {
+  content: "\e900";
+}

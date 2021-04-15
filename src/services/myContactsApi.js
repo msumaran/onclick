@@ -1,23 +1,14 @@
-
-import axios from 'axios'
-
-import { getHeaders, handleError } from 'helpers/api'
-import { configApp } from 'helpers/config'
-
-const apiUrl = `${configApp.baseUrl}/my-contacts`
+import apiService from './apiService'
 
 export const findAll = async () => {
 
     try {
 
-        const headers = await getHeaders()
+        const data = await apiService.get('/my-contacts/combobox')
 
-        const res = await axios.get(apiUrl + '/combobox', { headers })
-
-        return res.data
+        return data
     } catch (error) {
 
-        handleError(error)
     }
 }
 

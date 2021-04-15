@@ -3,12 +3,12 @@ import { toast } from 'react-toastify'
 import { handleCatchNotify } from 'helpers/api'
 import { configApp } from 'helpers/config'
 
-import api from 'services/clientApi'
+import clientApi from 'services/clientApi'
 
 const findAll = () => {
   return async (dispatch) => {
     try {
-      const res = await api.findAll()
+      const res = await clientApi.findAll()
 
       dispatch({
         type: 'CLIENT_FIND_ALL',
@@ -17,19 +17,17 @@ const findAll = () => {
 
       return res.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.findAll', err)
-
-      handleCatchNotify(err)
-
-      return err.code
     }
   }
 }
 
 const findBy = (criteria = [], orderBy = false, limit = false, offset = false) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.findBy(criteria, orderBy, limit, offset)
+
+      const res = await clientApi.findBy(criteria, orderBy, limit, offset)
 
       if (configApp.env === 'dev') console.log('clientAction.findBy', res)
 
@@ -37,33 +35,37 @@ const findBy = (criteria = [], orderBy = false, limit = false, offset = false) =
         type: 'CLIENT_FIND_BY',
         payload: res.content
       })
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.findBy', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
+      throw error
     }
   }
 }
 
 const find = (id) => {
+
   return async (dispatch) => {
+
     try {
+
       dispatch({
         type: 'CLIENT_FIND',
         payload: id
       })
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.find', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
+      throw error
     }
   }
 }
 
 const create = (data) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.create(data)
+
+      const res = await clientApi.create(data)
 
       dispatch({
         type: 'CLIENT_CREATE',
@@ -73,22 +75,20 @@ const create = (data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.create', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const update = (id, data) => {
-  return async (dispatch) => {
-    try {
-      console.log("data: ", data);
 
-      const res = await api.update(id, data)
+  return async (dispatch) => {
+
+    try {
+
+      const res = await clientApi.update(id, data)
 
       dispatch({
         type: 'CLIENT_UPDATE',
@@ -98,20 +98,20 @@ const update = (id, data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.update', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const changePassword = (id, data) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.updatePassword(id, data)
+
+      const res = await clientApi.updatePassword(id, data)
 
       dispatch({
         type: 'CLIENT_UPDATE_PASSWORD',
@@ -121,20 +121,20 @@ const changePassword = (id, data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.updatePassword', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const editRegions = (data) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.editRegions(data)
+
+      const res = await clientApi.editRegions(data)
 
       dispatch({
         type: 'CLIENT_EDIT_REGIONS',
@@ -144,20 +144,20 @@ const editRegions = (data) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.editRegions', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
 
 const remove = (id) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.remove(id)
+
+      const res = await clientApi.remove(id)
 
       dispatch({
         type: 'CLIENT_REMOVE',
@@ -167,12 +167,9 @@ const remove = (id) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('clientAction.remove', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }

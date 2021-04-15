@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
 import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
-import { Formik } from 'formik'
 import moment from 'moment'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,6 +14,11 @@ import { StripedTable } from '../../../components/CustomTable'
 import MyPaymentForm from './MyPaymentForm'
 
 const MyPayments = () => {
+
+    moment.locale('es', {
+        months: 'Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Setiembre, Octubre, Noviembre, Diciembre'.split(', '),
+        weekdays: 'Domingo, Lunes, Martes, Miércoles, Jueves, Viernes, Sábado'.split(', '),
+    })
 
     const dispatch = useDispatch()
 
@@ -39,12 +43,12 @@ const MyPayments = () => {
         {
             Header: 'Inicia',
             accessor: 'startAt',
-            Cell: ({ cell: { value } }) => moment(value).format('LLL')
+            Cell: ({ cell: { value } }) => moment(value).format('DD/MM/YYYY H:mm a')
         },
         {
             Header: 'Termina',
             accessor: 'endAt',
-            Cell: ({ cell: { value } }) => moment(value).format('LLL')
+            Cell: ({ cell: { value } }) => moment(value).format('DD/MM/YYYY H:mm a')
         }
     ]
 
@@ -78,7 +82,7 @@ const MyPayments = () => {
 
             dispatch(myPaymentsActions.findAll())
         }
-    }, [ paymentsLoaded ])
+    }, [ paymentsLoaded, dispatch ])
 
     useEffect(() => {
 

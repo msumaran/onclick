@@ -4,7 +4,9 @@ import { toast } from 'react-toastify'
 import { handleCatchNotify } from 'helpers/api'
 import { Log } from 'helpers/DebugHelper'
 
-import api from 'services/myPaymentsApi'
+import myPaymentsApi from 'services/myPaymentsApi'
+
+import { toastDefaults } from 'helpers/config'
 
 export const findAll = () => {
 
@@ -12,7 +14,7 @@ export const findAll = () => {
 
         try {
 
-            const data = await api.findAll()
+            const data = await myPaymentsApi.findAll()
 
             dispatch({
                 type: 'MY_PAYMENTS_FIND_ALL',
@@ -33,18 +35,17 @@ export const create = (row_data) => {
 
         try {
 
-            const data = await api.create(row_data)
+            const data = await myPaymentsApi.create(row_data)
 
             dispatch({
                 type: 'MY_PAYMENTS_CREATE',
                 payload: data.content
             })
 
-            toast.success(data.message)
+            toast.success(data.message, toastDefaults)
         } catch (error) {
-            Log('myPaymentsAction.create', error)
 
-            handleCatchNotify(error)
+            //
         }
     }
 }

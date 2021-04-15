@@ -1,3 +1,6 @@
+
+import apiService from 'services/apiService'
+
 import axios from 'axios'
 // import mockAdapter from 'axios-mock-adapter'
 
@@ -8,104 +11,87 @@ import { configApp } from 'helpers/config'
 const baseUrl = `${configApp.baseUrl}/payment`
 
 const findAll = async () => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.get(baseUrl + '/combobox', { headers })
+    return await apiService.get('/payment/combobox')
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const findBy = async (criteria = [], orderBy = false, limit = false, offset = false) => {
+
   try {
-    const params = {}
-    params.criteria = criteria
+
+    const params = {
+      criteria
+    }
+
     if (orderBy) params.orderBy = orderBy
     if (limit) params.limit = limit
     if (offset) params.offset = offset
 
-    const headers = await getHeaders()
+    return await apiService.post(`/payment?${serialize(params)}`)
+  } catch (error) {
 
-    const res = await axios.get(`${baseUrl}?${serialize(params)}`, { headers })
-
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const find = async (id) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.get(`${baseUrl}/${id}`, { headers })
+    return await apiService.get(`/payment/${id}`)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const create = async (data) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.post(baseUrl, data, { headers })
+    return await apiService.post('/payment', data)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const update = async (id, data) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.put(`${baseUrl}/${id}`, data, { headers })
+    return await apiService.put(`/payment/${id}`, data)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const updatePassword = async (id, data) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.put(`${baseUrl}/${id}/changepassword`, data, { headers })
+    return await apiService.put(`/payment/${id}/changepassword`, data)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
-  }
-}
-
-const editRegions = async (data) => {
-  try {
-    const headers = await getHeaders()
-
-    const res = await axios.put(`${baseUrl}/setdepartments`, data, { headers })
-
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const remove = async (id) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.delete(`${baseUrl}/${id}`, { headers })
+    return await apiService.del(`/payment/${id}`)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
@@ -115,9 +101,8 @@ const paymentApi = {
   find,
   create,
   update,
-  remove,
   updatePassword,
-  editRegions
+  remove,
 }
 
 export default paymentApi

@@ -1,9 +1,12 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap'
+import * as router from 'react-router-dom'
+
+import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav } from 'reactstrap'
 import PropTypes from 'prop-types'
-import { AppNavbarBrand, AppSidebarToggler } from '@coreui/react'
-//
+import { AppNavbarBrand, AppSidebarToggler, AppBreadcrumb } from '@coreui/react'
+
+import routes from 'helpers/routes'
+
 import logo from 'assets/img/brand/logo.png'
 import iso from 'assets/img/brand/iso.png'
 
@@ -21,8 +24,8 @@ const Header = (props) => {
       <AppNavbarBrand
         full={{
           src: logo,
-          width: 88,
-          height: 25,
+          width: 155,
+          height: 55,
           alt: 'Logo'
         }}
         minimized={{
@@ -32,23 +35,25 @@ const Header = (props) => {
           alt: 'ISO'
         }}
       />
+
       <AppSidebarToggler className="d-md-down-none" display="lg" />
 
-      <Nav className="d-md-down-none" navbar>
-        <NavItem className="px-3">
-          <NavLink to="/dashboard" className="nav-link">
-            Dashboard
-          </NavLink>
-        </NavItem>
-      </Nav>
+      <AppBreadcrumb className="d-none d-lg-block" appRoutes={routes} router={router} />
+
       <Nav className="ml-auto" navbar>
-        <NavItem className="d-md-down-none">
-          <NavLink to="#" className="nav-link">
-            {props.user.name}
-          </NavLink>
-        </NavItem>
         <UncontrolledDropdown nav direction="down">
-          <DropdownToggle nav>
+          <DropdownToggle nav
+            style={{
+              display: 'flex',
+            }}
+          >
+            <span className="d-none d-sm-flex" style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center'
+            }}>
+              {props.user.name}
+            </span>
             <span className="img-avatar"
               style={{
                 border: '1px solid #333',
@@ -63,10 +68,10 @@ const Header = (props) => {
           </DropdownToggle>
           <DropdownMenu right>
             <DropdownItem href="/security/change-password">
-              <i className="icon-lock-open"></i> Change Password
+              <i className="icon-lock-open"></i> Cambiar contraseña
             </DropdownItem>
             <DropdownItem onClick={(e) => props.onLogout(e)}>
-              <i className="icon-logout"></i> Logout
+              <i className="icon-logout"></i> Cerrar sesión
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

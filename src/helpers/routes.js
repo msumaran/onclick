@@ -1,9 +1,12 @@
+/*eslint no-unused-vars: "off" */
+
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('views/Dashboard/Dashboard'))
 
 const MyContacts = React.lazy(() => import('views/Clients/MyContacts/MyContacts'))
 const MyPayments = React.lazy(() => import('views/Clients/MyPayments/MyPayments'))
+const MyLandings = React.lazy(() => import('views/Clients/MyLandings/MyLandings'))
 const MyLanding = React.lazy(() => import('views/Clients/MyLanding/MyLanding'))
 
 const User = React.lazy(() => import('views/Security/User/User'))
@@ -17,6 +20,7 @@ const Access = React.lazy(() => import('views/Security/Profile/Access'))
 const Client = React.lazy(() => import('views/Client/Client'))
 const Payment = React.lazy(() => import('views/Payment/Payment'))
 const MyPayment = React.lazy(() => import('views/Client/Payment/MyPayment'))
+const MyKanban = React.lazy(() => import('views/Tests/MyKanban/MyKanban'))
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -24,7 +28,7 @@ const routes = [
   { path: '/dashboard', name: 'Tablero', component: Dashboard },
   { path: '/my-contacts', name: 'Mis contactos', component: MyContacts },
   { path: '/my-payments', name: 'Mis pagos', component: MyPayments },
-  { path: '/my-landing', name: 'Mis pagos', component: MyLanding },
+  { path: '/my-landing', name: 'Editor de landing', component: MyLanding },
 
   { path: '/security/access', name: 'Accesos', component: Access },
   { path: '/security/users', name: 'Usuarios', component: User },
@@ -33,6 +37,7 @@ const routes = [
   { path: '/client', name: 'Clientes', component: Client },
   { path: '/payment', name: 'Pagos', component: Payment },
   { path: '/my-payments', name: 'Mis pagos', component: MyPayment },
+  { path: '/my-kanban', name: 'Mi kanban', component: MyKanban },
 ]
 
 export default routes

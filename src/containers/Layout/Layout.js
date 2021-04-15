@@ -26,13 +26,13 @@ import { Navigation } from 'helpers/nav'
 import routes from 'helpers/routes'
 
 import Preloader from '../../components/Preloader/Preloader'
+import Feedback from 'components/Feedback/Feedback'
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading content...</div>
 
 const Header = lazy(() => import('./Header'))
 const Footer = lazy(() => import('./Footer'))
 const ChangePassword = lazy(() => import('../../views/Security/ChangePassword'))
-
 
 const Layout = (props) => {
 
@@ -81,6 +81,7 @@ const Layout = (props) => {
             <AppSidebar fixed display="lg">
               <AppSidebarHeader />
               <AppSidebarForm />
+              <div className="space-top d-none d-md-block"></div>
               <Suspense fallback={loading()}>
 
                 <AppSidebarNav navConfig={ Navigation(my_permissions) } {...props} router={router} />
@@ -91,8 +92,8 @@ const Layout = (props) => {
               <AppSidebarMinimizer />
             </AppSidebar>
             <main className="main">
-              <AppBreadcrumb appRoutes={routes} router={router} />
-              <Container fluid>
+              <AppBreadcrumb className="main-breadcrumb d-block d-lg-none" appRoutes={routes} router={router} />
+              <Container fluid className="main-container">
                 <Suspense fallback={loading()}>
                   <Switch>
                     {routes.map((route, idx) => {
@@ -118,12 +119,10 @@ const Layout = (props) => {
               </Container>
             </main>
           </div>
+          <Footer>
+            <Feedback dispatch={(data) => console.log('dispatched', data)} />
+          </Footer>
 
-          <AppFooter>
-            <Suspense fallback={loading()}>
-              <Footer />
-            </Suspense>
-          </AppFooter>
           <ToastContainer />
         </>
       )}

@@ -1,24 +1,13 @@
 
-import axios from 'axios'
-
-import { getHeaders, handleError } from 'helpers/api'
-import { serialize } from 'helpers/utils'
-import { configApp } from 'helpers/config'
-
-const apiUrl = `${configApp.baseUrl}/my-payments`
+import apiService from 'services/apiService'
 
 export const findAll = async () => {
 
     try {
 
-        const headers = await getHeaders()
-
-        const res = await axios.get(apiUrl + '/combobox', { headers })
-
-        return res.data
+        return await apiService.get('/my-payments/combobox')
     } catch (error) {
 
-        handleError(error)
     }
 }
 
@@ -26,15 +15,10 @@ export const create = async (data) => {
 
     try {
 
-        const headers = await getHeaders()
-
-        const res = await axios.post(apiUrl, data, { headers })
-
-        return res.data
+        return await apiService.post('/my-payments', data)
     } catch (error) {
 
-
-        handleError(error)
+        // handleError(error)
     }
 }
 

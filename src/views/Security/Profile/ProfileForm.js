@@ -51,8 +51,11 @@ const ProfileForm = ({ show, dismiss }) => {
         enableReinitialize={true}
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          dispatch(profileAction.update(values.id, values)).then((status) => {
+
+          dispatch(profileAction.update(values.profile_id, values)).then((status) => {
             setSubmitting(false)
+
+            console.log({ status })
 
             if (status === 200 || status === 201) {
               dismiss()

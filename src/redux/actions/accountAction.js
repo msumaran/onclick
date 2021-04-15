@@ -1,35 +1,33 @@
 import { toast } from 'react-toastify'
 
-import { handleCatchNotify } from 'helpers/api'
-import { configApp } from 'helpers/config'
-
-import api from 'services/accountApi'
+import accountApi from 'services/accountApi'
 
 const login = (username, password) => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.login(username, password)
 
-      if (res) {
-        dispatch({
-          type: 'ACCOUNT_LOGIN',
-          payload: res
-        })
+      const res = await accountApi.login(username, password)
 
-        window.location.replace('/')
-      }
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('accountAction.login', err)
+      dispatch({
+        type: 'ACCOUNT_LOGIN',
+        payload: res
+      })
 
-      toast.error(err.message)
+      window.location.replace(window.location.pathname)
+    } catch (error) {
+
+      throw error
     }
   }
 }
 
 const logout = () => {
+
   return (dispatch) => {
 
-    api.logout()
+    accountApi.logout()
 
     dispatch({
       type: 'ACCOUNT_LOGOUT'
@@ -42,7 +40,7 @@ const logout = () => {
 const selfChangePassword = (password) => {
   return async (dispatch) => {
     try {
-      const res = await api.selfChangePassword(password)
+      const res = await accountApi.selfChangePassword(password)
 
       dispatch({
         type: 'ACCOUNT_CHANGE_PASSWORD',
@@ -52,12 +50,9 @@ const selfChangePassword = (password) => {
       toast.success(res.message)
 
       return res.code
-    } catch (err) {
-      if (configApp.env === 'dev') console.log('awardAction.update', err)
+    } catch (error) {
 
-      handleCatchNotify(err)
-
-      return err.code
+      throw error
     }
   }
 }
@@ -68,7 +63,7 @@ const getPermissions = () => {
 
     try {
 
-      const res = await api.getPermissions()
+      const res = await accountApi.getPermissions()
 
       dispatch({
         type: 'SET_MY_PERMISSIONS',
@@ -76,11 +71,7 @@ const getPermissions = () => {
       })
     } catch (error) {
 
-      if (configApp.env === 'dev') console.log('accountAction.getPermissions', error.message)
-
-      handleCatchNotify(error)
-
-      // toast.error(error.message)
+      throw error
     }
   }
 }

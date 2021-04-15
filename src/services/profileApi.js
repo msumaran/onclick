@@ -1,3 +1,6 @@
+
+import apiService from 'services/apiService'
+
 import axios from 'axios'
 
 import { getHeaders, handleError } from 'helpers/api'
@@ -7,81 +10,76 @@ import { configApp } from 'helpers/config'
 const baseUrl = `${configApp.baseUrl}/profile`
 
 const findAll = async () => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.get(baseUrl + '/combobox', { headers })
+    return await apiService.get('/profile/combobox')
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const findBy = async (criteria = [], orderBy = false, limit = false, offset = false) => {
-  const params = {}
-  params.criteria = criteria
+
+  const params = {
+    criteria
+  }
+
   if (orderBy) params.orderBy = orderBy
   if (limit) params.limit = limit
   if (offset) params.offset = offset
 
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.get(`${baseUrl}?${serialize(params)}`, { headers })
+    return await apiService.get(`/profile?${serialize(params)}`)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const find = async (id) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.get(`${baseUrl}/${id}`, { headers })
+    return await apiService.get(`/profile/${id}`)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const create = async (data) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.post(baseUrl, data, { headers })
+    return await apiService.post('/profile', data)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const update = async (id, data) => {
+
   try {
-    const headers = await getHeaders()
 
-    // const res = await axios.put(`${baseUrl}/${id}`, data, { headers })
-    const res = await axios.put(`${configApp.baseUrl}/setpermission`, data, { headers })
+    return await apiService.put(`/profile/${id}/setpermission`, data)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 
 const remove = async (id) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.delete(`${baseUrl}/${id}`, { headers })
+    return await apiService.del(`/profile/${id}`)
+  } catch (error) {
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    throw error
   }
 }
 

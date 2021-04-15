@@ -1,10 +1,8 @@
-import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Row, Col, Card, CardHeader, CardBody, Button, Badge } from 'reactstrap'
+import { Row, Col, Card, CardHeader, CardBody, Button } from 'reactstrap'
 import moment from 'moment'
 
-import { SpinCircle } from 'components/Spin'
-import { confirm } from 'components/CustomModal/ModalConfirm'
 import { StripedTable } from 'components/CustomTable'
 
 import paymentAction from 'redux/actions/paymentAction'
@@ -46,7 +44,7 @@ const MyPayment = () => {
         Cell: ({ cell: { value } }) => moment(value).format('LLL')
       }
     ],
-    [dispatch]
+    []
   )
 
   const data = useSelector((store) => store.paymentReducer.payments)

@@ -3,33 +3,36 @@ import { toast } from 'react-toastify'
 import { handleCatchNotify } from 'helpers/api'
 import { configApp } from 'helpers/config'
 
-import api from 'services/paymentApi'
+import paymentApi from 'services/paymentApi'
 
 const findAll = () => {
+
   return async (dispatch) => {
+
     try {
-      const res = await api.findAll()
+
+      const data = await paymentApi.findAll()
 
       dispatch({
         type: 'PAYMENT_FIND_ALL',
-        payload: res.content
+        payload: data.content
       })
 
-      return res.code
+      return data.code
     } catch (err) {
-      if (configApp.env === 'dev') console.log('paymentAction.findAll', err)
+      // if (configApp.env === 'dev') console.log('paymentAction.findAll', err)
 
-      handleCatchNotify(err)
+      // handleCatchNotify(err)
 
-      return err.code
+      // return err.code
     }
   }
 }
-  
+
 const findBy = (criteria = [], orderBy = false, limit = false, offset = false) => {
   return async (dispatch) => {
     try {
-      const res = await api.findBy(criteria, orderBy, limit, offset)
+      const res = await paymentApi.findBy(criteria, orderBy, limit, offset)
 
       if (configApp.env === 'dev') console.log('paymentAction.findBy', res)
 
@@ -63,7 +66,7 @@ const find = (id) => {
 const create = (data) => {
   return async (dispatch) => {
     try {
-      const res = await api.create(data)
+      const res = await paymentApi.create(data)
 
       dispatch({
         type: 'PAYMENT_CREATE',
@@ -88,7 +91,7 @@ const update = (id, data) => {
     try {
       console.log("data: ", data);
 
-      const res = await api.update(id, data)
+      const res = await paymentApi.update(id, data)
 
       dispatch({
         type: 'PAYMENT_UPDATE',
@@ -111,7 +114,7 @@ const update = (id, data) => {
 const changePassword = (id, data) => {
   return async (dispatch) => {
     try {
-      const res = await api.updatePassword(id, data)
+      const res = await paymentApi.updatePassword(id, data)
 
       dispatch({
         type: 'PAYMENT_UPDATE_PASSWORD',
@@ -134,7 +137,7 @@ const changePassword = (id, data) => {
 const editRegions = (data) => {
   return async (dispatch) => {
     try {
-      const res = await api.editRegions(data)
+      const res = await paymentApi.editRegions(data)
 
       dispatch({
         type: 'PAYMENT_EDIT_REGIONS',
@@ -157,7 +160,7 @@ const editRegions = (data) => {
 const remove = (id) => {
   return async (dispatch) => {
     try {
-      const res = await api.remove(id)
+      const res = await paymentApi.remove(id)
 
       dispatch({
         type: 'PAYMENT_REMOVE',

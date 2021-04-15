@@ -1,57 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTable, useSortBy, usePagination, useGlobalFilter } from 'react-table'
-import {
-  Table,
-  Button,
-  CustomInput,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  FormGroup,
-  Label
-} from 'reactstrap'
 
-const propTypes = {
-  columns: PropTypes.array.isRequired,
-  data: PropTypes.array.isRequired,
-  loading: PropTypes.bool,
-  defaultPageSize: PropTypes.number,
-  defaultSorted: PropTypes.array
-}
+import TableToolbar from './TableToolbar'
 
-const defaultProps = {
-  defaultPageSize: 10,
-  defaultSorted: []
-}
+import { Table, Button, CustomInput, FormGroup, Label } from 'reactstrap'
 
-// Define a default UI for filtering
-const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
-  return (
-    <div className="rt-filter">
-      <FormGroup>
-        <InputGroup>
-          <Input
-            value={globalFilter || ''}
-            onChange={(e) => {
-              setGlobalFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
-            }}
-            placeholder="Buscar..."
-          />
-          <InputGroupAddon addonType="append">
-            <InputGroupText>
-              <i className="icon-magnifier"></i>
-            </InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-      </FormGroup>
-    </div>
-  )
-}
+import './StripedTable.css'
 
-// Our table component
-const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }) => {
+const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted, options = {} }) => {
+
+  const toolbar_options = Object.assign({}, options.toolbar)
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -68,22 +28,22 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
     setPageSize,
     setGlobalFilter,
     state: { pageIndex, pageSize, globalFilter }
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: {
-        pageSize: defaultPageSize,
-        sortBy: defaultSorted
-      }
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination
-  )
+  } = useTable({
+    columns,
+    data,
+    initialState: {
+      pageSize: defaultPageSize,
+      sortBy: defaultSorted
+    }
+  }, useGlobalFilter, useSortBy, usePagination)
+
   return (
     <React.Fragment>
-      <GlobalFilter globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+      <TableToolbar
+        options={toolbar_options}
+        filterCriteria={globalFilter}
+        onFilter={setGlobalFilter}
+      />
       <Table striped hover responsive {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -109,7 +69,13 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {!loading ? (
+          {loading ? (
+            <tr>
+              <td align="center" colSpan="1000">
+                Cargando...
+              </td>
+            </tr>
+          ) : (
             data.length > 0 ? (
               page.map((row) => {
                 prepareRow(row)
@@ -124,16 +90,10 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
             ) : (
               <tr>
                 <td align="center" colSpan="1000">
-                  No data available in table
+                  No se encontraron registros
                 </td>
               </tr>
             )
-          ) : (
-            <tr>
-              <td align="center" colSpan="1000">
-                Loading...
-              </td>
-            </tr>
           )}
         </tbody>
         <tfoot>
@@ -170,14 +130,14 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
               setPageSize(Number(e.target.value))
             }}
           >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
+            {[100, 200, 300, 400, 500].map((pageSize) => (
               <option key={pageSize} value={pageSize}>
-                Show {pageSize}
+                Mostrar {pageSize}
               </option>
             ))}
           </CustomInput>
           <Label className="ml-2">
-            Page {pageIndex + 1} to {pageOptions.length}
+            Página {pageIndex + 1} al {pageOptions.length}
           </Label>
         </FormGroup>
       </div>
@@ -201,7 +161,17 @@ const StripedTable = ({ columns, data, loading, defaultPageSize, defaultSorted }
   )
 }
 
-StripedTable.propTypes = propTypes
-StripedTable.defaultProps = defaultProps
+StripedTable.propTypes = {
+  columns: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
+  defaultPageSize: PropTypes.number,
+  defaultSorted: PropTypes.array
+}
+
+StripedTable.defaultProps = {
+  defaultPageSize: 10,
+  defaultSorted: []
+}
 
 export { StripedTable }

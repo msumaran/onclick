@@ -31,7 +31,7 @@ const Profile = () => {
   const fetchProfile = useCallback(() => {
 
     dispatch(profileAction.findAll())
-  }, [ dispatch, loaded ])
+  }, [ dispatch ])
 
   const columns = useMemo(
     () => [

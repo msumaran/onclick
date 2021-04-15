@@ -1,25 +1,23 @@
-import axios from 'axios'
 
-import { getHeaders, handleError } from 'helpers/api'
-import { configApp } from 'helpers/config'
-
-const baseUrl = `${configApp.baseUrl}`
+import apiService from 'services/apiService'
 
 const login = async (username, password) => {
-  try {
-    const headers = await getHeaders()
 
-    const res = await axios.post(`${baseUrl}/login_check`, { username, password }, { headers })
+  try {
+
+    const data = await apiService.post('/login_check', { username, password })
 
     localStorage.setItem('session', JSON.stringify({
-      name: res.data.name,
-      profileId: res.data.profileId,
-      token: res.data.token
+      name: data.name,
+      profileId: data.profileId,
+      token: data.token,
+      tutorial: true,
     }))
 
-    return res.data
-  } catch (err) {
-    handleError(err)
+    return data
+  } catch (error) {
+
+    //
   }
 }
 
@@ -29,14 +27,13 @@ const logout = () => {
 }
 
 const selfChangePassword = async (password) => {
+
   try {
-    const headers = await getHeaders()
 
-    const res = await axios.put(`${baseUrl}/user/self-change-password`, { password }, { headers })
+    const data = await apiService.put('/user/self-change-password', { password })
 
-    return res.data
+    return data
   } catch (err) {
-    handleError(err)
   }
 }
 
@@ -44,22 +41,17 @@ const getPermissions = async () => {
 
   try {
 
-    const headers = await getHeaders()
+    const data = await apiService.get('/account')
 
-    const res = await axios.get(`${baseUrl}/account`, { headers })
-
-    return res.data
+    return data
   } catch (error) {
 
-    handleError(error)
   }
 }
 
-const accountApi = {
+export default {
   login,
   logout,
   selfChangePassword,
   getPermissions,
 }
-
-export default accountApi

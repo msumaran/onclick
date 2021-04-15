@@ -1,7 +1,8 @@
 
-import { handleCatchNotify } from 'helpers/api'
-import { configApp } from 'helpers/config'
-import api from 'services/landingApi'
+import { toast } from 'react-toastify'
+
+import { toastDefaults } from 'helpers/config'
+import landingApi from 'services/landingApi'
 
 const getMyLanding = () => {
 
@@ -9,41 +10,66 @@ const getMyLanding = () => {
 
         try {
 
-            const data = await api.getMyLanding()
+            const data = await landingApi.getMyLanding()
 
             dispatch({
                 type: 'LANDING_LOAD_FROM_DB',
                 payload: {
                     code: data.content.code,
                     html: data.content.html,
+                    seo: data.content.seo
                 }
             })
         } catch (error) {
-            if (configApp.env === 'dev') console.log('landingAction.findAll', error)
-
-            handleCatchNotify(error)
         }
     }
 }
 
-const saveMyLanding = (code, html) => {
+const saveDraft = (data) => {
 
     return async (dispatch) => {
 
         dispatch({
-            type: 'LANDING_SAVE_TO_DB_START',
+            type: 'LANDING_SAVE_DRAFT_TO_DB_START',
         })
 
         try {
-            await api.saveMyLanding(code, html)
+            const _data = await landingApi.saveMyLanding(data)
 
             dispatch({
-                type: 'LANDING_SAVE_TO_DB_END',
+                type: 'LANDING_SAVE_DRAFT_TO_DB_END',
             })
+
+            toast.success(_data.message, toastDefaults)
         } catch (error) {
 
             dispatch({
-                type: 'LANDING_SAVE_TO_DB_ERROR',
+                type: 'LANDING_SAVE_DRAFT_TO_DB_ERROR',
+            })
+        }
+    }
+}
+
+const publish = (data) => {
+
+    return async (dispatch) => {
+
+        dispatch({
+            type: 'LANDING_PUBLISH_START',
+        })
+
+        try {
+            const _data = await landingApi.saveMyLanding(data)
+
+            dispatch({
+                type: 'LANDING_PUBLISH_END',
+            })
+
+            toast.success(_data.message, toastDefaults)
+        } catch (error) {
+
+            dispatch({
+                type: 'LANDING_PUBLISH_ERROR',
             })
         }
     }
@@ -51,5 +77,6 @@ const saveMyLanding = (code, html) => {
 
 export default {
     getMyLanding,
-    saveMyLanding,
+    saveDraft,
+    publish,
 }

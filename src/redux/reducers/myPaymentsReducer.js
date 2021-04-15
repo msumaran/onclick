@@ -20,6 +20,8 @@ const myPaymentsReducer = (state = defaultState, action) => {
                 st.payments = [...st.payments, action.payload]
             }
             break
+        default:
+            //
     }
 
     return st
