@@ -356,13 +356,27 @@ body {
     flex: 0 0 30px;
 }
 
-@media (max-width: 991.98px) {
+
+@media (max-width: 992px) {
 
     .app-header {
 
         .navbar-brand {
             left: 45px;
             margin-left: 0;
+        }
+    }
+}
+
+@media (min-width: 992px) {
+
+    .brand-minimized {
+
+        .app-header {
+
+            .navbar-brand {
+                background-color: #1d5cc1;
+            }
         }
     }
 }

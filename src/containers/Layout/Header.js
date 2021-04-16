@@ -30,8 +30,8 @@ const Header = (props) => {
         }}
         minimized={{
           src: iso,
-          width: 30,
-          height: 30,
+          width: 40,
+          height: 40,
           alt: 'ISO'
         }}
       />
