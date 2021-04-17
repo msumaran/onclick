@@ -16,6 +16,7 @@ const initialState = {
     loaded: false,
     saveDraftStatus: '',
     publishStatus: '',
+    saveSeoStatus: '',
 }
 
 const landingReducer = (state = initialState, { type, payload }) => {
@@ -57,6 +58,15 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_PUBLISH_ERROR':
             st.publishStatus = 'error'
+            break
+        case 'LANDING_SAVE_SEO_START':
+            st.saveSeoStatus = 'saving'
+            break
+        case 'LANDING_SAVE_SEO_END':
+            st.saveSeoStatus = 'saved'
+            break
+        case 'LANDING_SAVE_SEO_ERROR':
+            st.saveSeoStatus = 'error'
             break
         default:
             //

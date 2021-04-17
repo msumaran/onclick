@@ -25,6 +25,7 @@ const MyLanding = () => {
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
     const landingSaveDraftStatus = useSelector((state) => state.landingReducer.saveDraftStatus)
     const landingPublishStatus = useSelector((state) => state.landingReducer.publishStatus)
+    const saveSeoStatus = useSelector((state) => state.landingReducer.saveSeoStatus)
 
     const [ state, setState ] = useState({
         design: JSON.parse(landingCode),
@@ -81,6 +82,15 @@ const MyLanding = () => {
         }
     }
 
+    const getSaveSeoStatus = () => {
+
+        if (saveSeoStatus === 'saving') {
+            return 'Guardando...'
+        } else {
+            return 'Guardar'
+        }
+    }
+
     const onLoadDesign = () => {
 
         console.log('Design loaded')
@@ -115,7 +125,6 @@ const MyLanding = () => {
             const { design } = editor_data
 
             const data = {
-                seo,
                 code: JSON.stringify({ body: design.body }),
             }
 
@@ -132,13 +141,17 @@ const MyLanding = () => {
             const { design, html } = editor_data
 
             const data = {
-                seo,
                 code: JSON.stringify({ body: design.body }),
                 html,
             }
 
             dispatch(landingActions.publish(data))
         })
+    }
+
+    const saveSeo = () => {
+
+        dispatch(landingActions.saveSeo(seo))
     }
 
     const hideSidebar = () => {
@@ -173,10 +186,7 @@ const MyLanding = () => {
                             <NavItem>
                                 <NavLink
                                     className={activeTab === 'seo' ? 'active' : ''}
-                                    onClick={() => {
-
-                                        setActiveTab('seo')
-                                    }}
+                                    onClick={() => setActiveTab('seo')}
                                 >
                                     SEO
                                 </NavLink>
@@ -284,6 +294,15 @@ const MyLanding = () => {
                                 </div>
                             </TabPane>
                             <TabPane tabId='seo'>
+                                <div className="btn-toolbar tab-pane-toolbar">
+                                    <div className="btn-group">
+                                        <button className="btn btn-primary"
+                                            onClick={() => saveSeo()}
+                                        >
+                                            <i className="icon-save"></i> {getSaveSeoStatus()}
+                                        </button>
+                                    </div>
+                                </div>
                                 <form>
                                     <div className="form-group row">
                                         <label htmlFor="" className="col-sm-2 col-form-label text-right">
