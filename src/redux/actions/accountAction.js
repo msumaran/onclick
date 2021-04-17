@@ -16,6 +16,8 @@ const login = (username, password) => {
       })
 
       window.location.replace(window.location.pathname)
+
+      return res.code
     } catch (error) {
 
       throw error

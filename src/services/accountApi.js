@@ -18,6 +18,7 @@ const login = async (username, password) => {
   } catch (error) {
 
     //
+    throw error
   }
 }
 
@@ -33,7 +34,9 @@ const selfChangePassword = async (password) => {
     const data = await apiService.put('/user/self-change-password', { password })
 
     return data
-  } catch (err) {
+  } catch (error) {
+
+    throw error
   }
 }
 
