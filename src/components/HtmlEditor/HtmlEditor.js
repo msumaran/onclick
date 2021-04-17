@@ -58,10 +58,15 @@ class HtmlEditor extends React.Component {
                 showDefaultFonts: true,
                 customFonts: [
                     {
+                        label: "Roboto",
+                        value: "'Roboto', sans-serif",
+                        url: "https://fonts.googleapis.com/css2?family=Roboto"
+                    },
+                    {
                         label: "Train One",
                         value: "'Train One',cursive",
                         url: "https://fonts.googleapis.com/css2?family=Train+One"
-                      }
+                    },
                 ]
               },
         })
