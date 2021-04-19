@@ -81,7 +81,13 @@ const Dashboard = (props) => {
 
   const [modal, setModal] = useState(session.tutorial);
 
-  const toggle = () => setModal(!modal);
+  const toggle = () => {
+
+    setModal(!modal)
+
+    setActiveIndex(0)
+  }
+
   const closeModal = () => {
     session.tutorial = false;
     localStorage.setItem('session', JSON.stringify(session))
@@ -104,13 +110,13 @@ const Dashboard = (props) => {
         </div>
       </CarouselItem>
     );
-  });
+  })
 
   return (
     <div className="animated fadeIn">
       <h1>Bienvenido a OnClick.la</h1>
       <p>
-        ¿Deseas ver el uso de la plataforma nuevamente?
+        ¿Deseas ver el uso de la plataforma nuevamente?&nbsp;
         <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
       </p>
 
