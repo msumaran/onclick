@@ -136,7 +136,7 @@ const MyPaymentForm = (props) => {
                                     name="cardname"
                                     value={formik.values.cardname}
                                     onChange={formik.handleChange}
-                                    invalid={formik.errors.cardname ? true : false}
+                                    invalid={formik.errors.cardname && formik.touched.cardname ? true : false}
                                 />
                                 <FormFeedback>{formik.errors.cardname}</FormFeedback>
                             </FormGroup>
@@ -158,7 +158,7 @@ const MyPaymentForm = (props) => {
                                             formik.handleChange(e)
                                         }
                                     }
-                                    invalid={formik.errors.cardnumber ? true : false}
+                                    invalid={formik.errors.cardnumber && formik.touched.cardnumber ? true : false}
                                 >
                                     {(inputProps) => <Input {...inputProps}  type="text" name="cardnumber"  /> }
                                 </InputMask>
@@ -176,7 +176,13 @@ const MyPaymentForm = (props) => {
                                     <FormGroup>
                                         <Label>Expiración</Label>
 
-                                        <InputMask mask="99/9999" maskChar="" alwaysShowMask="true" value={formik.values.carddate} onChange={formik.handleChange} invalid={formik.errors.carddate ? true : false} >
+                                        <InputMask mask="99/9999"
+                                            maskChar=""
+                                            alwaysShowMask="true"
+                                            value={formik.values.carddate}
+                                            onChange={formik.handleChange}
+                                            invalid={formik.errors.carddate && formik.touched.carddate ? true : false}
+                                        >
                                             {(inputProps) => <Input {...inputProps}  type="text" name="carddate"  /> }
                                         </InputMask>
 
@@ -191,7 +197,7 @@ const MyPaymentForm = (props) => {
                                             name="cardcvv"
                                             value={formik.values.cardcvv}
                                             onChange={formik.handleChange}
-                                            invalid={formik.errors.cardcvv ? true : false}
+                                            invalid={formik.errors.cardcvv && formik.touched.cardcvv ? true : false}
                                         />
                                         <FormFeedback>{formik.errors.cardcvv}</FormFeedback>
                                     </FormGroup>
@@ -215,7 +221,7 @@ const MyPaymentForm = (props) => {
                                                 formik.handleChange(e)
                                             }
                                         }
-                                        invalid={formik.errors.pack_id ? true : false}
+                                        invalid={formik.errors.pack_id && formik.touched.pack_id ? true : false}
                                     >
                                         <option value="" label="Seleccione" />
                                         {props.packs.map((pack, i) => (
