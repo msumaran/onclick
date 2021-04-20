@@ -356,6 +356,26 @@ body {
     flex: 0 0 30px;
 }
 
+.app-feedback {
+
+    .btn-feedback {
+        background-color: transparent;
+        border: 0 none;
+        border-radius: 0px;
+        font-size: 1.2rem;
+
+        &:hover {
+            background-color: #c3c3c3;
+        }
+
+        &:focus {
+            background-color: #c3c3c3;
+            border: 0 none;
+            outline: none;
+        }
+    }
+}
+
 
 @media (max-width: 992px) {
 

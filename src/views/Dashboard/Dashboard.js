@@ -94,24 +94,6 @@ const Dashboard = (props) => {
     setModal(!modal);
   }
 
-  const slides = items.map((item) => {
-    return (
-      <CarouselItem
-        onExiting={() => setAnimating(true)}
-        onExited={() => setAnimating(false)}
-        key={item.id}
-      >
-        <img src={item.src} alt={item.altText} className="img-fluid" />
-        {/* <CarouselCaption captionText={item.caption} captionHeader={item.caption} /> */}
-        <div className="text-center">
-        {
-          item.id == 5 ? <Button onClick={closeModal} outline color="secondary" >Aceptar</Button> : <Button onClick={closeModal} outline color="secondary" >Saltar tutorial</Button>
-        }
-        </div>
-      </CarouselItem>
-    );
-  })
-
   return (
     <div className="animated fadeIn">
       <h1>Bienvenido a OnClick.la</h1>
@@ -120,20 +102,36 @@ const Dashboard = (props) => {
         <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
       </p>
 
-
       <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} >
         <ModalBody>
-          <Carousel activeIndex={activeIndex} next={next} previous={previous} className="sliderTutorial"  autoPlay={false} interval={false}  >
+          <Carousel
+            className="sliderTutorial"
+            activeIndex={activeIndex}
+            next={next}
+            previous={previous}
+            autoPlay={false}
+            interval={false}
+          >
             <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
-            {slides}
+            {items.map((item) => (
+              <CarouselItem
+                onExiting={() => setAnimating(true)}
+                onExited={() => setAnimating(false)}
+                key={item.id}
+              >
+                <img src={item.src} alt={item.altText} className="img-fluid" />
+                <div className="text-center">
+                  <Button onClick={closeModal} outline color="blue-dark" >
+                    {item.id === 5 ? 'Aceptar' : 'Saltar tutorial'}
+                  </Button>
+                </div>
+              </CarouselItem>
+            ))}
             <CarouselControl direction="prev" directionText="Previous" onClickHandler={previous} />
             <CarouselControl direction="next" directionText="Next" onClickHandler={next} />
           </Carousel>
         </ModalBody>
       </Modal>
-
-
-
     </div>
   )
 }
