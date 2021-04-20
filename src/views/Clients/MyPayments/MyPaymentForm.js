@@ -26,9 +26,9 @@ import { SpinCircle } from '../../../components/Spin'
 
 import InputMask from 'react-input-mask';
 
-import ccvisa from 'assets/img/cc-visa.svg';
-import ccmastercard from 'assets/img/cc-mastercard.svg';
-import ccamericanexpres from 'assets/img/cc-americanexpress.svg';
+import imgvisa from 'assets/img/cc-visa.svg';
+import imgmastercard from 'assets/img/cc-mastercard.svg';
+import imgamericanexpres from 'assets/img/cc-americanexpress.svg';
 
 const MyPaymentForm = (props) => {
 
@@ -51,9 +51,9 @@ const MyPaymentForm = (props) => {
 
     const [cards, setCards] = useState(
         [
-            {id:"visa", img: ccvisa, opacity:true, status:"disabled"},
-            {id:"master", img: ccmastercard, opacity:true, status:"disabled"},
-            {id:"american", img: ccamericanexpres, opacity:true, status:"disabled"},
+            {id:"visa", img: imgvisa, opacity:true, status:"disabled"},
+            {id:"master", img: imgmastercard, opacity:true, status:"disabled"},
+            {id:"american", img: imgamericanexpres, opacity:true, status:"disabled"},
         ]
     );
 
@@ -62,22 +62,22 @@ const MyPaymentForm = (props) => {
         var firstLetter = value.split("");
 
         let cards = [
-            {id:"visa", img: ccvisa, opacity:true, status:"disabled"},
-            {id:"master", img: ccmastercard, opacity:true, status:"disabled"},
-            {id:"american", img: ccamericanexpres, opacity:true, status:"disabled"},
+            {id:"visa", img: imgvisa, opacity:true, status:"disabled"},
+            {id:"master", img: imgmastercard, opacity:true, status:"disabled"},
+            {id:"american", img: imgamericanexpres, opacity:true, status:"disabled"},
         ];
 
         switch (firstLetter[0]) {
             case "3":
-                cards[2] = {id:"american", img: ccamericanexpres, opacity:true, status:""};
+                cards[2] = {id:"american", img: imgamericanexpres, opacity:true, status:""};
                 setCards(cards);
                 break;
             case "4":
-                cards[0] = {id:"visa", img: ccvisa, opacity:true, status:""};
+                cards[0] = {id:"visa", img: imgvisa, opacity:true, status:""};
                 setCards(cards);
                 break;
             case "5":
-                cards[1] = {id:"master", img: ccmastercard, opacity:true, status:""};
+                cards[1] = {id:"master", img: imgmastercard, opacity:true, status:""};
                 setCards(cards);
                 break;
             default:
