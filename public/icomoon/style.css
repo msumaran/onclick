@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon-onclick';
-  src:  url('fonts/icomoon-onclick.eot?rrn640');
-  src:  url('fonts/icomoon-onclick.eot?rrn640#iefix') format('embedded-opentype'),
-    url('fonts/icomoon-onclick.ttf?rrn640') format('truetype'),
-    url('fonts/icomoon-onclick.woff?rrn640') format('woff'),
-    url('fonts/icomoon-onclick.svg?rrn640#icomoon-onclick') format('svg');
+  src:  url('fonts/icomoon-onclick.eot?jc8ghb');
+  src:  url('fonts/icomoon-onclick.eot?jc8ghb#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-onclick.ttf?jc8ghb') format('truetype'),
+    url('fonts/icomoon-onclick.woff?jc8ghb') format('woff'),
+    url('fonts/icomoon-onclick.svg?jc8ghb#icomoon-onclick') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.oc-feedback:before {
+  content: "\e90d";
+}
 .oc-edit:before {
   content: "\e90a";
 }

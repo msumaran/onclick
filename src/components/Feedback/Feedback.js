@@ -45,8 +45,8 @@ const Feedback = (props) => {
 
     return (
         <div className="app-feedback">
-            <button className="btn btn-sm btn-secondary" onClick={() => toggleVisible()}>
-              <i className="icon-bubbles"></i>
+            <button className="btn-feedback" onClick={() => toggleVisible()}>
+              <i className="oc oc-feedback"></i>
             </button>
 
             {!visible ? null : (
