@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import './Feedback.css'
+import './Feedback.scss'
 
 const defaultFeedback = {
     type: '',
@@ -45,7 +45,7 @@ const Feedback = (props) => {
 
     return (
         <div className="app-feedback">
-            <button className="btn-feedback" onClick={() => toggleVisible()}>
+            <button className={`btn-feedback ${visible ? 'active' : ''}`} onClick={() => toggleVisible()}>
               <i className="oc oc-feedback"></i>
             </button>
 

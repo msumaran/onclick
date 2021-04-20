@@ -1,0 +1,39 @@
+
+.app-feedback {
+    position: relative;
+
+    .btn-feedback {
+        background-color: transparent;
+        border: 0 none;
+        border-radius: 0px;
+        font-size: 1.2rem;
+
+        &:hover {
+            background-color: #c3c3c3;
+        }
+
+        &:focus,
+        &.active {
+            background-color: #c3c3c3;
+            border: 0 none;
+            outline: none;
+        }
+    }
+
+    .feedback-window {
+        background-color: #f1efef;
+        border: 1px solid #ddd;
+        box-shadow: 1px 1px 4px 0px #b6b6b6;
+        padding: 10px;
+        position: absolute;
+        bottom: 34px;
+        right: 0;
+        width: 420px;
+
+        .feedback-close {
+            border: 0 none;
+            float: right;
+            outline: none;
+        }
+    }
+}
