@@ -17,6 +17,8 @@ import myPaymentsReducer from 'redux/reducers/myPaymentsReducer'
 import myContactsReducer from 'redux/reducers/myContactsReducer'
 import reportReducer from 'redux/reducers/reportReducer'
 
+import { ActivationsReducer } from 'redux/activations.redux'
+
 const reducers = combineReducers({
   accountReducer,
   userReducer,
@@ -32,6 +34,8 @@ const reducers = combineReducers({
   myPaymentsReducer,
   myContactsReducer,
   reportReducer,
+
+  ActivationsReducer,
 })
 
 export default reducers

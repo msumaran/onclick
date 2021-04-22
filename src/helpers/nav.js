@@ -10,6 +10,12 @@ const Navigation = (permissions) => {
       nameMachine: 'dashboard'
     },
     {
+      name: 'Activaciones',
+      url: '/activations',
+      icon: 'oc oc-users',
+      nameMachine: 'page_activation'
+    },
+    {
       name: 'Admin Clientes',
       url: '/client',
       icon: 'oc oc-clients',

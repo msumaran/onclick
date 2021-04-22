@@ -135,6 +135,9 @@ const onApiError = (endpoint, method, error, headers) => {
     } else if (error.response.status === 401) {
 
         message = error.response.data.message
+    } else if (error.response.status === 404) {
+
+        message = 'Error de servidor'
     } else {
 
         message = error.response.data.error
