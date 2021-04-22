@@ -33,6 +33,9 @@ const saveDraft = (data) => {
 
         dispatch({
             type: 'LANDING_SAVE_DRAFT_TO_DB_START',
+            payload: {
+                code: data.code
+            }
         })
 
         try {
@@ -60,6 +63,9 @@ const publish = (data) => {
 
         dispatch({
             type: 'LANDING_PUBLISH_START',
+            payload: {
+                code: data.code
+            }
         })
 
         try {

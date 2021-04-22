@@ -43,6 +43,7 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_SAVE_DRAFT_TO_DB_START':
             st.saveDraftStatus = 'saving'
+            st.code = payload.code
             break
         case 'LANDING_SAVE_DRAFT_TO_DB_END':
             st.saveDraftStatus = 'saved'
@@ -52,6 +53,7 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_PUBLISH_START':
             st.publishStatus = 'publishing'
+            st.code = payload.code
             break
         case 'LANDING_PUBLISH_END':
             st.publishStatus = 'published'
