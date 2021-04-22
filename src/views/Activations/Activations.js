@@ -40,7 +40,7 @@ const Activations = () => {
                                 {!permission_helper.validate('page_activation', 'r') ? null : (
                                     <StripedTable
                                         columns={[
-                                            { Header: 'Plan', accessor: 'pack' },
+                                            { Header: 'Plan', accessor: 'pack.name' },
                                             { Header: 'Nombres y apellidos', accessor: 'fullname' },
                                             { Header: 'Email', accessor: 'email' },
                                             { Header: 'Teléfono', accessor: 'phone' },
@@ -48,7 +48,7 @@ const Activations = () => {
                                         ]}
                                         data={activations_result}
                                         defaultSorted={[
-                                            { id: 'pack' }
+                                            { id: 'pack.name' }
                                         ]}
                                         loading={activations_load_status === 'loading'}
                                     />
