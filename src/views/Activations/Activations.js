@@ -23,7 +23,7 @@ const Activations = () => {
 
         if (activations_load_status === '') {
 
-            dispatch(ActivationActions.ActionFindAll())
+            dispatch(ActivationActions.findAll())
         }
     }, [ activations_load_status, dispatch ])
 
@@ -44,7 +44,7 @@ const Activations = () => {
                                             { Header: 'Nombres y apellidos', accessor: 'fullname' },
                                             { Header: 'Email', accessor: 'email' },
                                             { Header: 'Teléfono', accessor: 'phone' },
-                                            { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar'},
+                                            { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar' },
                                         ]}
                                         data={activations_result}
                                         defaultSorted={[

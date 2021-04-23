@@ -32,7 +32,7 @@ export const ActivationsReducer = (state = initialState, action) => {
     return st
 }
 
-const ActionFindAll = () => {
+const findAll = () => {
 
     return async (dispatch) => {
 
@@ -61,6 +61,8 @@ const ActionFindAll = () => {
     }
 }
 
-export default {
-    ActionFindAll,
+const ActivationActions = {
+    findAll,
 }
+
+export default ActivationActions
