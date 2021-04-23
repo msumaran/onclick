@@ -44,7 +44,7 @@ const Activations = () => {
                                             { Header: 'Nombres y apellidos', accessor: 'fullname' },
                                             { Header: 'Email', accessor: 'email' },
                                             { Header: 'Teléfono', accessor: 'phone' },
-                                            { Header: 'Estado', accessor: 'is_active' },
+                                            { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar'},
                                         ]}
                                         data={activations_result}
                                         defaultSorted={[

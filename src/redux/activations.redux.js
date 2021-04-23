@@ -47,7 +47,7 @@ const ActionFindAll = () => {
             dispatch({
                 type: ACTIVATIONS_LOAD_SUCCESS,
                 content: {
-                    result: data.content.result
+                    result: data.content
                 }
             })
         } catch (error) {
