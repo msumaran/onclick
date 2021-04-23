@@ -80,6 +80,12 @@ const Navigation = (permissions) => {
       ]
     },
     {
+      name: 'Feedback',
+      url: '/feedback',
+      icon: 'oc oc-feedback',
+      nameMachine: 'feedback'
+    },
+    {
       name: 'Reportes',
       url: '/report',
       icon: 'oc oc-reports',
