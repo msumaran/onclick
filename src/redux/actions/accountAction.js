@@ -15,7 +15,8 @@ const login = (username, password) => {
         payload: res
       })
 
-      window.location.replace(window.location.pathname)
+      // window.location.replace(window.location.pathname)
+      window.location.replace( `${process.env.PUBLIC_URL}` )
 
       return res.code
     } catch (error) {
@@ -59,6 +60,26 @@ const selfChangePassword = (password) => {
   }
 }
 
+const recoveryAccount = (username) => {
+  return async (dispatch) => {
+    try {
+      const res = await accountApi.recoveryAccount(username)
+
+      dispatch({
+        type: 'ACCOUNT_RECOVERY',
+        payload: res.content
+      })
+
+      toast.success(res.message)
+
+      return res.code
+    } catch (error) {
+
+      throw error
+    }
+  }
+}
+
 const getPermissions = () => {
 
   return async (dispatch) => {
@@ -82,7 +103,8 @@ const accountAction = {
   login,
   logout,
   selfChangePassword,
-  getPermissions
+  getPermissions,
+  recoveryAccount
 }
 
 export default accountAction

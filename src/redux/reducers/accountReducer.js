@@ -25,7 +25,13 @@ const accountReducer = (state = defaultState, { type, payload }) => {
       st.isLogged = false
       st.token = undefined
       break
+    case 'ACCOUNT_RECOVERY':
+        st.isLogged = false
+        st.token = undefined
+        break
     default:
+      st.isLogged = false
+      st.token = undefined
       // none
   }
 

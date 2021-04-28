@@ -23,6 +23,7 @@ const MyPayment = React.lazy(() => import('views/Client/Payment/MyPayment'))
 const MyKanban = React.lazy(() => import('views/Tests/MyKanban/MyKanban'))
 
 const Activations = React.lazy(() => import('views/Activations/Activations'))
+const Inquiries = React.lazy(() => import('views/Inquiries/Inquiries'))
 const Feedback = React.lazy(() => import('views/Feedback/Feedback'))
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -44,6 +45,7 @@ const routes = [
 
   { path: '/activations', name: 'Activaciones', component: Activations },
   { path: '/feedback', name: 'Feedback', component: Feedback },
+  { path: '/inquiries', name: 'Consultas', component: Inquiries },
 ]
 
 export default routes

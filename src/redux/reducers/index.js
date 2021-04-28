@@ -18,6 +18,7 @@ import myContactsReducer from 'redux/reducers/myContactsReducer'
 import reportReducer from 'redux/reducers/reportReducer'
 
 import { ActivationsReducer } from 'redux/activations.redux'
+import { InquiriesReducer } from 'redux/inquiries.redux'
 import { FeedbackReducer } from 'redux/feedback.redux'
 
 const reducers = combineReducers({
@@ -37,6 +38,7 @@ const reducers = combineReducers({
   reportReducer,
 
   ActivationsReducer,
+  InquiriesReducer,
   FeedbackReducer,
 })
 

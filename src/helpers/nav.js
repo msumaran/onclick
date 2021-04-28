@@ -11,9 +11,15 @@ const Navigation = (permissions) => {
     },
     {
       name: 'Activaciones',
-      url: '/activations',
+      url: '`/activations`',
       icon: 'oc oc-users',
       nameMachine: 'page_activation'
+    },
+    {
+      name: 'Consultas',
+      url: '/inquiries',
+      icon: 'oc oc-users',
+      nameMachine: 'page_contact'
     },
     {
       name: 'Admin Clientes',
