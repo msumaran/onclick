@@ -44,10 +44,15 @@ const Login = () => {
                       username: '',
                       password: ''
                     }}
-                    onSubmit={(values, { setSubmitting }) => {
-                      dispatch(accountAction.login(values.username, values.password)).then((status) => {
-                        setSubmitting(false)
-                      })
+                    onSubmit={(values, { setSubmitting, resetForm }) => {
+                      dispatch(accountAction.login(values.username, values.password))
+                        .then((status) => {
+                          setSubmitting(false);
+                          resetForm();
+                        })
+                        .catch((error)=>{
+                          setSubmitting(false);
+                        })
                     }}
                   >
                     {({ values, isSubmitting, handleChange, handleSubmit }) => (
