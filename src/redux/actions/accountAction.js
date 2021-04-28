@@ -15,7 +15,8 @@ const login = (username, password) => {
         payload: res
       })
 
-      window.location.replace(window.location.pathname)
+      // window.location.replace(window.location.pathname)
+      window.location.replace( `${process.env.PUBLIC_URL}` )
 
       return res.code
     } catch (error) {
