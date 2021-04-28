@@ -66,8 +66,8 @@ const Header = (props) => {
               {props.user.name.substring(0, 1).toUpperCase()}
             </span>
           </DropdownToggle>
-          <DropdownMenu right>
-            <DropdownItem href="/#/security/change-password">
+          <DropdownMenu right> 
+            <DropdownItem href="/admin/#/security/change-password">
               <i className="icon-lock-open"></i> Cambiar contraseña
             </DropdownItem>
             <DropdownItem onClick={(e) => props.onLogout(e)}>
