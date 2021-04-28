@@ -18,6 +18,7 @@ import myContactsReducer from 'redux/reducers/myContactsReducer'
 import reportReducer from 'redux/reducers/reportReducer'
 
 import { ActivationsReducer } from 'redux/activations.redux'
+import { InquiriesReducer } from 'redux/inquiries.redux'
 
 const reducers = combineReducers({
   accountReducer,
@@ -36,6 +37,7 @@ const reducers = combineReducers({
   reportReducer,
 
   ActivationsReducer,
+  InquiriesReducer,
 })
 
 export default reducers
