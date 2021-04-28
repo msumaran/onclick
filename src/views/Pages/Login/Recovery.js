@@ -46,11 +46,14 @@ const Recovery = () => {
                       username: ''
                     }}
                     onSubmit={(values, { setSubmitting, resetForm}) => {
-                      dispatch(accountAction.recoveryAccount(values.username)).then((status) => {
-                        console.log("status: ",status);
-                        setSubmitting(false);
-                        resetForm();
-                      })
+                      dispatch(accountAction.recoveryAccount(values.username))
+                        .then((status) => { 
+                          setSubmitting(false);
+                          resetForm();
+                        })
+                        .catch((error) =>{ 
+                          setSubmitting(false);
+                        })
                     }}
                   >
                     {({ values, isSubmitting, handleChange, handleSubmit }) => (
