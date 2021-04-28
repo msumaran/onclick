@@ -59,6 +59,26 @@ const selfChangePassword = (password) => {
   }
 }
 
+const recoveryAccount = (username) => {
+  return async (dispatch) => {
+    try {
+      const res = await accountApi.recoveryAccount(username)
+
+      dispatch({
+        type: 'ACCOUNT_RECOVERY',
+        payload: res.content
+      })
+
+      toast.success(res.message)
+
+      return res.code
+    } catch (error) {
+
+      throw error
+    }
+  }
+}
+
 const getPermissions = () => {
 
   return async (dispatch) => {
@@ -82,7 +102,8 @@ const accountAction = {
   login,
   logout,
   selfChangePassword,
-  getPermissions
+  getPermissions,
+  recoveryAccount
 }
 
 export default accountAction

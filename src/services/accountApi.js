@@ -52,9 +52,23 @@ const getPermissions = async () => {
   }
 }
 
+const recoveryAccount = async (username) => {
+
+  try {
+
+    const data = await apiService.postOut('/ajax/user/recovery-account', { username })
+
+    return data
+  } catch (error) {
+
+    throw error
+  }
+}
+
 export default {
   login,
   logout,
   selfChangePassword,
   getPermissions,
+  recoveryAccount,
 }

@@ -217,7 +217,7 @@ const UserForm = ({ show, dismiss, isEdit }) => {
                       <SpinCircle /> Procesando...
                     </>
                   ) : (
-                    'Guardar editición'
+                    'Guardar edición'
                   )}
                 </Button>
               )}

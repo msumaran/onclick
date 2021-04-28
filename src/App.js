@@ -15,6 +15,7 @@ const loading = () => <Preloader />
 //
 const Login = React.lazy(() => import('views/Pages/Login/Login'))
 const Layout = React.lazy(() => import('containers/Layout'))
+const Recovery = React.lazy(() => import('views/Pages/Login/Recovery'))
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Router history={history} basename={process.env.PUBLIC_URL} >
           <Switch>
             <PublicRoute restricted path="/login" name="Login" component={Login} exact />
+            <PublicRoute restricted path="/recuperar-cuenta" name="Recovery" component={Recovery} exact />
             <PrivateRoute path="/" name="Admin" component={Layout} />
           </Switch>
         </Router>

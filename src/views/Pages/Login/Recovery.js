@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik } from 'formik'
 import { ToastContainer } from 'react-toastify'
@@ -28,8 +28,10 @@ import logoImage from 'assets/img/logo.svg';
 import iconUser from 'assets/img/icon-user.png';
 import iconPass from 'assets/img/icon-password.png';
 
-const Login = () => {
+const Recovery = () => {
   const dispatch = useDispatch()
+
+  // const [isSubmitting, setSubmitting] = useState(false);
 
   return (
     <div className="app flex-row align-items-center login" style={{backgroundImage: `url(${bgImage})`}}>
@@ -41,19 +43,20 @@ const Login = () => {
                 <CardBody>
                   <Formik
                     initialValues={{
-                      username: '',
-                      password: ''
+                      username: ''
                     }}
-                    onSubmit={(values, { setSubmitting }) => {
-                      dispatch(accountAction.login(values.username, values.password)).then((status) => {
-                        setSubmitting(false)
+                    onSubmit={(values, { setSubmitting, resetForm}) => {
+                      dispatch(accountAction.recoveryAccount(values.username)).then((status) => {
+                        console.log("status: ",status);
+                        setSubmitting(false);
+                        resetForm();
                       })
                     }}
                   >
                     {({ values, isSubmitting, handleChange, handleSubmit }) => (
                       <Form onSubmit={handleSubmit}>
                         <img src={logoImage} alt="logo" />
-                        <h1>Ingresa con tu cuenta</h1>
+                        <h1>Recuperar cuenta</h1>
 
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
@@ -69,47 +72,23 @@ const Login = () => {
                             placeholder="Usuario"
                           />
                         </InputGroup>
-
-                        <InputGroup className="mb-0">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                            <img src={iconPass} alt="" />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <Input
-                            type="password"
-                            name="password"
-                            value={values.password}
-                            onChange={handleChange}
-                            placeholder="Contraseña"
-                          />
-                        </InputGroup>
-
-                        <Row>
-                          <Col xs={12} className="text-right">
-                            <a href="admin#/recuperar-cuenta" target="_self" className="go-recovery" > 
-                              Olvide la contraseña
-                            </a>
-                          </Col>
-                        </Row>
-
                         <Row>
                           <Col xs={12} className="text-center" >
                             <Button type="submit" color="primary" disabled={isSubmitting} className="px-4">
                               {isSubmitting ? (
                                 <Fragment>
-                                  <SpinCircle /> Ingresando
+                                  <SpinCircle /> Enviando email
                                 </Fragment>
                               ) : (
-                                'Ingresar'
+                                'Recuperar'
                               )}
                             </Button>
                           </Col>
                         </Row>
                         <Row>
                           <Col xs={12} className="text-center">
-                            <a href={`${process.env.REACT_APP_WEBSITE_URL}`} target="_self" className="back-to-home" > 
-                              Volver a la página inicial
+                            <a href="admin#/login" target="_self" className="back-to-home" > 
+                              Iniciar sesión
                             </a>
                           </Col>
                         </Row>
@@ -127,4 +106,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Recovery

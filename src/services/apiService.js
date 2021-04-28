@@ -6,6 +6,7 @@ import { getHeaders } from 'helpers/api'
 import { configApp, toastDefaults } from 'helpers/config'
 
 const baseUrl = configApp.baseUrl
+const websiteUrl = configApp.websiteUrl
 
 const get = async (endpoint) => {
 
@@ -37,6 +38,27 @@ const post = async (endpoint, data) => {
     try {
 
         const res = await axios.post(`${baseUrl}${endpoint}`, data, { headers })
+
+        onApiResponse(endpoint, 'POST', res, headers)
+
+        return res.data
+    } catch (error) {
+
+        onApiError(endpoint, 'POST', error, headers)
+
+        throw error
+    }
+}
+
+const postOut = async (endpoint, data) => {
+
+    const headers = await getHeaders()
+
+    onApiRequest(endpoint, 'POST', data, headers)
+
+    try {
+
+        const res = await axios.post(`${websiteUrl}${endpoint}`, data, { headers })
 
         onApiResponse(endpoint, 'POST', res, headers)
 
@@ -132,14 +154,13 @@ const onApiError = (endpoint, method, error, headers) => {
     if (!error.response) {
 
         message = error.message
-    } else if (error.response.status === 401) {
+    } else if (error.response.status === 401 || error.response.status === 422) {
 
         message = error.response.data.message
     } else if (error.response.status === 404) {
 
         message = 'Error de servidor'
-    } else {
-
+    } else { 
         message = error.response.data.error
     }
 
@@ -166,4 +187,5 @@ export default {
     post,
     put,
     del,
+    postOut,
 }
