@@ -67,7 +67,7 @@ const Header = (props) => {
             </span>
           </DropdownToggle>
           <DropdownMenu right>
-            <DropdownItem href="/security/change-password">
+            <DropdownItem href="/#/security/change-password">
               <i className="icon-lock-open"></i> Cambiar contraseña
             </DropdownItem>
             <DropdownItem onClick={(e) => props.onLogout(e)}>
