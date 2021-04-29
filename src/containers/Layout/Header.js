@@ -5,6 +5,8 @@ import { UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav }
 import PropTypes from 'prop-types'
 import { AppNavbarBrand, AppSidebarToggler, AppBreadcrumb } from '@coreui/react'
 
+import { Link } from 'react-router-dom'
+
 import routes from 'helpers/routes'
 
 import logo from 'assets/img/brand/logo.png'
@@ -66,10 +68,10 @@ const Header = (props) => {
               {props.user.name.substring(0, 1).toUpperCase()}
             </span>
           </DropdownToggle>
-          <DropdownMenu right> 
-            <DropdownItem href="/admin/#/security/change-password">
+          <DropdownMenu right>
+            <Link className="dropdown-item" to="/security/change-password">
               <i className="icon-lock-open"></i> Cambiar contraseña
-            </DropdownItem>
+            </Link>
             <DropdownItem onClick={(e) => props.onLogout(e)}>
               <i className="icon-logout"></i> Cerrar sesión
             </DropdownItem>

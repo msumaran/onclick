@@ -2,6 +2,8 @@ import { toast } from 'react-toastify'
 
 import accountApi from 'services/accountApi'
 
+import { toastDefaults } from 'helpers/config'
+
 const login = (username, password) => {
 
   return async (dispatch) => {
@@ -50,7 +52,7 @@ const selfChangePassword = (password) => {
         payload: res.content
       })
 
-      toast.success(res.message)
+      toast.success(res.message, toastDefaults)
 
       return res.code
     } catch (error) {

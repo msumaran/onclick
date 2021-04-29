@@ -26,6 +26,8 @@ import accountAction from 'redux/actions/accountAction'
 
 import history from 'helpers/history'
 
+import { toastDefaults } from 'helpers/config'
+
 const ChangePassword = () => {
   const [isPassword, setIsPassword] = useState(true)
 
