@@ -11,7 +11,7 @@ const Navigation = (permissions) => {
     },
     {
       name: 'Activaciones',
-      url: '`/activations`',
+      url: '/activations',
       icon: 'oc oc-users',
       nameMachine: 'page_activation'
     },
