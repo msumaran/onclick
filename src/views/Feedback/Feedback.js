@@ -40,8 +40,17 @@ const Feedback = () => {
                                 {!permission_helper.validate('feedback', 'r') ? null : (
                                     <StripedTable
                                         columns={[
-                                            { Header: 'Tipo', accessor: 'type' },
-                                            { Header: 'Usuario', accessor: 'user.fullname' },
+                                            { Header: 'Tipo', accessor: 'type', Cell: ({ row: { original } }) => {
+
+                                                console.log({ original })
+
+                                                switch (original.type) {
+                                                    case 'sugerencia': return 'Sugerencia'
+                                                    case 'problema': return 'Queja o problema'
+                                                    default: return ''
+                                                }
+                                            } },
+                                            { Header: 'Usuario', accessor: 'user.name' },
                                             { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
                                                 <>
                                                 </>

@@ -34,11 +34,11 @@ const Feedback = (props) => {
         setVisible(false)
     }
 
-    const sendFeedback = () => {
+    const sendFeedback = async () => {
 
         data.url = location.pathname
 
-        props.dispatch(data)
+        await props.dispatch(data)
 
         hideFeedback()
     }
@@ -80,7 +80,9 @@ const Feedback = (props) => {
                                 ></textarea>
                             </div>
                             <div className="text-right">
-                                <button className="btn btn-primary" onClick={() => sendFeedback()}>Enviar</button>
+                                <button className="btn btn-primary" onClick={() => sendFeedback()}>
+                                    {!props.sending ? 'Enviar' : 'Enviando...'}
+                                </button>
                             </div>
                         </div>
                     </div>

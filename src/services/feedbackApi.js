@@ -1,13 +1,24 @@
 
 import apiService from './apiService'
 
-const api_base = '/feedback'
+const API_URL = '/feedback'
 
 export const findAll = async () => {
 
     try {
 
-        return await apiService.get(`${api_base}/combobox`)
+        return await apiService.get(`${API_URL}/combobox`)
+    } catch (error) {
+
+        throw error
+    }
+}
+
+export const create = async (data) => {
+
+    try {
+
+        return await apiService.post(API_URL, data)
     } catch (error) {
 
         throw error
@@ -16,4 +27,5 @@ export const findAll = async () => {
 
 export default {
     findAll,
+    create,
 }

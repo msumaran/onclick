@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import * as router from 'react-router-dom'
 import { Container } from 'reactstrap'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import {
   AppFooter,
   AppHeader,
@@ -19,6 +19,7 @@ import {
 import { confirm } from 'components/CustomModal/ModalConfirm'
 
 import accountAction from 'redux/actions/accountAction'
+import FeedbackActions from 'redux/feedback.redux'
 
 // sidebar nav config
 import { Navigation } from 'helpers/nav'
@@ -27,6 +28,8 @@ import routes from 'helpers/routes'
 
 import Preloader from '../../components/Preloader/Preloader'
 import Feedback from 'components/Feedback/Feedback'
+
+import { toastDefaults } from 'helpers/config'
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading content...</div>
 
@@ -42,6 +45,8 @@ const Layout = (props) => {
 
   const permissionsLoaded = useSelector((state) => state.accountReducer.loaded)
   const my_permissions = useSelector((state) => state.accountReducer.permissions)
+
+  const feedback_create_status = useSelector(state => state.FeedbackReducer.create_status)
 
   useEffect(() => {
 
@@ -64,6 +69,13 @@ const Layout = (props) => {
     },
     [dispatch]
   )
+
+  const createRow = async (data) => {
+
+    await dispatch(FeedbackActions.createRow(data))
+
+    toast.success('El mensaje se envió con éxito.', toastDefaults)
+  }
 
   return (
     <div className="app">
@@ -120,7 +132,10 @@ const Layout = (props) => {
             </main>
           </div>
           <Footer>
-            <Feedback dispatch={(data) => console.log('dispatched', data)} />
+            <Feedback
+              sending={feedback_create_status === 'creating'}
+              dispatch={async (data) => await createRow(data)}
+            />
           </Footer>
 
           <ToastContainer />
