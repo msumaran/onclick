@@ -92,8 +92,8 @@ const Login = () => {
 
                         <Row>
                           <Col xs={12} className="text-right">
-                            <a href="admin#/recuperar-cuenta" target="_self" className="go-recovery" > 
-                              Olvide la contraseña
+                            <a href="admin#/recuperar-cuenta" target="_self" className="go-recovery" >
+                              Olvidé la contraseña
                             </a>
                           </Col>
                         </Row>
@@ -113,7 +113,7 @@ const Login = () => {
                         </Row>
                         <Row>
                           <Col xs={12} className="text-center">
-                            <a href={`${process.env.REACT_APP_WEBSITE_URL}`} target="_self" className="back-to-home" > 
+                            <a href={`${process.env.REACT_APP_WEBSITE_URL}`} target="_self" className="back-to-home" >
                               Volver a la página inicial
                             </a>
                           </Col>

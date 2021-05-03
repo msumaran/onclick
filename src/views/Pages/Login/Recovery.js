@@ -47,11 +47,11 @@ const Recovery = () => {
                     }}
                     onSubmit={(values, { setSubmitting, resetForm}) => {
                       dispatch(accountAction.recoveryAccount(values.username))
-                        .then((status) => { 
+                        .then((status) => {
                           setSubmitting(false);
                           resetForm();
                         })
-                        .catch((error) =>{ 
+                        .catch((error) =>{
                           setSubmitting(false);
                         })
                     }}
@@ -60,6 +60,9 @@ const Recovery = () => {
                       <Form onSubmit={handleSubmit}>
                         <img src={logoImage} alt="logo" />
                         <h1>Recuperar cuenta</h1>
+                        <p>
+                          <small>Escribe aquí tu nombre de usuario para recuperar tu contraseña.</small>
+                        </p>
 
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">
@@ -90,7 +93,7 @@ const Recovery = () => {
                         </Row>
                         <Row>
                           <Col xs={12} className="text-center">
-                            <a href="admin#/login" target="_self" className="back-to-home" > 
+                            <a href="admin#/login" target="_self" className="back-to-home" >
                               Iniciar sesión
                             </a>
                           </Col>

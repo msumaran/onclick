@@ -60,7 +60,7 @@ const Layout = (props) => {
     (e) => {
       e.preventDefault()
 
-      confirm('Logout', 'Are you sure you want to logout?', 'Yes', 'Not', {
+      confirm('Cerrar Sesión', '¿Estás seguro que deseas cerrar tu sesión?', 'Cerrar sesión', 'Cancelar', {
         enableEscape: false,
         proceed: () => {
           dispatch(accountAction.logout())
