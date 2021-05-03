@@ -49,24 +49,24 @@ const ChangePassword = () => {
         })
       }}
     >
-      {({ values, errors, isSubmitting, handleChange, handleSubmit }) => (
-        <Form onSubmit={handleSubmit} className="form-horizontal animated fadeIn">
+      {(formik) => (
+        <Form onSubmit={formik.handleSubmit} className="form-horizontal animated fadeIn">
           <Row>
             <Col md={6}>
               <Card>
                 <CardHeader>
-                  <strong>Change Password</strong>
+                  <strong>Cambiar contraseña</strong>
                 </CardHeader>
                 <CardBody>
                   <FormGroup>
-                    <Label htmlFor="password">Password</Label>
-                    <InputGroup className={errors.password ? 'is-invalid' : null}>
+                    <Label htmlFor="password">Contraseña</Label>
+                    <InputGroup className={formik.errors.password ? 'is-invalid' : null}>
                       <Input
                         type={isPassword ? 'password' : 'text'}
                         name="password"
-                        value={values.password}
-                        onChange={handleChange}
-                        invalid={errors.password ? true : false}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        invalid={formik.errors.password && formik.touched.password ? true : false}
                       />
                       <InputGroupAddon addonType="append">
                         <Button color="secondary" onClick={togglePassword}>
@@ -74,17 +74,17 @@ const ChangePassword = () => {
                         </Button>
                       </InputGroupAddon>
                     </InputGroup>
-                    <FormFeedback>{errors.password}</FormFeedback>
+                    <FormFeedback>{formik.errors.password}</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="confirmPassword">Confirm Password</Label>
-                    <InputGroup className={errors.confirmPassword ? 'is-invalid' : null}>
+                    <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
+                    <InputGroup className={formik.errors.confirmPassword ? 'is-invalid' : null}>
                       <Input
                         type={isPassword ? 'password' : 'text'}
                         name="confirmPassword"
-                        value={values.confirmPassword}
-                        onChange={handleChange}
-                        invalid={errors.confirmPassword ? true : false}
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        invalid={formik.errors.confirmPassword && formik.touched.confirmPassword ? true : false}
                       />
                       <InputGroupAddon addonType="append">
                         <Button color="secondary" onClick={togglePassword}>
@@ -92,23 +92,23 @@ const ChangePassword = () => {
                         </Button>
                       </InputGroupAddon>
                     </InputGroup>
-                    <FormFeedback>{errors.confirmPassword}</FormFeedback>
+                    <FormFeedback>{formik.errors.confirmPassword}</FormFeedback>
                   </FormGroup>
                 </CardBody>
                 <CardFooter>
                   <div className="form-actions">
-                    <Button type="submit" color="primary" disabled={isSubmitting}>
-                      {isSubmitting ? (
+                    <Button type="submit" color="primary" disabled={formik.isSubmitting}>
+                      {formik.isSubmitting ? (
                         <Fragment>
-                          <SpinCircle /> Processing
+                          <SpinCircle /> Guardando...
                         </Fragment>
                       ) : (
-                        'Save changes'
+                        'Guardar'
                       )}
                     </Button>
                     {` `}
                     <Button type="button" color="secondary" onClick={() => history.push('/dashboard')}>
-                      Cancel
+                      Cancelar
                     </Button>
                   </div>
                 </CardFooter>
