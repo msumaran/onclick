@@ -103,6 +103,7 @@ const saveSeo = (seo) => {
 
             dispatch({
                 type: 'LANDING_SAVE_SEO_END',
+                payload: seo
             })
 
             toast.success(_data.message, toastDefaults)

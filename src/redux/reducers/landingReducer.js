@@ -66,6 +66,7 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_SAVE_SEO_END':
             st.saveSeoStatus = 'saved'
+            st.seo = payload
             break
         case 'LANDING_SAVE_SEO_ERROR':
             st.saveSeoStatus = 'error'
