@@ -9,6 +9,11 @@ import { StripedTable } from 'components/CustomTable'
 
 import FeedbackActions from 'redux/feedback.redux'
 
+import { configApp } from 'helpers/config'
+import { Link } from 'react-router-dom'
+
+const moment = require('moment')
+
 const Feedback = () => {
 
     const dispatch = useDispatch()
@@ -38,6 +43,11 @@ const Feedback = () => {
             case 'problema': return 'Queja o problema'
             default: return ''
         }
+    }
+
+    const getRowDate = (date) => {
+
+        return moment(date).format('DD/MM/YYYY H:mm a')
     }
 
     useEffect(() => {
@@ -94,9 +104,19 @@ const Feedback = () => {
                                 <input
                                     type="text"
                                     className="form-control-plaintext"
-                                    defaultValue={feedbackRow.createdAt}
+                                    defaultValue={getRowDate(feedbackRow.createdAt)}
                                     readOnly
                                 />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label sm={3}>Url</Label>
+                            <Col sm={9} style={{
+                                paddingTop: 7
+                            }}>
+                                <Link to={feedbackRow.url}>
+                                    {configApp.websiteUrl + '/admin/#' + feedbackRow.url}
+                                </Link>
                             </Col>
                         </FormGroup>
                         <FormGroup row>
