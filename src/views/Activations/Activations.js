@@ -172,7 +172,7 @@ const Activations = () => {
                         </FormGroup>
                         <FormGroup row>
                             <Label sm={4}>Fecha de nacimiento</Label>
-                            <Col sm={4}>
+                            <Col sm={5}>
                                 <input
                                     type="date"
                                     className="form-control"
