@@ -122,13 +122,13 @@ const Activations = () => {
                 </Col>
             </Row>
 
-            <Modal size="lg" isOpen={showModal} toggle={() => setShowModal(!showModal)}>
+            <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)}>
                 <ModalHeader toggle={() => setShowModal(false)}>Registrar nuevo usuario</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup row>
-                            <Label sm={3}>Plan</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Plan</Label>
+                            <Col sm={8}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -138,8 +138,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Nombres</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Nombres</Label>
+                            <Col sm={8}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -149,8 +149,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Apellidos</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Apellidos</Label>
+                            <Col sm={8}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -160,8 +160,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Email</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Email</Label>
+                            <Col sm={8}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -171,8 +171,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Fecha de nacimiento</Label>
-                            <Col sm={3}>
+                            <Label sm={4}>Fecha de nacimiento</Label>
+                            <Col sm={4}>
                                 <input
                                     type="date"
                                     className="form-control"
@@ -182,8 +182,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Teléfono</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Teléfono</Label>
+                            <Col sm={4}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -193,8 +193,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>DNI</Label>
-                            <Col md={3} sm={9}>
+                            <Label sm={4}>DNI</Label>
+                            <Col md={4} sm={9}>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -204,8 +204,8 @@ const Activations = () => {
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Dirección</Label>
-                            <Col sm={6}>
+                            <Label sm={4}>Dirección</Label>
+                            <Col sm={8}>
                                 <textarea
                                     type="text"
                                     className="form-control"
