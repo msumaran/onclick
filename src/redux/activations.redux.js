@@ -1,16 +1,17 @@
 
 import activationsApi from 'services/activationsApi'
 
-import { toast } from 'react-toastify'
-import { toastDefaults } from 'helpers/config'
-
 export const ACTIVATIONS_LOAD_REQUEST = 'activations-load-request'
 export const ACTIVATIONS_LOAD_SUCCESS = 'activations-load-success'
 export const ACTIVATIONS_LOAD_ERROR = 'activations-load-error'
+export const ACTIVATIONS_CREATE_USER_REQUEST = 'activations-load-request'
+export const ACTIVATIONS_CREATE_USER_SUCCESS = 'activations-load-success'
+export const ACTIVATIONS_CREATE_USER_ERROR = 'activations-load-error'
 
 const initialState = {
     result: [],
     load_status: '',
+    create_status: ''
 }
 
 export const ActivationsReducer = (state = initialState, action) => {
@@ -27,6 +28,15 @@ export const ActivationsReducer = (state = initialState, action) => {
     } else if (action.type === ACTIVATIONS_LOAD_ERROR) {
 
         st.load_status = 'error'
+    } else if (action.type = ACTIVATIONS_CREATE_USER_REQUEST) {
+
+        st.create_status = 'creating'
+    } else if (action.type = ACTIVATIONS_CREATE_USER_SUCCESS) {
+
+        st.create_status = 'created'
+    } else if (action.type = ACTIVATIONS_CREATE_USER_ERROR) {
+
+        st.create_status = 'error'
     }
 
     return st
@@ -61,8 +71,35 @@ const findAll = () => {
     }
 }
 
+const createUser = (user_data) => {
+
+    return async (dispatch) => {
+
+        dispatch({
+            type: ACTIVATIONS_CREATE_USER_REQUEST
+        })
+
+        try {
+
+            await activationsApi.createUser(user_data)
+
+            dispatch({
+                type: ACTIVATIONS_CREATE_USER_SUCCESS
+            })
+        } catch (error) {
+
+            dispatch({
+                type: ACTIVATIONS_CREATE_USER_ERROR
+            })
+
+            throw error
+        }
+    }
+}
+
 const ActivationActions = {
     findAll,
+    createUser,
 }
 
 export default ActivationActions

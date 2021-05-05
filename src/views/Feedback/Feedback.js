@@ -114,7 +114,7 @@ const Feedback = () => {
                             <Col sm={9} style={{
                                 paddingTop: 7
                             }}>
-                                <Link to={feedbackRow.url}>
+                                <Link to={feedbackRow.url} target="_blank">
                                     {configApp.websiteUrl + '/admin/#' + feedbackRow.url}
                                 </Link>
                             </Col>

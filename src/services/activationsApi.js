@@ -14,6 +14,18 @@ export const findAll = async () => {
     }
 }
 
+export const createUser = async (data) => {
+
+    try {
+
+        return await apiService.post(`${api_base}/user`, data)
+    } catch (error) {
+
+        throw error
+    }
+}
+
 export default {
     findAll,
+    createUser,
 }
