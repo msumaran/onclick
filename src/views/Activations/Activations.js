@@ -10,7 +10,10 @@ import { Row, Col, Card, CardHeader, CardBody, Modal, ModalHeader, ModalBody, Fo
 import { StripedTable } from 'components/CustomTable'
 
 const defRow = {
-    pack: {},
+    pack: '',
+    fullname: '',
+    email: '',
+    phone: '',
     dni: '',
     address: ''
 }
@@ -38,7 +41,19 @@ const Activations = () => {
 
     const selectRow = (row) => {
 
-        setSelected(Object.assign(defRow, row))
+        const data = {
+            activationId: row.id,
+            pack: row.pack.name,
+            identification: '',
+            name: row.fullname,
+            lastname: row.fullname,
+            address: '',
+            phone: row.phone,
+            born: '',
+            email: row.email,
+        }
+
+        setSelected(data)
 
         setShowModal(true)
     }
@@ -113,43 +128,65 @@ const Activations = () => {
                     <Form>
                         <FormGroup row>
                             <Label sm={3}>Plan</Label>
-                            <Col sm={9}>
+                            <Col sm={6}>
                                 <input
                                     type="text"
-                                    className="form-control-plaintext"
-                                    defaultValue={selected.pack.name}
+                                    className="form-control"
+                                    defaultValue={selected.pack}
                                     readOnly
                                 />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
-                            <Label sm={3}>Nombres y apellidos</Label>
-                            <Col sm={9}>
+                            <Label sm={3}>Nombres</Label>
+                            <Col sm={6}>
                                 <input
                                     type="text"
-                                    className="form-control-plaintext"
-                                    defaultValue={selected.fullname}
-                                    readOnly
+                                    className="form-control"
+                                    defaultValue={selected.name}
+                                    onChange={(e) => setSelected({ ...selected, name: e.currentTarget.value })}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label sm={3}>Apellidos</Label>
+                            <Col sm={6}>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={selected.lastname}
+                                    onChange={(e) => setSelected({ ...selected, lastname: e.currentTarget.value })}
                                 />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label sm={3}>Email</Label>
-                            <Col sm={9}>
+                            <Col sm={6}>
                                 <input
                                     type="text"
-                                    className="form-control-plaintext"
+                                    className="form-control"
                                     defaultValue={selected.email}
                                     readOnly
                                 />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
+                            <Label sm={3}>Fecha de nacimiento</Label>
+                            <Col sm={3}>
+                                <input
+                                    type="date"
+                                    className="form-control"
+                                    value={selected.born}
+                                    onChange={(e) => setSelected({ ...selected, born: e.currentTarget.value })}
+                                />
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
                             <Label sm={3}>Teléfono</Label>
-                            <Col sm={9}>
+                            <Col sm={6}>
                                 <input
                                     type="text"
-                                    className="form-control-plaintext"
+                                    className="form-control"
                                     defaultValue={selected.phone}
                                     readOnly
                                 />
@@ -161,8 +198,8 @@ const Activations = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    value={selected.dni}
-                                    onChange={(e) => setSelected({ ...selected, dni: e.currentTarget.value })}
+                                    value={selected.identification}
+                                    onChange={(e) => setSelected({ ...selected, identification: e.currentTarget.value })}
                                 />
                             </Col>
                         </FormGroup>
