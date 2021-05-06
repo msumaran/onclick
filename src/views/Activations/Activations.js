@@ -8,14 +8,18 @@ import PermissionHelper from 'helpers/PermissionHelper'
 import ActivationActions from 'redux/activations.redux'
 import { Row, Col, Card, CardHeader, CardBody, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, ModalFooter } from 'reactstrap'
 import { StripedTable } from 'components/CustomTable'
+import { toast } from 'react-toastify'
+import { toastDefaults } from 'helpers/config'
 
 const defRow = {
     pack: '',
-    fullname: '',
+    name: '',
+    lastname: '',
     email: '',
     phone: '',
     dni: '',
-    address: ''
+    address: '',
+    born: '',
 }
 
 const Activations = () => {
@@ -27,6 +31,7 @@ const Activations = () => {
 
     const activations_result = useSelector(state => state.ActivationsReducer.result)
     const activations_load_status = useSelector(state => state.ActivationsReducer.load_status)
+    const activations_create_status = useSelector(state => state.ActivationsReducer.create_status)
 
     const [ showModal, setShowModal ] = useState(false)
     const [ selected, setSelected ] = useState(defRow)
@@ -65,7 +70,7 @@ const Activations = () => {
         setShowModal(false)
     }
 
-    const createUser = () => {
+    const registerUser = async () => {
 
         if (selected.dni === '') {
 
@@ -79,7 +84,11 @@ const Activations = () => {
             return
         }
 
-        dispatch(ActivationActions.createUser(selected))
+        await dispatch(ActivationActions.createUser(selected))
+
+        resetModal()
+
+        toast.success('El usuario fue creado satisfactoriamente', toastDefaults)
     }
 
     return (
@@ -122,7 +131,7 @@ const Activations = () => {
                 </Col>
             </Row>
 
-            <Modal isOpen={showModal} toggle={() => setShowModal(!showModal)}>
+            <Modal isOpen={showModal} toggle={() => resetModal()}>
                 <ModalHeader toggle={() => setShowModal(false)}>Registrar nuevo usuario</ModalHeader>
                 <ModalBody>
                     <Form>
@@ -221,8 +230,8 @@ const Activations = () => {
                     <button className="btn btn-secondary" onClick={() => resetModal()}>
                         Cancelar
                     </button>
-                    <button className="btn btn-primary" onClick={() => createUser()}>
-                        Crear usuario
+                    <button className="btn btn-primary" onClick={() => registerUser()}>
+                        {activations_create_status === 'creating' ? 'Creando usuario...' : 'Crear usuario'}
                     </button>
                 </ModalFooter>
             </Modal>
