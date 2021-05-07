@@ -41,14 +41,14 @@ const routes = [
   { path: '/security/profiles', name: 'Perfiles', component: Profile },
   { path: '/security/change-password', name: 'Cambiar contraseña', component: ChangePassword },
 
-  { path: '/client', name: 'Clientes', component: Client },
+  { path: '/client', name: 'Usuarios', component: Client },
   { path: '/payment', name: 'Pagos', component: Payment },
   { path: '/my-payments', name: 'Mis pagos', component: MyPayment },
   { path: '/my-kanban', name: 'Mi kanban', component: MyKanban },
 
-  { path: '/activations', name: 'Activaciones', component: Activations },
+  { path: '/requests', name: 'Solicitudes', component: Activations },
   { path: '/feedback', name: 'Feedback', component: Feedback },
-  { path: '/inquiries', name: 'Consultas', component: Inquiries },
+  { path: '/messages', name: 'Mensajes', component: Inquiries },
 
 ]
 

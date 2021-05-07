@@ -33,7 +33,7 @@ const Inquiries = () => {
                 <Col xs={12}>
                     <Card>
                         <CardHeader>
-                            <strong>Consultas</strong>
+                            <strong>Mensajes</strong>
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">

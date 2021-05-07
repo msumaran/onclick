@@ -97,7 +97,7 @@ const Activations = () => {
                 <Col xs={12}>
                     <Card>
                         <CardHeader>
-                            <strong>Activaciones</strong>
+                            <strong>Solicitudes</strong>
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
