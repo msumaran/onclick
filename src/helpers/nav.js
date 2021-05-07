@@ -91,12 +91,12 @@ const Navigation = (permissions) => {
       icon: 'oc oc-feedback',
       nameMachine: 'feedback'
     },
-    {
-      name: 'Reportes',
-      url: '/report',
-      icon: 'oc oc-reports',
-      nameMachine: 'report'
-    }
+    // {
+    //   name: 'Reportes',
+    //   url: '/report',
+    //   icon: 'oc oc-reports',
+    //   nameMachine: 'report'
+    // }
   ]
 
   let modules = [];
