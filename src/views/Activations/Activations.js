@@ -32,6 +32,7 @@ const Activations = () => {
     const activations_result = useSelector(state => state.ActivationsReducer.result)
     const activations_load_status = useSelector(state => state.ActivationsReducer.load_status)
     const activations_create_status = useSelector(state => state.ActivationsReducer.create_status)
+    const activationsReloading = useSelector(state => state.ActivationsReducer.reloading)
 
     const [ showModal, setShowModal ] = useState(false)
     const [ selected, setSelected ] = useState(defRow)
@@ -123,6 +124,17 @@ const Activations = () => {
                                             { id: 'pack.name' }
                                         ]}
                                         loading={activations_load_status === 'loading'}
+                                        options={{
+                                            toolbar: {
+                                                refreshButton: {
+                                                    enabled: true,
+                                                    classNames: 'btn btn-secondary',
+                                                    refreshing: activationsReloading,
+                                                    autoDispatchInSeconds: 60,
+                                                    dispatch: () => dispatch(ActivationActions.findAll(true))
+                                                }
+                                            }
+                                        }}
                                     />
                                 )}
                             </div>
