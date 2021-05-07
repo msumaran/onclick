@@ -154,13 +154,18 @@ const onApiError = (endpoint, method, error, headers) => {
     if (!error.response) {
 
         message = error.message
-    } else if (error.response.status === 401 || error.response.status === 422) {
+    } else if (error.response.status === 401) {
+
+        localStorage.removeItem('session')
+        window.location.replace('/login')
+        return
+    } else if (error.response.status === 422) {
 
         message = error.response.data.message
     } else if (error.response.status === 404) {
 
         message = 'Error de servidor'
-    } else { 
+    } else {
         message = error.response.data.error
     }
 
