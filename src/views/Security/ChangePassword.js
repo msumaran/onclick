@@ -59,7 +59,7 @@ const ChangePassword = () => {
                 </CardHeader>
                 <CardBody>
                   <FormGroup>
-                    <Label htmlFor="password">Contraseña</Label>
+                    <Label htmlFor="password">Nueva contraseña</Label>
                     <InputGroup className={formik.errors.password ? 'is-invalid' : null}>
                       <Input
                         type={isPassword ? 'password' : 'text'}
@@ -77,7 +77,7 @@ const ChangePassword = () => {
                     <FormFeedback>{formik.errors.password}</FormFeedback>
                   </FormGroup>
                   <FormGroup>
-                    <Label htmlFor="confirmPassword">Confirmar contraseña</Label>
+                    <Label htmlFor="confirmPassword">Confirmar nueva contraseña</Label>
                     <InputGroup className={formik.errors.confirmPassword ? 'is-invalid' : null}>
                       <Input
                         type={isPassword ? 'password' : 'text'}

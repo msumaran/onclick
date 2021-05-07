@@ -12,6 +12,12 @@ import routes from 'helpers/routes'
 import logo from 'assets/img/brand/logo.png'
 import iso from 'assets/img/brand/iso.png'
 
+import FeedbackActions from 'redux/feedback.redux'
+import Feedback from 'components/Feedback/Feedback'
+import { ToastContainer, toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { toastDefaults } from 'helpers/config'
+
 const propTypes = {
   children: PropTypes.node
 }
@@ -19,6 +25,16 @@ const propTypes = {
 const defaultProps = {}
 
 const Header = (props) => {
+
+  const dispatch = useDispatch()
+
+  const feedback_create_status = useSelector(state => state.FeedbackReducer.create_status)
+  const createRow = async (data) => {
+
+    await dispatch(FeedbackActions.createRow(data))
+
+    toast.success('El mensaje se envió con éxito.', toastDefaults)
+  }
 
   return (
     <React.Fragment>
@@ -43,6 +59,11 @@ const Header = (props) => {
       <AppBreadcrumb className="d-none d-lg-block" appRoutes={routes} router={router} />
 
       <Nav className="ml-auto" navbar>
+          <Feedback
+            sending={feedback_create_status === 'creating'}
+            dispatch={async (data) => await createRow(data)}
+            position="top"
+          />
         <UncontrolledDropdown nav direction="down">
           <DropdownToggle nav
             style={{

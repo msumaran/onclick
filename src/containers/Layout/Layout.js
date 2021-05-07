@@ -19,7 +19,7 @@ import {
 import { confirm } from 'components/CustomModal/ModalConfirm'
 
 import accountAction from 'redux/actions/accountAction'
-import FeedbackActions from 'redux/feedback.redux'
+// import FeedbackActions from 'redux/feedback.redux'
 
 // sidebar nav config
 import { Navigation } from 'helpers/nav'
@@ -27,7 +27,7 @@ import { Navigation } from 'helpers/nav'
 import routes from 'helpers/routes'
 
 import Preloader from '../../components/Preloader/Preloader'
-import Feedback from 'components/Feedback/Feedback'
+// import Feedback from 'components/Feedback/Feedback'
 
 import { toastDefaults } from 'helpers/config'
 
@@ -46,7 +46,7 @@ const Layout = (props) => {
   const permissionsLoaded = useSelector((state) => state.accountReducer.loaded)
   const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
-  const feedback_create_status = useSelector(state => state.FeedbackReducer.create_status)
+  // const feedback_create_status = useSelector(state => state.FeedbackReducer.create_status)
 
   useEffect(() => {
 
@@ -70,12 +70,12 @@ const Layout = (props) => {
     [dispatch]
   )
 
-  const createRow = async (data) => {
+  // const createRow = async (data) => {
 
-    await dispatch(FeedbackActions.createRow(data))
+  //   await dispatch(FeedbackActions.createRow(data))
 
-    toast.success('El mensaje se envió con éxito.', toastDefaults)
-  }
+  //   toast.success('El mensaje se envió con éxito.', toastDefaults)
+  // }
 
   return (
     <div className="app">
@@ -131,12 +131,12 @@ const Layout = (props) => {
               </Container>
             </main>
           </div>
-          <Footer>
-            <Feedback
+          {/* <Footer> */}
+            {/* <Feedback
               sending={feedback_create_status === 'creating'}
               dispatch={async (data) => await createRow(data)}
-            />
-          </Footer>
+            /> */}
+          {/* </Footer> */}
 
           <ToastContainer />
         </>

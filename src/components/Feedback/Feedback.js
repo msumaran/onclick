@@ -46,11 +46,12 @@ const Feedback = (props) => {
     return (
         <div className="app-feedback">
             <button className={`btn-feedback ${visible ? 'active' : ''}`} onClick={() => toggleVisible()}>
+              Sugerencia
               <i className="oc oc-feedback"></i>
             </button>
 
             {!visible ? null : (
-                <div className="feedback-window">
+                <div className={ "feedback-window " + props.position }>
                     <div className="feedback-header">
                         <button className="feedback-close"
                             onClick={() => hideFeedback()}
