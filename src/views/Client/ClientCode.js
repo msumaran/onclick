@@ -43,10 +43,10 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
         validationSchema={
           isEdit
             ? yup.object().shape({
-                code_ga: yup.string().required('This field is required.'),
+                code_ga: yup.string().required('El código de Google Analitycs es requerido.').nullable(),
               })
             : yup.object().shape({
-                code_ga: yup.string().required('This field is required.'),
+                code_ga: yup.string().required('El código de Google Analitycs es requerido.').nullable(),
               })
         }
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -81,7 +81,7 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
             <ModalHeader toggle={dismiss}>{isEdit ? 'Editar CA' : 'Nuevo CA'}</ModalHeader>
             <ModalBody>
               <FormGroup>
-                <Label htmlFor="code_ga">Codigo Analitycs</Label>
+                <Label htmlFor="code_ga">Codigo de Google Analitycs</Label>
                 <Input
                   type="text"
                   name="code_ga"
