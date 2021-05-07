@@ -46,7 +46,6 @@
     text-decoration: underline;
     margin-top: 15px;
     position: relative;
-    display: block;
 }
 .login .go-recovery{
     margin-top: 0px;

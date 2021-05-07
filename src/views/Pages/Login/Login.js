@@ -91,7 +91,7 @@ const Login = () => {
                         </InputGroup>
 
                         <Row>
-                          <Col xs={12} className="text-right">
+                          <Col xs={12} className="text-right mb-4 mt-2">
                             <a href="admin#/recuperar-cuenta" target="_self" className="go-recovery" >
                               Olvidé la contraseña
                             </a>
