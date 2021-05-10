@@ -21,9 +21,11 @@ const accountReducer = (state = defaultState, { type, payload }) => {
       break
     case 'ACCOUNT_LOGOUT':
     case 'ACCOUNT_CHANGE_PASSWORD':
-
+      
       st.isLogged = false
       st.token = undefined
+      break
+    case 'ACCOUNT_CHANGE_TUTORIAL':
       break
     case 'ACCOUNT_RECOVERY':
         st.isLogged = false
