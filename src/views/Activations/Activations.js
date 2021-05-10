@@ -127,9 +127,7 @@ const Activations = () => {
                                             )}
                                         ]}
                                         data={activations_result}
-                                        defaultSorted={[
-                                            { id: 'pack.name' }
-                                        ]}
+                                        
                                         loading={activations_load_status === 'loading'}
                                         options={{
                                             toolbar: {
