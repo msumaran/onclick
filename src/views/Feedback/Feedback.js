@@ -73,6 +73,7 @@ const Feedback = () => {
                                         columns={[
                                             { Header: 'Tipo', accessor: 'type', Cell: ({ row: { original } }) => getRowType(original) },
                                             { Header: 'Usuario', accessor: 'user.name' },
+                                            { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
                                             { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
                                                 <>
                                                     <button className="btn btn-secondary" onClick={() => selectRow(original)}>
@@ -82,9 +83,6 @@ const Feedback = () => {
                                             )}
                                         ]}
                                         data={feedback_result}
-                                        defaultSorted={[
-                                            { id: 'type' }
-                                        ]}
                                         loading={feedback_load_status === 'loading'}
                                     />
                                 )}

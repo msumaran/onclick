@@ -131,7 +131,7 @@ const User = () => {
                   className="btn btn-danger"
                   disabled={deleting[`row_id_${original.id}`]}
                   onClick={() =>
-                    confirm('Delete', 'Are you sure you want to delete this record?').then(() => {
+                    confirm('Eliminar', '¿Está seguro que deseas eliminar este registro?').then(() => {
                       setDeleting({ [`row_id_${original.id}`]: true })
                       dispatch(userAction.remove(original.id))
                     })
@@ -139,7 +139,7 @@ const User = () => {
                 >
                   {deleting[`row_id_${original.id}`] ? (
                     <Fragment>
-                      <SpinCircle /> Deleting...
+                      <SpinCircle /> Eliminando...
                     </Fragment>
                   ) : (
                     <i className="oc oc-trash" style={{

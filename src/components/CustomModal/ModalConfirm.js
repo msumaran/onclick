@@ -43,7 +43,7 @@ const Confirmation = (props) => {
 Confirmation.propTypes = propTypes
 Confirmation.defaultProps = defaultProps
 
-export function confirm(title, confirmation, proceedLabel = 'OK', cancelLabel = 'Cancel', options = {}) {
+export function confirm(title, confirmation, proceedLabel = 'Aceptar', cancelLabel = 'Cancelar', options = {}) {
   return createConfirmation(confirmable(Confirmation))({
     title,
     confirmation,
