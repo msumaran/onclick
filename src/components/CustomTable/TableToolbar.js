@@ -105,6 +105,15 @@ const TableToolbar = (props) => {
                 )}
             </div>
             <div className="table-toolbar-right">
+                {!options.rightButtons ? null : (
+                    <>
+                        {React.Children.map(options.rightButtons, (btn) => (
+                            <>
+                                {btn}
+                            </>
+                        ))}
+                    </>
+                )}
                 <TableFilter
                     value={props.filterCriteria}
                     placeholder="Buscar..."
