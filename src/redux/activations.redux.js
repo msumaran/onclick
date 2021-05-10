@@ -48,7 +48,7 @@ export const ActivationsReducer = (state = initialState, action) => {
     return st
 }
 
-const findAll = (reloading = false) => {
+const findAll = (period, reloading = false) => {
 
     return async (dispatch) => {
 
@@ -66,7 +66,7 @@ const findAll = (reloading = false) => {
 
         try {
 
-            const data = await activationsApi.findAll()
+            const data = await activationsApi.findAll(period)
 
             dispatch({
                 type: ACTIVATIONS_LOAD_SUCCESS,
@@ -82,6 +82,14 @@ const findAll = (reloading = false) => {
 
             throw error
         }
+    }
+}
+
+const reloadAll = (period) => {
+
+    return async (dispatch) => {
+
+        dispatch(findAll(period, true))
     }
 }
 
@@ -115,6 +123,7 @@ const createUser = (user_data) => {
 
 const ActivationActions = {
     findAll,
+    reloadAll,
     createUser,
 }
 

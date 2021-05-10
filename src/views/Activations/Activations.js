@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import PermissionHelper from 'helpers/PermissionHelper'
 
 import ActivationActions from 'redux/activations.redux'
-import { Row, Col, Card, CardHeader, CardBody, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, ModalFooter } from 'reactstrap'
+import { Row, Col, Card, CardHeader, CardBody, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, ModalFooter, ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { StripedTable } from 'components/CustomTable'
 import { toast } from 'react-toastify'
 import { toastDefaults } from 'helpers/config'
+import moment from 'moment'
 
 const defRow = {
     pack: '',
@@ -32,16 +33,21 @@ const Activations = () => {
     const activations_result = useSelector(state => state.ActivationsReducer.result)
     const activations_load_status = useSelector(state => state.ActivationsReducer.load_status)
     const activations_create_status = useSelector(state => state.ActivationsReducer.create_status)
-    const activationsReloading = useSelector(state => state.ActivationsReducer.reloading)
+    const activations_reloading = useSelector(state => state.ActivationsReducer.reloading)
 
     const [ showModal, setShowModal ] = useState(false)
     const [ selected, setSelected ] = useState(defRow)
+
+    const [ dateFilter, setDateFilter ] = useState({
+        periods: [ '1d', '7d', '30d' ],
+        period: ''
+    })
 
     useEffect(() => {
 
         if (activations_load_status === '') {
 
-            dispatch(ActivationActions.findAll())
+            dispatch(ActivationActions.findAll(dateFilter.period))
         }
     }, [ activations_load_status, dispatch ])
 
@@ -109,6 +115,7 @@ const Activations = () => {
                                             { Header: 'Nombres y apellidos', accessor: 'fullname' },
                                             { Header: 'Email', accessor: 'email' },
                                             { Header: 'Teléfono', accessor: 'phone' },
+                                            { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
                                             { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar' },
                                             { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
                                                 <>
@@ -129,10 +136,21 @@ const Activations = () => {
                                                 refreshButton: {
                                                     enabled: true,
                                                     classNames: 'btn btn-secondary',
-                                                    refreshing: activationsReloading,
+                                                    refreshing: activations_reloading,
                                                     autoDispatchInSeconds: 60,
-                                                    dispatch: () => dispatch(ActivationActions.findAll(true))
-                                                }
+                                                    dispatch: () => dispatch(ActivationActions.reloadAll(dateFilter.period))
+                                                },
+                                                dateFilter: {
+                                                    enabled: true,
+                                                    classNames: 'btn btn-secondary',
+                                                    periods: dateFilter.periods,
+                                                    value: dateFilter.period,
+                                                    onChange: (value) => {
+                                                        setDateFilter({ ...dateFilter, period: value })
+
+                                                        dispatch(ActivationActions.reloadAll(value))
+                                                    }
+                                                },
                                             }
                                         }}
                                     />
