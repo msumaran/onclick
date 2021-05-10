@@ -25,6 +25,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.oc-message:before {
+  content: "\e90e";
+}
 .oc-feedback:before {
   content: "\e90d";
 }

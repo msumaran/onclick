@@ -18,7 +18,7 @@ const Navigation = (permissions) => {
     {
       name: 'Mensajes',
       url: '/messages',
-      icon: 'oc oc-users',
+      icon: 'oc oc-message',
       nameMachine: 'page_contact'
     },
     {
