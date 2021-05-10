@@ -7,17 +7,21 @@ const login = async (username, password) => {
 
     const data = await apiService.post('/login_check', { username, password })
 
+
     localStorage.setItem('session', JSON.stringify({
       name: data.name,
       profileId: data.profileId,
       token: data.token,
-      tutorial: true,
     }))
+
+    if (!localStorage.getItem('onclick-show-tutorial')) {
+
+      localStorage.setItem('onclick-show-tutorial', data.profileId === 1 ? false : true)
+    }
 
     return data
   } catch (error) {
 
-    //
     throw error
   }
 }

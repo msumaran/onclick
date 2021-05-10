@@ -3,11 +3,11 @@ import apiService from './apiService'
 
 const api_base = '/activation'
 
-export const findAll = async () => {
+export const findAll = async (period) => {
 
     try {
 
-        return await apiService.get(`${api_base}/combobox`)
+        return await apiService.get(`${api_base}/combobox?period=${period}`)
     } catch (error) {
 
         throw error

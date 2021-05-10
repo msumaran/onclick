@@ -13,7 +13,7 @@ import {
 const TableFilter = (props) => {
 
     return (
-      <div className="rt-filter">
+      <div className="rt-filter ml-1">
         <FormGroup>
           <InputGroup>
             <Input

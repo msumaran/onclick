@@ -55,7 +55,7 @@ const items = [
 const Dashboard = (props) => {
 
   const session = JSON.parse(localStorage.getItem('session'))
-  let tutorialShow = session.tutorial || false;
+  const tutorialShow = localStorage.getItem('onclick-show-tutorial');
   // const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
   // const permission_helper = new PermissionHelper(my_permissions)
@@ -89,8 +89,8 @@ const Dashboard = (props) => {
   }
 
   const closeModal = () => {
-    session.tutorial = false;
-    localStorage.setItem('session', JSON.stringify(session))
+
+    localStorage.setItem('onclick-show-tutorial', 'false')
     setModal(!modal);
   }
 

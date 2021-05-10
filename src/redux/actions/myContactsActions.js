@@ -5,11 +5,11 @@ import { Log } from 'helpers/DebugHelper'
 import myContactsApi from 'services/myContactsApi'
 
 
-export const findAll = (reload = false) => {
+export const findAll = (reloading = false) => {
 
     return async (dispatch) => {
 
-        if (reload) {
+        if (reloading) {
 
             dispatch({
                 type: 'MY_CONTACTS_RELOAD_ALL',

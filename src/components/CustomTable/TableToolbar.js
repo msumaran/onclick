@@ -3,11 +3,16 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import TableFilter from './TableFilter'
+import DropdownDateFilter from 'components/DropdownDateFilter/DropdownDateFilter'
 
 const TableToolbar = (props) => {
 
     const defaultOptions = {
         refreshButton: {
+            enabled: false,
+            classNames: 'btn btn-custom-default'
+        },
+        dateFilter: {
             enabled: false,
             classNames: 'btn btn-custom-default'
         },
@@ -17,6 +22,7 @@ const TableToolbar = (props) => {
 
     const options = {
         refreshButton: Object.assign(defaultOptions.refreshButton, props.options.refreshButton),
+        dateFilter: Object.assign(defaultOptions.dateFilter, props.options.dateFilter),
         leftButtons: Object.assign(defaultOptions.leftButtons, props.options.leftButtons),
         rightButtons: Object.assign(defaultOptions.rightButtons, props.options.rightButtons),
     }
@@ -105,6 +111,22 @@ const TableToolbar = (props) => {
                 )}
             </div>
             <div className="table-toolbar-right">
+                {!options.rightButtons ? null : (
+                    <>
+                        {React.Children.map(options.rightButtons, (btn) => (
+                            <>
+                                {btn}
+                            </>
+                        ))}
+                    </>
+                )}
+                {!options.dateFilter.enabled ? null : (
+                    <DropdownDateFilter
+                        periods={options.dateFilter.periods}
+                        value={options.dateFilter.value}
+                        onChange={options.dateFilter.onChange}
+                    />
+                )}
                 <TableFilter
                     value={props.filterCriteria}
                     placeholder="Buscar..."
