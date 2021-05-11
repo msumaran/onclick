@@ -13,10 +13,15 @@ const initialState = {
         og_type: 'website',
         og_site_name: '',
     },
+    messages:{
+        success: '',
+        faill: '',
+    },
     loaded: false,
     saveDraftStatus: '',
     publishStatus: '',
     saveSeoStatus: '',
+    saveMessagesStatus: '',
 }
 
 const landingReducer = (state = initialState, { type, payload }) => {
@@ -39,6 +44,8 @@ const landingReducer = (state = initialState, { type, payload }) => {
             st.seo.og_description = payload.seo.og_description || ''
             st.seo.og_type = payload.seo.og_type || ''
             st.seo.og_site_name = payload.seo.og_site_name || ''
+            st.messages.success = payload.messages.success || ''
+            st.messages.faill = payload.messages.faill || ''
             st.loaded = true
             break
         case 'LANDING_SAVE_DRAFT_TO_DB_START':
@@ -70,6 +77,16 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_SAVE_SEO_ERROR':
             st.saveSeoStatus = 'error'
+            break
+        case 'LANDING_SAVE_MESSAGES_START':
+            st.saveMessagesStatus = 'saving'
+            break
+        case 'LANDING_SAVE_MESSAGES_END':
+            st.saveMessagesStatus = 'saved'
+            st.seo = payload
+            break
+        case 'LANDING_SAVE_MESSAGES_ERROR':
+            st.saveMessagesStatus = 'error'
             break
         default:
             //

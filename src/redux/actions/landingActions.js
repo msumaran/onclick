@@ -17,7 +17,8 @@ const getMyLanding = () => {
                 payload: {
                     code: data.content.code,
                     html: data.content.html,
-                    seo: data.content.seo
+                    seo: data.content.seo,
+                    messages: data.content.messages
                 }
             })
         } catch (error) {
@@ -116,9 +117,41 @@ const saveSeo = (seo) => {
     }
 }
 
+const saveMessages = (messages) => {
+
+    const data = {
+        action: 'save_messages',
+        messages
+    }
+
+    return async (dispatch) => {
+
+        dispatch({
+            type: 'LANDING_SAVE_MESSAGES_START',
+        })
+
+        try {
+            const _data = await landingApi.saveMyLanding(data)
+
+            dispatch({
+                type: 'LANDING_SAVE_MESSAGES_END',
+                payload: messages
+            })
+
+            toast.success(_data.message, toastDefaults)
+        } catch (error) {
+
+            dispatch({
+                type: 'LANDING_SAVE_MESSAGES_ERROR',
+            })
+        }
+    }
+}
+
 export default {
     getMyLanding,
     saveDraft,
     publish,
     saveSeo,
+    saveMessages,
 }
