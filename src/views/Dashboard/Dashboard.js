@@ -103,6 +103,17 @@ const Dashboard = (props) => {
     setModal(!modal);
   }
 
+  const openSidebar = () => {
+
+    const body = document.getElementsByTagName('body')[0]
+    body.classList.add('sidebar-lg-show')
+
+    document.getElementsByClassName('main-breadcrumb')[0].classList.remove('d-none')
+    document.getElementsByClassName('main-container')[0].classList.remove('no-breadcrumb')
+  }
+
+  openSidebar();
+
   return (
     <div className="animated fadeIn">
       <h1>Bienvenido a OnClick.la</h1>
