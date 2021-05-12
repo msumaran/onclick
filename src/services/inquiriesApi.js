@@ -14,6 +14,18 @@ export const findAll = async () => {
     }
 }
 
+export const check = async (id) => {
+
+    try {
+
+        return await apiService.put(`${api_base}/${id}`, {})
+    } catch (error) {
+
+        throw error
+    }
+}
+
 export default {
     findAll,
+    check
 }

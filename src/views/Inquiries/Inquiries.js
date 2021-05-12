@@ -20,11 +20,10 @@ const Inquiries = () => {
 
     const inquiries_result = useSelector(state => state.InquiriesReducer.result)
     const inquiries_load_status = useSelector(state => state.InquiriesReducer.load_status)
+    const inquiries_load_check_status = useSelector(state => state.InquiriesReducer.load_check_status)
 
     const [ showModal, setShowModal ] = useState(false)
-    const [ feedbackRow, setFeedbackRow ] = useState({
-        user: {}
-    })
+    const [ feedbackRow, setFeedbackRow ] = useState({})
     useEffect(() => {
 
         if (inquiries_load_status === '') {
@@ -38,19 +37,21 @@ const Inquiries = () => {
         return moment(date).format('DD/MM/YYYY H:mm a')
     }
 
-    const selectRow = (row) => {
-
+    const selectRow = (row) => { 
         setFeedbackRow(row)
-
+        
         setShowModal(true)
     }
     
     const closeModal = () => {
+        setFeedbackRow({})
         setShowModal(false)
     }
-    
+
     const checkInquiry = () => {
-        setShowModal(false)
+        dispatch(InquiryActions.ActionCheck(feedbackRow.id)).then(() => {
+            closeModal()
+        })
     }
 
     return (
