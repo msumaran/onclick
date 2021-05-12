@@ -11,6 +11,30 @@
 .form-control-plaintext {
     height: calc(1.5em + 0.75rem + 2px);
 }
+.form-control-plaintext-message {
+    min-height: 72px;
+    width: 100%;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+    
+    &::-webkit-scrollbar:vertical {
+        width: 11px;
+    }
+    
+    &::-webkit-scrollbar:horizontal {
+        height: 11px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        border: 2px solid white; /* should match background, can't be transparent */
+        background-color: rgba(0, 0, 0, .5);
+    }
+}
+
+
 
 .input-group.is-invalid {
     ~ .invalid-feedback {
