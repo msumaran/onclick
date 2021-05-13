@@ -39,7 +39,7 @@ const Activations = () => {
     const [ selected, setSelected ] = useState(defRow)
 
     const [ dateFilter, setDateFilter ] = useState({
-        periods: [ '1d', '7d', '30d' ],
+        periods: [ 'today', 'this-week', 'this-month', 'this-year' ],
         period: ''
     })
 
