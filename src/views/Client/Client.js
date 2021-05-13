@@ -1,6 +1,6 @@
 /*eslint no-unused-vars: "off" */
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Card, CardHeader, CardBody, Button, Badge } from 'reactstrap'
 import moment from 'moment'
@@ -12,6 +12,11 @@ import clientAction from 'redux/actions/clientAction'
 import ClientCode from './ClientCode'
 
 import PermissionHelper from 'helpers/PermissionHelper'
+
+import userAction from 'redux/actions/userAction'
+
+import { SpinCircle } from 'components/Spin'
+import { confirm } from 'components/CustomModal/ModalConfirm'
 
 const Client = () => {
 
@@ -63,6 +68,7 @@ const Client = () => {
         width: 300,
         Cell: ({ row: { original } }) => {
           const [deleting, setDeleting] = useState({ [`row_id_${original.id}`]: false })
+          const [activating, setActivating] = useState({ [`row_id_${original.id}`]: false })
 
           return (
             <div className="btn-group btn-group-sm">
@@ -78,6 +84,57 @@ const Client = () => {
                   <i className="icon-key"></i> Code GA
                 </Button>
               ) : null}
+
+              {permission_helper.validate('user', 'd') && original.isActive ? (
+                <button
+                  className="btn btn-danger"
+                  disabled={deleting[`row_id_${original.id}`]}
+                  onClick={() =>
+                    confirm('Eliminar', '¿Está seguro que deseas desactivar este registro?').then(() => {
+                      setDeleting({ [`row_id_${original.id}`]: true })
+                      dispatch(clientAction.remove(original.id)).then((status) => {
+                        setDeleting({ [`row_id_${original.id}`]: false })
+                      })
+                    })
+                  }
+                >
+                  {deleting[`row_id_${original.id}`] ? (
+                    <Fragment>
+                      <SpinCircle /> Eliminando...
+                    </Fragment>
+                  ) : (
+                    <i className="oc oc-trash" style={{
+                      fontSize: '1.2rem',
+                    }}></i>
+                  )}
+                </button>
+              ) : null}
+
+              {permission_helper.validate('user', 'd') && !original.isActive ? (
+                <button
+                  className="btn btn-success"
+                  disabled={activating[`row_id_${original.id}`]}
+                  onClick={() =>
+                    confirm('Activar', '¿Está seguro que deseas activar este registro?').then(() => {
+                      setActivating({ [`row_id_${original.id}`]: true })
+                      dispatch(clientAction.active(original.id)).then((status) => {
+                        setActivating({ [`row_id_${original.id}`]: false })
+                      })
+                    })
+                  }
+                >
+                  {activating[`row_id_${original.id}`] ? (
+                    <Fragment>
+                      <SpinCircle /> Activando...
+                    </Fragment>
+                  ) : (
+                    <i className="oc oc-edit" style={{
+                      fontSize: '1.2rem',
+                    }}></i>
+                  )}
+                </button>
+              ) : null}
+
             </div>
           )
         }

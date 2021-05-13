@@ -59,32 +59,32 @@ const Navigation = (permissions) => {
     //   nameMachine: 'landing'
     // },
 
-    // {
-    //   name: 'Seguridad',
-    //   url: '/security',
-    //   icon: 'oc oc-security',
-    //   nameMachine: 'security',
-    //   children: [
-    //     {
-    //       name: 'Usuarios',
-    //       url: '/security/users',
-    //       icon: 'oc oc-users',
-    //       nameMachine: 'user'
-    //     },
-    //     {
-    //       name: 'Perfiles',
-    //       url: '/security/profiles',
-    //       icon: 'oc oc-profiles',
-    //       nameMachine: 'profile'
-    //     },
-    //     {
-    //       name: 'Accesos',
-    //       url: '/security/access',
-    //       icon: 'oc oc-access',
-    //       nameMachine: 'access'
-    //     }
-    //   ]
-    // },
+    {
+      name: 'Seguridad',
+      url: '/security',
+      icon: 'oc oc-security',
+      nameMachine: 'security',
+      children: [
+        {
+          name: 'Usuarios',
+          url: '/security/users',
+          icon: 'oc oc-users',
+          nameMachine: 'user'
+        },
+        {
+          name: 'Perfiles',
+          url: '/security/profiles',
+          icon: 'oc oc-profiles',
+          nameMachine: 'profile'
+        },
+        {
+          name: 'Accesos',
+          url: '/security/access',
+          icon: 'oc oc-access',
+          nameMachine: 'access'
+        }
+      ]
+    },
     {
       name: 'Feedback',
       url: '/feedback',

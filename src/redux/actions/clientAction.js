@@ -174,6 +174,29 @@ const remove = (id) => {
   }
 }
 
+const active = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await clientApi.active(id)
+
+      dispatch({
+        type: 'CLIENT_ACTIVE',
+        payload: res.content
+      })
+
+      toast.success(res.message)
+
+      return res.code
+    } catch (err) {
+      if (configApp.env === 'dev') console.log('clientAction.active', err)
+
+      handleCatchNotify(err)
+
+      return err.code
+    }
+  }
+}
+
 const clientAction = {
   findAll,
   findBy,
@@ -182,7 +205,8 @@ const clientAction = {
   update,
   remove,
   changePassword,
-  editRegions
+  editRegions,
+  active
 }
 
 export default clientAction
