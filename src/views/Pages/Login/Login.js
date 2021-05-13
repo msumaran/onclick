@@ -67,11 +67,11 @@ const Login = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            type="text"
+                            type="email"
                             name="username"
                             value={values.username}
                             onChange={handleChange}
-                            placeholder="Usuario"
+                            placeholder="Correo electrónico"
                           />
                         </InputGroup>
 

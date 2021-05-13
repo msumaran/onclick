@@ -61,7 +61,7 @@ const Recovery = () => {
                         <img src={logoImage} alt="logo" />
                         <h1>Recuperar cuenta</h1>
                         <p>
-                          <small>Escribe aquí tu nombre de usuario para recuperar tu contraseña.</small>
+                          <small>Escribe aquí tu correo electrónico para recuperar tu contraseña.</small>
                         </p>
 
                         <InputGroup className="mb-3">
@@ -71,11 +71,11 @@ const Recovery = () => {
                             </InputGroupText>
                           </InputGroupAddon>
                           <Input
-                            type="text"
+                            type="email"
                             name="username"
                             value={values.username}
                             onChange={handleChange}
-                            placeholder="Usuario"
+                            placeholder="Correo electrónico"
                           />
                         </InputGroup>
                         <Row>

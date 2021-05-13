@@ -40,8 +40,12 @@ const Client = () => {
         accessor: 'lastname'
       },
       {
-        Header: 'Usuario',
-        accessor: 'username'
+        Header: 'Landing ID',
+        accessor: 'nickname'
+      },
+      {
+        Header: 'Correo electrónico',
+        accessor: 'email'
       },
       {
         Header: 'Status',
