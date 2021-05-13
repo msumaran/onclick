@@ -40,6 +40,13 @@ const userReducer = (state = defaultState, { type, payload }) => {
         user: payload
       }
     case 'USER_REMOVE':
+      console.log("remove ", state);
+      return {
+        ...state,
+        users: state.users.filter((item) => item.id !== payload.id)
+      }
+    case 'USER_ACTIVE':
+      console.log("active ", state);
       return {
         ...state,
         users: state.users.filter((item) => item.id !== payload.id)

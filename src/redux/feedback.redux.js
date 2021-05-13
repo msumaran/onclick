@@ -7,11 +7,13 @@ const FEEDBACK_LOAD_ERROR = 'FEEDBACK_LOAD_ERROR'
 const FEEDBACK_CREATE_REQUEST = 'FEEDBACK_CREATE_REQUEST'
 const FEEDBACK_CREATE_SUCCESS = 'FEEDBACK_CREATE_SUCCESS'
 const FEEDBACK_CREATE_ERROR = 'FEEDBACK_CREATE_ERROR'
+const FEEDBACK_RELOAD_REQUEST = 'FEEDBACK_RELOAD_REQUEST'
 
 const initialState = {
     result: [],
     load_status: '',
     create_status: '',
+    reloading: false,
 }
 
 export const FeedbackReducer = (state = initialState, action) => {
@@ -25,6 +27,7 @@ export const FeedbackReducer = (state = initialState, action) => {
 
         st.load_status = 'loaded'
         st.result = action.content.result
+        st.reloading = false
     } else if (action.type === FEEDBACK_LOAD_ERROR) {
 
         st.load_status = 'error'
@@ -37,18 +40,29 @@ export const FeedbackReducer = (state = initialState, action) => {
     } else if (action.type === FEEDBACK_CREATE_ERROR) {
 
         st.create_status = 'error'
+    } else if (action.type === FEEDBACK_RELOAD_REQUEST) {
+
+        st.reloading = true
     }
 
     return st
 }
 
-const findAll = () => {
+const findAll = (reloading = false) => {
 
     return async (dispatch) => {
 
-        dispatch({
-            type: FEEDBACK_LOAD_REQUEST
-        })
+        if (reloading) {
+
+            dispatch({
+                type: FEEDBACK_RELOAD_REQUEST
+            })
+        } else {
+
+            dispatch({
+                type: FEEDBACK_LOAD_REQUEST
+            })
+        }
 
         try {
 
@@ -97,9 +111,18 @@ const createRow = (feedback_data) => {
     }
 }
 
+const reloadAll = () => {
+
+    return async (dispatch) => {
+
+        dispatch(findAll(true))
+    }
+}
+
 const FeedbackActions = {
     findAll,
     createRow,
+    reloadAll
 }
 
 export default FeedbackActions

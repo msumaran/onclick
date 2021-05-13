@@ -42,7 +42,23 @@ const defaultState = {
       case 'CLIENT_REMOVE':
         return {
           ...state,
-          clients: state.clients.filter((item) => item.id !== payload.id)
+          clients: state.clients.map((item) => {
+            if( item.id === payload.id){
+              item.isActive = false;
+            }
+            return item;
+          })
+        }
+      case 'CLIENT_ACTIVE': 
+
+        return {
+          ...state,
+          clients: state.clients.map((item) => {
+            if( item.id === payload.id){
+              item.isActive = true;
+            }
+            return item;
+          })
         }
       default:
         return state

@@ -131,6 +131,29 @@ const remove = (id) => {
   }
 }
 
+const active = (id) => {
+  return async (dispatch) => {
+    try {
+      const res = await userApi.active(id)
+
+      dispatch({
+        type: 'USER_ACTIVE',
+        payload: res.content
+      })
+
+      toast.success(res.message)
+
+      return res.code
+    } catch (err) {
+      if (configApp.env === 'dev') console.log('userAction.active', err)
+
+      handleCatchNotify(err)
+
+      return err.code
+    }
+  }
+}
+
 const userAction = {
   findAll,
   findBy,
@@ -139,6 +162,7 @@ const userAction = {
   update,
   remove,
   changePassword,
+  active,
 }
 
 export default userAction

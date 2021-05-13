@@ -22,10 +22,12 @@ const MyLanding = () => {
 
     const landingCode = useSelector((state) => state.landingReducer.code)
     const landingSeo = useSelector((state) => state.landingReducer.seo)
+    const landingMessages = useSelector((state) => state.landingReducer.messages)
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
     const landingSaveDraftStatus = useSelector((state) => state.landingReducer.saveDraftStatus)
     const landingPublishStatus = useSelector((state) => state.landingReducer.publishStatus)
     const saveSeoStatus = useSelector((state) => state.landingReducer.saveSeoStatus)
+    const saveMessagesStatus = useSelector((state) => state.landingReducer.saveMessagesStatus)
 
     const [ state, setState ] = useState({
         design: JSON.parse(landingCode),
@@ -36,6 +38,7 @@ const MyLanding = () => {
 
     const [ activeTab, setActiveTab ] = useState('editor')
     const [ seo, setSeo ] = useState(landingSeo)
+    const [ messages, setMessages ] = useState(landingMessages)
 
     const editor_ref = useRef()
 
@@ -91,6 +94,15 @@ const MyLanding = () => {
         }
     }
 
+    const getSaveMessagesStatus = () => {
+
+        if (saveMessagesStatus === 'saving') {
+            return 'Guardando...'
+        } else {
+            return 'Guardar'
+        }
+    }
+
     const onLoadDesign = () => {
 
         console.log('Design loaded')
@@ -107,6 +119,14 @@ const MyLanding = () => {
 
         setSeo({
             ...seo,
+            [field]: value
+        })
+    }
+
+    const handleMessagesInputsChange = (field, value) => {
+
+        setMessages({
+            ...messages,
             [field]: value
         })
     }
@@ -154,6 +174,11 @@ const MyLanding = () => {
         dispatch(landingActions.saveSeo(seo))
     }
 
+    const saveMessages = () => {
+
+        dispatch(landingActions.saveMessages(messages))
+    }
+
     const hideSidebar = () => {
 
         const body = document.getElementsByTagName('body')[0]
@@ -189,6 +214,14 @@ const MyLanding = () => {
                                     onClick={() => setActiveTab('seo')}
                                 >
                                     SEO
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink
+                                    className={activeTab === 'message' ? 'active' : ''}
+                                    onClick={() => setActiveTab('message')}
+                                >
+                                    Mensajes de Formulario
                                 </NavLink>
                             </NavItem>
                         </Nav>
@@ -293,6 +326,7 @@ const MyLanding = () => {
                                     )}
                                 </div>
                             </TabPane>
+                            
                             <TabPane tabId='seo'>
                                 <div className="btn-toolbar tab-pane-toolbar">
                                     <div className="btn-group">
@@ -374,6 +408,56 @@ const MyLanding = () => {
                                     </div> */}
                                 </form>
                             </TabPane>
+
+                            <TabPane tabId='message'>
+                                <div className="btn-toolbar tab-pane-toolbar">
+                                    <div className="btn-group">
+                                        <button className="btn btn-primary"
+                                            onClick={() => saveMessages()}
+                                        >
+                                            <i className="icon-save"></i> {getSaveMessagesStatus()}
+                                        </button>
+                                    </div>
+                                </div>
+                                <form>
+                                    <div className="form-group row">
+                                        <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                            Mensaje exitoso:
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <textarea rows="4" className="form-control"
+                                                value={messages.success}
+                                                onChange={(e) => handleMessagesInputsChange('success', e.target.value)}
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                            Mensaje fallido:
+                                        </label>
+                                        <div className="col-sm-10">
+                                            <textarea rows="4" className="form-control"
+                                                value={messages.faill}
+                                                onChange={(e) => handleMessagesInputsChange('faill', e.target.value)}
+                                            ></textarea>
+                                        </div>
+                                    </div>
+                                    {/* <div className="form-group row">
+                                        <div className="offset-sm-2 col-sm-10">
+                                            <button className="btn btn-primary"
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+
+                                                    saveDraft()
+                                                }}
+                                            >
+                                                {getSaveDraftStatus()}
+                                            </button>
+                                        </div>
+                                    </div> */}
+                                </form>
+                            </TabPane>
+
                         </TabContent>
                     </>
                 )}

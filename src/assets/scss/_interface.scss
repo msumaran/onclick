@@ -74,6 +74,25 @@
             box-shadow: none;
         }
     }
+    &.btn-success {
+        background-color: transparent;
+        border-color: transparent;
+        color: #4dbd74;
+
+        &:not(:disabled):not(.disabled):active {
+            background-color: transparent;
+            border-color: transparent;
+            color: #4dbd74;
+
+            &:focus {
+                box-shadow: none;
+            }
+        }
+
+        &:focus {
+            box-shadow: none;
+        }
+    }
 }
 
 .input-group {

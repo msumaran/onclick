@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, CardBody, CardHeader, Col, Row, Form, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Row, Form, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 import { StripedTable } from 'components/CustomTable'
@@ -11,6 +11,8 @@ import FeedbackActions from 'redux/feedback.redux'
 
 import { configApp } from 'helpers/config'
 import { Link } from 'react-router-dom'
+import { SpinCircle } from 'components/Spin'
+import reportAction from 'redux/actions/reportAction'
 
 const moment = require('moment')
 
@@ -28,6 +30,8 @@ const Feedback = () => {
     const [ feedbackRow, setFeedbackRow ] = useState({
         user: {}
     })
+
+    const feedback_reloading = useSelector(state => state.FeedbackReducer.reloading)
 
     const selectRow = (row) => {
 
@@ -58,6 +62,8 @@ const Feedback = () => {
         }
     }, [ feedback_load_status, dispatch ])
 
+    const [submitting, setSubmitting] = useState(false)
+
     return (
         <div className="animated fadeIn">
             <Row>
@@ -73,6 +79,7 @@ const Feedback = () => {
                                         columns={[
                                             { Header: 'Tipo', accessor: 'type', Cell: ({ row: { original } }) => getRowType(original) },
                                             { Header: 'Usuario', accessor: 'user.name' },
+                                            { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
                                             { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
                                                 <>
                                                     <button className="btn btn-secondary" onClick={() => selectRow(original)}>
@@ -82,10 +89,51 @@ const Feedback = () => {
                                             )}
                                         ]}
                                         data={feedback_result}
-                                        defaultSorted={[
-                                            { id: 'type' }
-                                        ]}
                                         loading={feedback_load_status === 'loading'}
+                                    
+                                        options={{
+                                            toolbar: {
+                                                refreshButton: {
+                                                    enabled: true,
+                                                    classNames: 'btn btn-secondary',
+                                                    refreshing: feedback_reloading,
+                                                    autoDispatchInSeconds: 60,
+                                                    dispatch: () => dispatch(FeedbackActions.reloadAll())
+                                                },
+                                                leftButtons:[
+                                                    (
+                                                        <>
+
+                                                            <Button
+                                                                className="ml-1"
+                                                                color="primary"
+                                                                onClick={() =>{
+                                                                    setSubmitting(true)
+                                                                    dispatch(reportAction.make('get_feedback')).then((res) => {
+                                                                        setSubmitting(false)
+
+                                                                        if (res.path) window.open(res.path)
+                                                                        else window.open(res)
+                                                                    })
+                                                                }}
+                                                            >
+                                                                {submitting ? (
+                                                                <>
+                                                                    <SpinCircle /> Procesando...
+                                                                </>
+                                                                ) : (
+                                                                <>
+                                                                    <i className="icon-cloud-download"></i> Exportar
+                                                                </>
+                                                                )}
+                                                            </Button>
+
+                                                        </>
+                                                    )
+                                                ]
+                                            }
+                                        }}
+
                                     />
                                 )}
                             </div>

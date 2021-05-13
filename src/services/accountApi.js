@@ -7,17 +7,14 @@ const login = async (username, password) => {
 
     const data = await apiService.post('/login_check', { username, password })
 
+    const showTutorial = data.profileId === 1 ? false : !data.tutorial;
 
     localStorage.setItem('session', JSON.stringify({
       name: data.name,
       profileId: data.profileId,
       token: data.token,
+      tutorial: showTutorial,
     }))
-
-    if (!localStorage.getItem('onclick-show-tutorial')) {
-
-      localStorage.setItem('onclick-show-tutorial', data.profileId === 1 ? false : true)
-    }
 
     return data
   } catch (error) {
@@ -36,6 +33,19 @@ const selfChangePassword = async (password) => {
   try {
 
     const data = await apiService.put('/user/self-change-password', { password })
+
+    return data
+  } catch (error) {
+
+    throw error
+  }
+}
+
+const selfChangeTutorial = async () => {
+
+  try {
+
+    const data = await apiService.put('/user/self-change-tutorial', { })
 
     return data
   } catch (error) {
@@ -75,4 +85,5 @@ export default {
   selfChangePassword,
   getPermissions,
   recoveryAccount,
+  selfChangeTutorial,
 }

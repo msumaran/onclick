@@ -62,6 +62,26 @@ const selfChangePassword = (password) => {
   }
 }
 
+const selfChangeTutorial = () => {
+  return async (dispatch) => {
+    try {
+      const res = await accountApi.selfChangeTutorial()
+
+      dispatch({
+        type: 'ACCOUNT_CHANGE_TUTORIAL',
+        payload: res.content
+      })
+
+      toast.success(res.message, toastDefaults)
+
+      return res.code
+    } catch (error) {
+
+      throw error
+    }
+  }
+}
+
 const recoveryAccount = (username) => {
   return async (dispatch) => {
     try {
@@ -106,7 +126,8 @@ const accountAction = {
   logout,
   selfChangePassword,
   getPermissions,
-  recoveryAccount
+  recoveryAccount,
+  selfChangeTutorial,
 }
 
 export default accountAction

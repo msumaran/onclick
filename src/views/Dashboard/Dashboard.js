@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: "off" */
 
 import React, {useState} from 'react'
-// import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
   Carousel,
   CarouselItem,
@@ -12,6 +12,7 @@ import {
   Button
 } from 'reactstrap';
 // import PermissionHelper from '../../helpers/PermissionHelper'
+import accountAction from 'redux/actions/accountAction';
 
 import slide1 from 'assets/img/slider/slide1.png';
 import slide2 from 'assets/img/slider/slide2.png';
@@ -55,12 +56,14 @@ const items = [
 const Dashboard = (props) => {
 
   const session = JSON.parse(localStorage.getItem('session'))
-  const tutorialShow = localStorage.getItem('onclick-show-tutorial');
+  // const tutorialShow = localStorage.getItem('onclick-show-tutorial');
   // const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
   // const permission_helper = new PermissionHelper(my_permissions)
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
+
+  const dispatch = useDispatch()
 
   const next = () => {
     if (animating) return;
@@ -83,16 +86,33 @@ const Dashboard = (props) => {
 
   const toggle = () => {
 
+    session.tutorial = true;
+    localStorage.setItem('session', JSON.stringify(session));
     setModal(!modal)
 
     setActiveIndex(0)
   }
 
   const closeModal = () => {
+    session.tutorial = false;
+    
+    dispatch(accountAction.selfChangeTutorial()).then((status) => {
+      localStorage.setItem('session', JSON.stringify(session));
+    })
 
-    localStorage.setItem('onclick-show-tutorial', 'false')
     setModal(!modal);
   }
+
+  const openSidebar = () => {
+
+    const body = document.getElementsByTagName('body')[0]
+    body.classList.add('sidebar-lg-show')
+
+    document.getElementsByClassName('main-breadcrumb')[0].classList.remove('d-none')
+    document.getElementsByClassName('main-container')[0].classList.remove('no-breadcrumb')
+  }
+
+  openSidebar();
 
   return (
     <div className="animated fadeIn">

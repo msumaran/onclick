@@ -28,7 +28,7 @@ const Navigation = (permissions) => {
       nameMachine: 'client'
     },
     {
-      name: 'Admin Pagos',
+      name: 'Pagos',
       url: '/payment',
       icon: 'oc oc-payments',
       nameMachine: 'payment'

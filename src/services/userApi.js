@@ -88,6 +88,17 @@ const remove = async (id) => {
   }
 }
 
+const active = async (id) => {
+
+  try {
+
+    return apiService.put(`/user/active/${id}`)
+  } catch (error) {
+
+    throw error
+  }
+}
+
 const userApi = {
   findAll,
   findBy,
@@ -96,6 +107,7 @@ const userApi = {
   update,
   remove,
   updatePassword,
+  active,
 }
 
 export default userApi
