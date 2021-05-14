@@ -90,7 +90,7 @@ const Client = () => {
                   className="btn btn-danger"
                   disabled={deleting[`row_id_${original.id}`]}
                   onClick={() =>
-                    confirm('Eliminar', '¿Está seguro que deseas desactivar este registro?').then(() => {
+                    confirm('Desactivar', '¿Está seguro que deseas desactivar este registro?').then(() => {
                       setDeleting({ [`row_id_${original.id}`]: true })
                       dispatch(clientAction.remove(original.id)).then((status) => {
                         setDeleting({ [`row_id_${original.id}`]: false })
@@ -100,7 +100,7 @@ const Client = () => {
                 >
                   {deleting[`row_id_${original.id}`] ? (
                     <Fragment>
-                      <SpinCircle /> Eliminando...
+                      <SpinCircle /> Desactivando...
                     </Fragment>
                   ) : (
                     <i className="oc oc-trash" style={{
