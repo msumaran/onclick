@@ -2,9 +2,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 
-import DatePicker from '@trendmicro/react-datepicker'
+import DatePicker from 'react-day-picker'
 
 import moment from 'moment'
+
+import 'react-day-picker/lib/style.css'
+import './DropdownDateFilter.scss'
 
 const DropdownDateFilter = (props) => {
 
@@ -13,18 +16,24 @@ const DropdownDateFilter = (props) => {
     const [ showing, setShowing ] = useState(false)
     const [ showingCustom, setShowingCustom ] = useState(false)
 
-    const [ fromDate, setFromDate ] = useState(moment().format('YYYY-MM-DD'))
-    const [ toDate, setToDate ] = useState(moment().format('YYYY-MM-DD'))
+    const [ fromDate, setFromDate ] = useState(moment())
+    const [ toDate, setToDate ] = useState(moment())
 
-    const today = moment().format('YYYY-MM-DD')
-
-    const getCustomRange = () => {
-
-    }
+    const todayDate = moment()
 
     const enableCustom = () => {
 
         setShowingCustom(true)
+    }
+
+    const disableCustom = () => {
+
+        if (props.periods.includes(props.value) || props.value === '') {
+
+            setShowingCustom(false)
+        }
+
+        setShowing(false)
     }
 
     const getPeriodName = (period) => {
@@ -35,7 +44,7 @@ const DropdownDateFilter = (props) => {
         }
 
         switch (period) {
-            case 'custom': return 'Custom'
+            case 'custom': return 'Personalizado'
             case 'today': return 'Hoy'
             case 'this-week': return 'Esta semana'
             case 'this-month': return 'Este mes'
@@ -53,16 +62,45 @@ const DropdownDateFilter = (props) => {
         setShowing(false)
     }
 
-    const getCheckStyle = (selected) => {
+    const setCustomPeriod = () => {
 
-        const style = {}
+        const range = {
+            from: fromDate.format('YYYY-MM-DD'),
+            to: toDate.format('YYYY-MM-DD')
+        }
+
+        props.onChange('custom', range)
+
+        setShowing(false)
+    }
+
+    const getActiveClassName = (selected) => {
+
+        let className = 'dropdown-item'
 
         if (selected === props.value) {
 
-            style.fontWeight = 'bold'
+            className += ' active'
+        } else if (selected === 'custom' && showingCustom) {
+
+            className += ' opened'
         }
 
-        return style
+        return className
+    }
+
+    const onFromDayClick = (day, { selected }) => {
+
+        const _day = moment(day)
+
+        setFromDate(selected ? undefined : _day)
+    }
+
+    const onToDayClick = (day, { selected }) => {
+
+        const _day = moment(day)
+
+        setToDate(selected ? undefined : _day)
     }
 
     useEffect(() => {
@@ -83,7 +121,7 @@ const DropdownDateFilter = (props) => {
     return (
         <>
             <div className="btn-group">
-                <div className="dropdown"
+                <div className="dropdown dropdown-date-filter"
                     ref={dropdownRef}
                 >
                     <button className="btn btn-secondary dropdown-toggle"
@@ -94,20 +132,41 @@ const DropdownDateFilter = (props) => {
                     <div className={`dropdown-menu dropdown-menu-right ${!showing ? '' : 'show'}`}>
                         <div className="d-flex flex-row justify-content-start">
                             {!showingCustom ? null : (
-                                <div className={!showingCustom ? '' : 'flex-grow-1'}>
-                                    <div>
-                                        <DatePicker
-                                            date={today}
-                                            maxDate={today}
-                                            onSelect={() => null}
-                                        />
+                                <div className={`date-range-picker p-3 ${!showingCustom ? '' : 'flex-grow-1'}`}>
+                                    <div className="picker-body">
+                                        <div className="picker-container">
+                                            <DatePicker
+                                                initialMonth={todayDate.subtract(1, 'months').toDate()}
+                                                selectedDays={[ fromDate.toDate() ]}
+                                                onDayClick={onFromDayClick}
+                                            />
+                                        </div>
+                                        <div className="picker-container">
+                                            <DatePicker
+                                                selectedDays={[ toDate.toDate() ]}
+                                                onDayClick={onToDayClick}
+                                            />
+                                        </div>
                                     </div>
-                                    <div>
-                                        <DatePicker
-                                            date={today}
-                                            maxDate={today}
-                                            onSelect={() => null}
-                                        />
+                                    <div className="picker-footer">
+                                        <div className="footer-range">
+                                            Desde el <strong>{fromDate.format('DD/MM/YYYY')}</strong>&nbsp;
+                                            hasta el <strong>{toDate.format('DD/MM/YYYY')}</strong>
+                                        </div>
+                                        <div className="text-right">
+                                            <button
+                                                className="btn btn-secondary"
+                                                onClick={() => disableCustom()}
+                                            >
+                                                Cancelar
+                                            </button>
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => setCustomPeriod()}
+                                            >
+                                                Aplicar
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -116,7 +175,7 @@ const DropdownDateFilter = (props) => {
                                     width: 158
                                 }}
                             >
-                                <button className="dropdown-item"
+                                <button className={getActiveClassName('')}
                                     style={{
                                         width: 158
                                     }}
@@ -125,14 +184,13 @@ const DropdownDateFilter = (props) => {
                                     {getPeriodName('')}
                                 </button>
                                 {props.periods.map((period) => (
-                                    <button className="dropdown-item"
-                                        style={getCheckStyle(period)}
+                                    <button className={getActiveClassName(period)}
                                         onClick={() => changePeriod(period)}
                                     >
                                         {getPeriodName(period)}
                                     </button>
                                 ))}
-                                <button className="dropdown-item"
+                                <button className={getActiveClassName('custom')}
                                     onClick={() => enableCustom()}
                                 >
                                     {getPeriodName('custom')}

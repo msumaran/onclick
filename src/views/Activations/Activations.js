@@ -127,7 +127,6 @@ const Activations = () => {
                                             )}
                                         ]}
                                         data={activations_result}
-                                        
                                         loading={activations_load_status === 'loading'}
                                         options={{
                                             toolbar: {
@@ -143,10 +142,17 @@ const Activations = () => {
                                                     classNames: 'btn btn-secondary',
                                                     periods: dateFilter.periods,
                                                     value: dateFilter.period,
-                                                    onChange: (value) => {
+                                                    onChange: (value, range) => {
+
                                                         setDateFilter({ ...dateFilter, period: value })
 
-                                                        dispatch(ActivationActions.reloadAll(value))
+                                                        if (value === 'custom') {
+
+                                                            dispatch(ActivationActions.reloadAll(`custom&from=${range.from}&to=${range.to}`))
+                                                        } else {
+
+                                                            dispatch(ActivationActions.reloadAll(value))
+                                                        }
                                                     }
                                                 },
                                             }

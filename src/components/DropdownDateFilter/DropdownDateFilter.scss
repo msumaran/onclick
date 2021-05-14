@@ -1,0 +1,62 @@
+
+.dropdown-date-filter {
+
+    .dropdown-item {
+
+        &.opened {
+            background-color: #f0f3f5;
+        }
+    }
+
+    .dropdown-item:focus {
+        outline: none;
+    }
+}
+
+.date-range-picker {
+    border-right: 1px solid #c8ced3;
+
+    .picker-body {
+        display: flex;
+        flex-direction: row;
+
+        div {
+            font-size: 0.9rem !important;
+        }
+
+        .picker-container {
+            border: 1px solid #c8ced3;
+
+            &:last-child {
+                border-left: 0 none;
+            }
+        }
+
+        .DayPicker-WeekdaysRow {
+            display: flex;
+        }
+
+        .DayPicker-Weekday {
+            flex-grow: 1;
+        }
+
+        .DayPicker-Week {
+            display: flex;
+        }
+
+        .DayPicker-Day {
+            flex-grow: 1;
+            width: 35px;
+        }
+    }
+
+    .picker-footer {
+        display: flex;
+        padding-top: 1rem;
+
+        .footer-range {
+            flex-grow: 1;
+            padding-top: 0.55rem;
+        }
+    }
+}
