@@ -2,9 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
 
-import DatePicker from 'react-day-picker'
+import DayPicker from 'react-day-picker'
 
 import moment from 'moment'
+import MomentLocaleUtils from 'react-day-picker/moment'
+import 'moment/locale/es'
 
 import 'react-day-picker/lib/style.css'
 import './DropdownDateFilter.scss'
@@ -135,16 +137,18 @@ const DropdownDateFilter = (props) => {
                                 <div className={`date-range-picker p-3 ${!showingCustom ? '' : 'flex-grow-1'}`}>
                                     <div className="picker-body">
                                         <div className="picker-container">
-                                            <DatePicker
+                                            <DayPicker
                                                 initialMonth={todayDate.subtract(1, 'months').toDate()}
                                                 selectedDays={[ fromDate.toDate() ]}
                                                 onDayClick={onFromDayClick}
+                                                localeUtils={MomentLocaleUtils} locale='es'
                                             />
                                         </div>
                                         <div className="picker-container">
-                                            <DatePicker
+                                            <DayPicker
                                                 selectedDays={[ toDate.toDate() ]}
                                                 onDayClick={onToDayClick}
+                                                localeUtils={MomentLocaleUtils} locale='es'
                                             />
                                         </div>
                                     </div>
