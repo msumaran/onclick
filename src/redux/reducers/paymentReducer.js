@@ -1,6 +1,7 @@
 const defaultState = {
     payments: [],
-    loaded: false
+    loaded: false,
+    paymentsinfo: [],
   }
   
   const paymentReducer = (state = defaultState, { type, payload }) => {
@@ -43,6 +44,11 @@ const defaultState = {
         return {
           ...state,
           payments: state.payments.filter((item) => item.id !== payload.id)
+        }
+      case 'PAYMENT_INFO_FIND': 
+        return {
+          ...state,
+          paymentsinfo: payload
         }
       default:
         return state

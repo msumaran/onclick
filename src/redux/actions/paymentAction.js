@@ -180,6 +180,22 @@ const remove = (id) => {
   }
 }
 
+const findByUserId = (id) => {
+  return async (dispatch) => {
+    try {
+      const data = await paymentApi.findByUserId(id)
+      dispatch({
+        type: 'PAYMENT_INFO_FIND',
+        payload: data.content
+      })
+    } catch (err) {
+      if (configApp.env === 'dev') console.log('paymentAction.findByUserId', err)
+
+      handleCatchNotify(err)
+    }
+  }
+}
+
 const paymentAction = {
   findAll,
   findBy,
@@ -188,7 +204,8 @@ const paymentAction = {
   update,
   remove,
   changePassword,
-  editRegions
+  editRegions,
+  findByUserId
 }
 
 export default paymentAction
