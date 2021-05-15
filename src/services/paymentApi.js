@@ -95,6 +95,17 @@ const remove = async (id) => {
   }
 }
 
+const findByUserId = async (id) => {
+
+  try {
+
+    return await apiService.get(`/payment/user/${id}`)
+  } catch (error) {
+
+    throw error
+  }
+}
+
 const paymentApi = {
   findAll,
   findBy,
@@ -103,6 +114,7 @@ const paymentApi = {
   update,
   updatePassword,
   remove,
+  findByUserId,
 }
 
 export default paymentApi
