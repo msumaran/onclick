@@ -12,6 +12,7 @@ import clientReducer from 'redux/reducers/clientReducer'
 import paymentReducer from 'redux/reducers/paymentReducer'
 import packReducer from 'redux/reducers/packReducer'
 
+import clientLandingReducer from 'redux/reducers/clientLandingReducer'
 import landingReducer from 'redux/reducers/landingReducer'
 import myPaymentsReducer from 'redux/reducers/myPaymentsReducer'
 import myContactsReducer from 'redux/reducers/myContactsReducer'
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   paymentReducer,
   packReducer,
 
+  clientLandingReducer,
   landingReducer,
   myPaymentsReducer,
   myContactsReducer,
