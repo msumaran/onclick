@@ -5,6 +5,8 @@ import moment from 'moment'
 
 const YearMonthForm = (props) => {
 
+    const years_limit = props.years_limit ?? 5
+
     const [ years, setYears ] = useState([])
     const [ months, setMonths ] = useState([])
     const [ selectedYear, setSelectedYear ] = useState(moment().year())
@@ -42,7 +44,7 @@ const YearMonthForm = (props) => {
 
             const years = []
 
-            for (let i = 0; i < 5; i += 1) {
+            for (let i = 0; i < years_limit; i += 1) {
 
                 years.push(moment().subtract(i, 'years'))
             }

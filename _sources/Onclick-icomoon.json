@@ -8,12 +8,28 @@
     {
       "selection": [
         {
+          "order": 26,
+          "id": 15,
+          "name": "calendar",
+          "prevSize": 32,
+          "code": 59663,
+          "tempChar": ""
+        },
+        {
+          "order": 25,
+          "id": 14,
+          "name": "check",
+          "prevSize": 32,
+          "code": 59662,
+          "tempChar": ""
+        },
+        {
           "order": 22,
           "id": 13,
           "name": "feedback",
           "prevSize": 32,
           "code": 59661,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 21,
@@ -21,7 +37,7 @@
           "name": "edit",
           "prevSize": 32,
           "code": 59658,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 20,
@@ -29,7 +45,7 @@
           "name": "password",
           "prevSize": 32,
           "code": 59659,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 19,
@@ -37,7 +53,7 @@
           "name": "trash",
           "prevSize": 32,
           "code": 59660,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 18,
@@ -45,7 +61,7 @@
           "name": "access",
           "prevSize": 32,
           "code": 59657,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 10,
@@ -53,7 +69,7 @@
           "name": "editor",
           "prevSize": 32,
           "code": 59655,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 11,
@@ -61,7 +77,7 @@
           "name": "leads",
           "prevSize": 32,
           "code": 59656,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 13,
@@ -69,7 +85,7 @@
           "name": "payments",
           "prevSize": 32,
           "code": 59649,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 12,
@@ -77,7 +93,7 @@
           "name": "profiles",
           "prevSize": 32,
           "code": 59650,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 14,
@@ -85,7 +101,7 @@
           "name": "users",
           "prevSize": 32,
           "code": 59651,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 15,
@@ -93,7 +109,7 @@
           "name": "security",
           "prevSize": 32,
           "code": 59652,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 16,
@@ -101,7 +117,7 @@
           "name": "reports",
           "prevSize": 32,
           "code": 59653,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 17,
@@ -109,7 +125,7 @@
           "name": "clients",
           "prevSize": 32,
           "code": 59654,
-          "tempChar": ""
+          "tempChar": ""
         },
         {
           "order": 2,
@@ -117,20 +133,51 @@
           "name": "dashboard",
           "prevSize": 32,
           "code": 59648,
-          "tempChar": ""
+          "tempChar": ""
         }
       ],
       "id": 2,
       "metadata": {
         "name": "Untitled Set",
         "importSize": {
-          "width": 612,
-          "height": 612
+          "width": 448,
+          "height": 512
         }
       },
       "height": 1024,
       "prevSize": 32,
       "icons": [
+        {
+          "id": 15,
+          "paths": [
+            "M800 128h-96v-104c0-13.2-10.8-24-24-24h-80c-13.2 0-24 10.8-24 24v104h-256v-104c0-13.2-10.8-24-24-24h-80c-13.2 0-24 10.8-24 24v104h-96c-53 0-96 43-96 96v704c0 53 43 96 96 96h704c53 0 96-43 96-96v-704c0-53-43-96-96-96zM788 928h-680c-6.6 0-12-5.4-12-12v-596h704v596c0 6.6-5.4 12-12 12z"
+          ],
+          "attrs": [
+            {}
+          ],
+          "width": 896,
+          "isMulticolor": false,
+          "isMulticolor2": false,
+          "grid": 0,
+          "tags": [
+            "calendar"
+          ]
+        },
+        {
+          "id": 14,
+          "paths": [
+            "M347.796 878.808l-332.8-332.8c-19.994-19.994-19.994-52.412 0-72.408l72.406-72.408c19.994-19.996 52.414-19.996 72.408 0l224.19 224.188 480.19-480.188c19.994-19.994 52.414-19.994 72.408 0l72.406 72.408c19.994 19.994 19.994 52.412 0 72.408l-588.8 588.802c-19.996 19.994-52.414 19.994-72.408-0.002z"
+          ],
+          "attrs": [
+            {}
+          ],
+          "isMulticolor": false,
+          "isMulticolor2": false,
+          "grid": 0,
+          "tags": [
+            "check"
+          ]
+        },
         {
           "id": 13,
           "paths": [

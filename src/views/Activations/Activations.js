@@ -11,6 +11,7 @@ import { StripedTable } from 'components/CustomTable'
 import { toast } from 'react-toastify'
 import { toastDefaults } from 'helpers/config'
 import moment from 'moment'
+import InputDatePicker from 'components/InputDatePicker/InputDatePicker'
 
 const defRow = {
     pack: '',
@@ -216,11 +217,10 @@ const Activations = () => {
                         <FormGroup row>
                             <Label sm={4}>Fecha de nacimiento</Label>
                             <Col sm={5}>
-                                <input
-                                    type="date"
+                                <InputDatePicker
                                     className="form-control"
                                     value={selected.born}
-                                    onChange={(e) => setSelected({ ...selected, born: e.currentTarget.value })}
+                                    onChange={(value) => setSelected({ ...selected, born: value })}
                                 />
                             </Col>
                         </FormGroup>
