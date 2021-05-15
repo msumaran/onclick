@@ -1,9 +1,10 @@
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import TableFilter from './TableFilter'
 import DropdownDateFilter from 'components/DropdownDateFilter/DropdownDateFilter'
+import TableRefresher from './TableRefresher'
 
 const TableToolbar = (props) => {
 
@@ -27,60 +28,6 @@ const TableToolbar = (props) => {
         rightButtons: Object.assign(defaultOptions.rightButtons, props.options.rightButtons),
     }
 
-
-    const refresh_delay = options.refreshButton.autoDispatchInSeconds || 0
-
-    const [ state, setState ] = useState({
-        delay: refresh_delay,
-    })
-
-    const runDispatch = () => {
-
-        setState({
-            ...state,
-            delay: refresh_delay,
-        })
-
-        options.refreshButton.dispatch()
-    }
-
-    const check_delay = () => {
-
-        if (options.refreshButton.refreshing) {
-
-            setState({
-                ...state,
-                delay: refresh_delay,
-            })
-
-            return
-        }
-
-        setTimeout(() => {
-
-            const delay = state.delay
-
-            if (delay === 0) {
-
-                runDispatch()
-            } else {
-
-                setState({
-                    ...state,
-                    delay: delay - 1
-                })
-            }
-        }, 1000)
-    }
-
-    useEffect(() => {
-
-        if (refresh_delay) {
-
-            check_delay()
-        }
-    }, [ refresh_delay, state.delay, options.refreshButton.refreshing ])
-
     return (
         <div className="table-toolbar">
             <div className="table-toolbar-left">
@@ -94,20 +41,14 @@ const TableToolbar = (props) => {
                     </>
                 )}
                 {!options.refreshButton.enabled ? null : (
-                    <button className={options.refreshButton.classNames}
-                        onClick={() => runDispatch()}
-                        disabled={options.refreshButton.refreshing}
-                    >
-                        {options.refreshButton.refreshing ? (
-                            <>
-                                <i className="icon-refresh"></i> Actualizando...
-                            </>
-                        ) : (
-                            <>
-                                <i className="icon-refresh"></i> Actualizar
-                            </>
-                        )}
-                    </button>
+                    <>
+                        <TableRefresher
+                            classNames={options.refreshButton.classNames}
+                            autoDispatchInSeconds={options.refreshButton.autoDispatchInSeconds}
+                            dispatch={() => options.refreshButton.dispatch()}
+                            refreshing={options.refreshButton.refreshing}
+                        />
+                    </>
                 )}
             </div>
             <div className="table-toolbar-right">
