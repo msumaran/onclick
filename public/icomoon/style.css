@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'icomoon-onclick';
-  src:  url('fonts/icomoon-onclick.eot?1l6sb5');
-  src:  url('fonts/icomoon-onclick.eot?1l6sb5#iefix') format('embedded-opentype'),
-    url('fonts/icomoon-onclick.ttf?1l6sb5') format('truetype'),
-    url('fonts/icomoon-onclick.woff?1l6sb5') format('woff'),
-    url('fonts/icomoon-onclick.svg?1l6sb5#icomoon-onclick') format('svg');
+  src:  url('fonts/icomoon-onclick.eot?rqlfhm');
+  src:  url('fonts/icomoon-onclick.eot?rqlfhm#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-onclick.ttf?rqlfhm') format('truetype'),
+    url('fonts/icomoon-onclick.woff?rqlfhm') format('woff'),
+    url('fonts/icomoon-onclick.svg?rqlfhm#icomoon-onclick') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-.oc {
+[class^="oc-"], [class*=" oc-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon-onclick' !important;
   speak: never;
@@ -25,10 +25,13 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.oc-calendar:before {
-  content: "\e90f";
-}
 .oc-check:before {
+  content: "\e910";
+}
+.oc-calendar:before {
+  content: "\e900";
+}
+.oc-message:before {
   content: "\e90e";
 }
 .oc-feedback:before {
@@ -71,5 +74,5 @@
   content: "\e906";
 }
 .oc-dashboard:before {
-  content: "\e900";
+  content: "\e90f";
 }
