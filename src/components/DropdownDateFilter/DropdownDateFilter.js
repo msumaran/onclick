@@ -1,12 +1,13 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
-
-import DayPicker from 'react-day-picker'
 
 import moment from 'moment'
 import MomentLocaleUtils from 'react-day-picker/moment'
 import 'moment/locale/es'
+
+import DayPicker from 'react-day-picker'
+
+import YearMonthForm from './YearMonthForm'
 
 import 'react-day-picker/lib/style.css'
 import './DropdownDateFilter.scss'
@@ -18,10 +19,10 @@ const DropdownDateFilter = (props) => {
     const [ showing, setShowing ] = useState(false)
     const [ showingCustom, setShowingCustom ] = useState(false)
 
-    const [ fromDate, setFromDate ] = useState(moment())
+    const [ fromDate, setFromDate ] = useState(moment().subtract(1, 'month'))
     const [ toDate, setToDate ] = useState(moment())
-
-    const todayDate = moment()
+    const [ fromSelected, setFromSelected ] = useState(moment())
+    const [ toSelected, setToSelected ] = useState(moment())
 
     const enableCustom = () => {
 
@@ -67,8 +68,8 @@ const DropdownDateFilter = (props) => {
     const setCustomPeriod = () => {
 
         const range = {
-            from: fromDate.format('YYYY-MM-DD'),
-            to: toDate.format('YYYY-MM-DD')
+            from: fromSelected.format('YYYY-MM-DD'),
+            to: toSelected.format('YYYY-MM-DD')
         }
 
         props.onChange('custom', range)
@@ -91,18 +92,25 @@ const DropdownDateFilter = (props) => {
         return className
     }
 
-    const onFromDayClick = (day, { selected }) => {
+    const onFromDayClick = (day) => {
 
-        const _day = moment(day)
-
-        setFromDate(selected ? undefined : _day)
+        setFromSelected(moment(day))
     }
 
-    const onToDayClick = (day, { selected }) => {
+    const onToDayClick = (day) => {
 
-        const _day = moment(day)
+        setToSelected(moment(day))
+    }
 
-        setToDate(selected ? undefined : _day)
+    const onYearMonthChange = (date, target) => {
+
+        if (target === 'from') {
+
+            setFromDate(moment(date))
+        } else {
+
+            setToDate(moment(date))
+        }
     }
 
     useEffect(() => {
@@ -138,24 +146,41 @@ const DropdownDateFilter = (props) => {
                                     <div className="picker-body">
                                         <div className="picker-container">
                                             <DayPicker
-                                                initialMonth={todayDate.subtract(1, 'months').toDate()}
-                                                selectedDays={[ fromDate.toDate() ]}
+                                                month={fromDate.toDate()}
+                                                selectedDays={[ fromSelected.toDate() ]}
                                                 onDayClick={onFromDayClick}
-                                                localeUtils={MomentLocaleUtils} locale='es'
+                                                localeUtils={MomentLocaleUtils}
+                                                locale='es'
+                                                captionElement={({ date, localeUtils }) => (
+                                                    <YearMonthForm
+                                                        date={date}
+                                                        localeUtils={localeUtils}
+                                                        onChange={(date) => onYearMonthChange(date, 'from')}
+                                                    />
+                                                )}
                                             />
                                         </div>
                                         <div className="picker-container">
                                             <DayPicker
-                                                selectedDays={[ toDate.toDate() ]}
+                                                month={toDate.toDate()}
+                                                selectedDays={[ toSelected.toDate() ]}
                                                 onDayClick={onToDayClick}
-                                                localeUtils={MomentLocaleUtils} locale='es'
+                                                localeUtils={MomentLocaleUtils}
+                                                locale='es'
+                                                captionElement={({ date, localeUtils }) => (
+                                                    <YearMonthForm
+                                                        date={date}
+                                                        localeUtils={localeUtils}
+                                                        onChange={(date) => onYearMonthChange(date, 'to')}
+                                                    />
+                                                )}
                                             />
                                         </div>
                                     </div>
                                     <div className="picker-footer">
                                         <div className="footer-range">
-                                            Desde el <strong>{fromDate.format('DD/MM/YYYY')}</strong>&nbsp;
-                                            hasta el <strong>{toDate.format('DD/MM/YYYY')}</strong>
+                                            Desde el <strong>{fromSelected.format('DD/MM/YYYY')}</strong>&nbsp;
+                                            hasta el <strong>{toSelected.format('DD/MM/YYYY')}</strong>
                                         </div>
                                         <div className="text-right">
                                             <button

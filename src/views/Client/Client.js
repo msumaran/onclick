@@ -17,6 +17,7 @@ import userAction from 'redux/actions/userAction'
 
 import { SpinCircle } from 'components/Spin'
 import { confirm } from 'components/CustomModal/ModalConfirm'
+import { Link } from 'react-router-dom'
 
 const Client = () => {
 
@@ -46,7 +47,12 @@ const Client = () => {
       },
       {
         Header: 'Landing ID',
-        accessor: 'nickname'
+        accessor: 'nickname',
+        Cell: ({ cell }) => (
+          <>
+            {cell.value} <Link to={`/client-landing/${cell.row.original.id}`} className="btn btn-secondary"><i className="oc oc-edit"></i></Link>
+          </>
+        )
       },
       {
         Header: 'Correo electrónico',
