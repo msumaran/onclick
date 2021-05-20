@@ -43,10 +43,10 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
         validationSchema={
           isEdit
             ? yup.object().shape({
-                code_ga: yup.string().required('El código de Google Analitycs es requerido.').nullable(),
+                code_ga: yup.string().required('El código de Google Analytics es requerido.').nullable(),
               })
             : yup.object().shape({
-                code_ga: yup.string().required('El código de Google Analitycs es requerido.').nullable(),
+                code_ga: yup.string().required('El código de Google Analytics es requerido.').nullable(),
               })
         }
         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -81,14 +81,16 @@ const ClientCode = ({ show, dismiss, isEdit }) => {
             <ModalHeader toggle={dismiss}>{isEdit ? 'Editar CA' : 'Nuevo CA'}</ModalHeader>
             <ModalBody>
               <FormGroup>
-                <Label htmlFor="code_ga">Codigo de Google Analitycs</Label>
-                <Input
+                <Label htmlFor="code_ga">Código de Google Analytics</Label>
+                <textarea
+                  className="form-control"
                   type="text"
                   name="code_ga"
+                  rows="8"
                   value={formik.values.code_ga}
                   onChange={formik.handleChange}
                   invalid={formik.errors.code_ga ? true : false}
-                />
+                ></textarea>
                 <FormFeedback>{formik.errors.code_ga}</FormFeedback>
               </FormGroup>
             </ModalBody>

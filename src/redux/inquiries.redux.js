@@ -45,7 +45,7 @@ export const InquiriesReducer = (state = initialState, action) => {
     return st
 }
 
-const ActionFindAll = () => {
+const ActionFindAll = (filter = '') => {
 
     return async (dispatch) => {
 
@@ -55,7 +55,7 @@ const ActionFindAll = () => {
 
         try {
 
-            const data = await inquiriesApi.findAll()
+            const data = await inquiriesApi.findAll(filter)
 
             dispatch({
                 type: INQUIRIES_LOAD_SUCCESS,

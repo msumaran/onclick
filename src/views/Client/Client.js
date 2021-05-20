@@ -48,9 +48,12 @@ const Client = () => {
       {
         Header: 'Landing ID',
         accessor: 'nickname',
-        Cell: ({ cell }) => (
+        Cell: ({ cell: { value, row: { original } } }) => (
           <>
-            {cell.value} <Link to={`/client-landing/${cell.row.original.id}`} className="btn btn-secondary"><i className="oc oc-edit"></i></Link>
+            <span>{value}</span>
+            {!original.hasLanding ? null : (
+              <Link to={`/client-landing/${original.id}`} className="btn btn-secondary"><i className="oc oc-edit"></i></Link>
+            )}
           </>
         )
       },
@@ -134,7 +137,7 @@ const Client = () => {
                       <SpinCircle /> Activando...
                     </Fragment>
                   ) : (
-                    <i className="oc oc-edit" style={{
+                    <i className="oc oc-check" style={{
                       fontSize: '1.2rem',
                     }}></i>
                   )}

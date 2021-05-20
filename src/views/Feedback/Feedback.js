@@ -1,20 +1,22 @@
 /*eslint no-unused-vars: "off" */
 
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { Button, Card, CardBody, CardHeader, Col, Row, Form, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap'
 
-import PermissionHelper from 'helpers/PermissionHelper'
+import moment from 'moment'
+
+import { useDispatch, useSelector } from 'react-redux'
+
+import { SpinCircle } from 'components/Spin'
 import { StripedTable } from 'components/CustomTable'
 
-import FeedbackActions from 'redux/feedback.redux'
-
 import { configApp } from 'helpers/config'
-import { Link } from 'react-router-dom'
-import { SpinCircle } from 'components/Spin'
+
+import FeedbackActions from 'redux/feedback.redux'
 import reportAction from 'redux/actions/reportAction'
 
-const moment = require('moment')
+import PermissionHelper from 'helpers/PermissionHelper'
 
 const Feedback = () => {
 
@@ -90,7 +92,7 @@ const Feedback = () => {
                                         ]}
                                         data={feedback_result}
                                         loading={feedback_load_status === 'loading'}
-                                    
+
                                         options={{
                                             toolbar: {
                                                 refreshButton: {

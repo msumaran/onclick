@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import PermissionHelper from 'helpers/PermissionHelper'
 
 import InquiryActions from 'redux/inquiries.redux'
-import { Button, Row, Col, Card, CardHeader, CardBody, Form, FormGroup, Label, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap'
+import { Button, Row, Col, Card, CardHeader, CardBody, Form, FormGroup, Label, Modal, ModalBody, ModalHeader, ModalFooter, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import { StripedTable } from 'components/CustomTable'
 
 const moment = require('moment')
@@ -22,13 +22,17 @@ const Inquiries = () => {
     const inquiries_load_status = useSelector(state => state.InquiriesReducer.load_status)
     const inquiries_load_check_status = useSelector(state => state.InquiriesReducer.load_check_status)
 
+    const [ showFilter, setShowFilter ] = useState(false)
+    const [ filter, setFilter ] = useState('')
+
     const [ showModal, setShowModal ] = useState(false)
     const [ feedbackRow, setFeedbackRow ] = useState({})
+
     useEffect(() => {
 
         if (inquiries_load_status === '') {
 
-            dispatch(InquiryActions.ActionFindAll())
+            dispatch(InquiryActions.ActionFindAll(filter))
         }
     }, [ inquiries_load_status, dispatch ])
 
@@ -37,12 +41,35 @@ const Inquiries = () => {
         return moment(date).format('DD/MM/YYYY H:mm a')
     }
 
-    const selectRow = (row) => { 
+    const selectRow = (row) => {
         setFeedbackRow(row)
-        
+
         setShowModal(true)
     }
-    
+
+    const getFilterText = () => {
+
+        const texts = {
+            '': 'Todos',
+            pending: 'Pendientes',
+            solved: 'Resueltos'
+        }
+
+        return texts[filter]
+    }
+
+    const toggleFilter = () => {
+
+        setShowFilter(!showFilter)
+    }
+
+    const changeFilter = (filter) => {
+
+        dispatch(InquiryActions.ActionFindAll(filter))
+
+        setFilter(filter)
+    }
+
     const closeModal = () => {
         setFeedbackRow({})
         setShowModal(false)
@@ -85,6 +112,38 @@ const Inquiries = () => {
                                         ]}
                                         data={inquiries_result}
                                         loading={inquiries_load_status === 'loading'}
+                                        options={{
+                                            toolbar: {
+                                                rightButtons: [
+                                                    (
+                                                        <div className="btn-group">
+                                                            <Dropdown isOpen={showFilter} toggle={toggleFilter}>
+                                                                <DropdownToggle caret>
+                                                                    {getFilterText()}
+                                                                </DropdownToggle>
+                                                                <DropdownMenu right>
+                                                                    <DropdownItem active={filter === ''}
+                                                                        onClick={() => changeFilter('')}
+                                                                    >
+                                                                        Todos
+                                                                    </DropdownItem>
+                                                                    <DropdownItem active={filter === 'pending'}
+                                                                        onClick={() => changeFilter('pending')}
+                                                                    >
+                                                                        Pendientes
+                                                                    </DropdownItem>
+                                                                    <DropdownItem active={filter === 'solved'}
+                                                                        onClick={() => changeFilter('solved')}
+                                                                    >
+                                                                        Resueltos
+                                                                    </DropdownItem>
+                                                                </DropdownMenu>
+                                                            </Dropdown>
+                                                        </div>
+                                                    )
+                                                ],
+                                            }
+                                        }}
                                     />
                                 )}
                             </div>
@@ -163,7 +222,7 @@ const Inquiries = () => {
                                 />
                             </Col>
                         </FormGroup>
-                        
+
                         <FormGroup row>
                             <Label sm={3}>Mensaje</Label>
                             <Col sm={9}>
@@ -172,7 +231,7 @@ const Inquiries = () => {
                                     className="form-control-plaintext-message"
                                     defaultValue={feedbackRow.message}
                                     readOnly
-                                     
+
                                 ></textarea>
                             </Col>
                         </FormGroup>
