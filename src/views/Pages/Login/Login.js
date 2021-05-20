@@ -112,7 +112,7 @@ const Login = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} className="text-center">
+                          <Col xs={12} className="text-center pt-4">
                             <a href={`${process.env.REACT_APP_WEBSITE_URL}`} target="_self" className="back-to-home" >
                               Volver a la página inicial
                             </a>
