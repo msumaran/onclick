@@ -31,7 +31,7 @@ import Preloader from '../../components/Preloader/Preloader'
 
 import { toastDefaults } from 'helpers/config'
 
-const loading = () => <div className="animated fadeIn pt-3 text-center">Loading content...</div>
+const loading = () => <div className="animated fadeIn pt-3 text-center">Cargando...</div>
 
 const Header = lazy(() => import('./Header'))
 const Footer = lazy(() => import('./Footer'))
