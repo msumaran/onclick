@@ -92,7 +92,7 @@ const Recovery = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} className="text-center">
+                          <Col xs={12} className="text-center pt-4">
                             <a href="admin#/login" target="_self" className="back-to-home" >
                               Iniciar sesión
                             </a>

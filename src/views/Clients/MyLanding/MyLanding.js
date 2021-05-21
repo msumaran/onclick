@@ -203,6 +203,8 @@ const MyLanding = () => {
 
     hideSidebar()
 
+    console.log("landingLoaded ", landingLoaded);
+
     return (
         <>
             <Prompt
