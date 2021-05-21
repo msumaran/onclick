@@ -9,10 +9,12 @@ import Preloader from '../../../components/Preloader/Preloader'
 import { useDispatch, useSelector } from 'react-redux'
 
 import landingActions from 'redux/actions/landingActions'
+import { string_to_slug } from 'redux/reducers/landingReducer'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 
 import HtmlEditor from '../../../components/HtmlEditor/HtmlEditor'
+import { configApp } from 'helpers/config'
 
 const MyLanding = () => {
 
@@ -117,10 +119,21 @@ const MyLanding = () => {
 
     const handleSeoInputsChange = (field, value) => {
 
-        setSeo({
-            ...seo,
-            [field]: value
-        })
+        const _seo = Object.assign({}, seo)
+
+        if (field === 'title') {
+
+            _seo.title = value
+            _seo.slug = string_to_slug(value)
+
+            setSeo(_seo)
+        } else {
+
+            setSeo({
+                ...seo,
+                [field]: value
+            })
+        }
     }
 
     const handleMessagesInputsChange = (field, value) => {
@@ -326,7 +339,7 @@ const MyLanding = () => {
                                     )}
                                 </div>
                             </TabPane>
-                            
+
                             <TabPane tabId='seo'>
                                 <div className="btn-toolbar tab-pane-toolbar">
                                     <div className="btn-group">
@@ -347,6 +360,29 @@ const MyLanding = () => {
                                                 value={seo.title}
                                                 onChange={(e) => handleSeoInputsChange('title', e.target.value)}
                                             />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                            Url:
+                                        </label>
+                                        <div className="col-sm-10">
+                                        <div className="input-group">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text" id="basic-addon3">
+                                                    {configApp.websiteUrl}/u/
+                                                </span>
+                                            </div>
+                                            <input type="text" className="form-control"
+                                                value={seo.slug}
+                                                onChange={(e) => handleSeoInputsChange('slug', e.target.value)}
+                                            />
+                                            <div className="input-group-append">
+                                                <button className="btn btn-outline-secondary" type="button">
+                                                    <i className="oc oc-question-circle"></i> Validar
+                                                </button>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                     <div className="form-group row">

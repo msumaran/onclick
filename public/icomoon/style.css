@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon-onclick';
-  src:  url('fonts/icomoon-onclick.eot?rqlfhm');
-  src:  url('fonts/icomoon-onclick.eot?rqlfhm#iefix') format('embedded-opentype'),
-    url('fonts/icomoon-onclick.ttf?rqlfhm') format('truetype'),
-    url('fonts/icomoon-onclick.woff?rqlfhm') format('woff'),
-    url('fonts/icomoon-onclick.svg?rqlfhm#icomoon-onclick') format('svg');
+  src:  url('fonts/icomoon-onclick.eot?gflvy');
+  src:  url('fonts/icomoon-onclick.eot?gflvy#iefix') format('embedded-opentype'),
+    url('fonts/icomoon-onclick.ttf?gflvy') format('truetype'),
+    url('fonts/icomoon-onclick.woff?gflvy') format('woff'),
+    url('fonts/icomoon-onclick.svg?gflvy#icomoon-onclick') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -25,6 +25,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.oc-times-circle:before {
+  content: "\e913";
+}
+.oc-question-circle:before {
+  content: "\e914";
+}
+.oc-check-circle:before {
+  content: "\e915";
+}
+.oc-times:before {
+  content: "\e911";
+}
+.oc-question:before {
+  content: "\e912";
+}
 .oc-check:before {
   content: "\e910";
 }
