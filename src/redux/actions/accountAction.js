@@ -4,6 +4,9 @@ import accountApi from 'services/accountApi'
 
 import { toastDefaults } from 'helpers/config'
 
+import { SET_MY_PERMISSIONS } from 'redux/reducers/accountReducer'
+import { LANDINGS_SET_RESULT } from 'redux/landings.redux'
+
 const login = (username, password) => {
 
   return async (dispatch) => {
@@ -102,17 +105,22 @@ const recoveryAccount = (username) => {
   }
 }
 
-const getPermissions = () => {
+const getAccountData = () => {
 
   return async (dispatch) => {
 
     try {
 
-      const res = await accountApi.getPermissions()
+      const res = await accountApi.getAccountData()
 
       dispatch({
-        type: 'SET_MY_PERMISSIONS',
+        type: SET_MY_PERMISSIONS,
         payload: res.content.permissions
+      })
+
+      dispatch({
+        type: LANDINGS_SET_RESULT,
+        payload: res.content.landings
       })
     } catch (error) {
 
@@ -125,7 +133,7 @@ const accountAction = {
   login,
   logout,
   selfChangePassword,
-  getPermissions,
+  getAccountData,
   recoveryAccount,
   selfChangeTutorial,
 }

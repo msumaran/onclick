@@ -21,13 +21,14 @@ export const string_to_slug = (str) => {
 }
 
 const initialState = {
+    id: '',
     code: JSON.stringify(sample),
     waiting_for_publish: false,
     html: '',
+    published: false,
     seo: {
         title: '',
         slug: '',
-        backend_slug: '',
         description: '',
         og_title: '',
         og_description: '',
@@ -56,7 +57,10 @@ const landingReducer = (state = initialState, { type, payload }) => {
 
                 st.code = payload.code
                 st.waiting_for_publish = payload.code_draft === '1' ? true : false
+                st.published = true
             }
+
+            st.id = payload.id
 
             st.html = payload.html
             st.seo.title = payload.seo.title || ''
@@ -86,6 +90,7 @@ const landingReducer = (state = initialState, { type, payload }) => {
             break
         case 'LANDING_PUBLISH_END':
             st.publishStatus = 'published'
+            st.published = true
             break
         case 'LANDING_PUBLISH_ERROR':
             st.publishStatus = 'error'

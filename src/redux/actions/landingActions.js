@@ -15,6 +15,7 @@ const getMyLanding = () => {
             dispatch({
                 type: 'LANDING_LOAD_FROM_DB',
                 payload: {
+                    id: data.content.id,
                     code: data.content.code,
                     html: data.content.html,
                     seo: data.content.seo,
@@ -22,6 +23,35 @@ const getMyLanding = () => {
                 }
             })
         } catch (error) {
+
+            throw error
+        }
+    }
+}
+
+const validateSlug = (landingId, slug) => {
+
+    return async (dispatch) => {
+
+        // dispatch({
+        //     type: 'LANDING_VALIDATE_SLUG_START'
+        // })
+
+        try {
+            const data = await landingApi.validateSlug(landingId, slug)
+
+            // dispatch({
+            //     type: 'LANDING_VALIDATE_SLUG_SUCCESS',
+            // })
+
+            return data.content.isValid
+        } catch (error) {
+
+            // dispatch({
+            //     type: 'LANDING_VALIDATE_SLUG_ERROR'
+            // })
+
+            throw error
         }
     }
 }
@@ -150,6 +180,7 @@ const saveMessages = (messages) => {
 
 export default {
     getMyLanding,
+    validateSlug,
     saveDraft,
     publish,
     saveSeo,

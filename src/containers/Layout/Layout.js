@@ -52,7 +52,7 @@ const Layout = (props) => {
 
     if (!permissionsLoaded) {
 
-      dispatch(accountAction.getPermissions())
+      dispatch(accountAction.getAccountData())
     }
   }, [ permissionsLoaded, dispatch ])
 

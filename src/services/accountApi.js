@@ -54,7 +54,7 @@ const selfChangeTutorial = async () => {
   }
 }
 
-const getPermissions = async () => {
+const getAccountData = async () => {
 
   try {
 
@@ -83,7 +83,7 @@ export default {
   login,
   logout,
   selfChangePassword,
-  getPermissions,
+  getAccountData,
   recoveryAccount,
   selfChangeTutorial,
 }

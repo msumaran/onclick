@@ -22,7 +22,9 @@ const MyLanding = () => {
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
 
+    const landingId = useSelector((state) => state.landingReducer.id)
     const landingCode = useSelector((state) => state.landingReducer.code)
+    const isPublished = useSelector((state) => state.landingReducer.published)
     const landingSeo = useSelector((state) => state.landingReducer.seo)
     const landingMessages = useSelector((state) => state.landingReducer.messages)
     const landingLoaded = useSelector((state) => state.landingReducer.loaded)
@@ -40,6 +42,7 @@ const MyLanding = () => {
 
     const [ activeTab, setActiveTab ] = useState('editor')
     const [ seo, setSeo ] = useState(landingSeo)
+    const [ validSlug, setValidSlug ] = useState(true)
     const [ messages, setMessages ] = useState(landingMessages)
 
     const editor_ref = useRef()
@@ -121,19 +124,18 @@ const MyLanding = () => {
 
         const _seo = Object.assign({}, seo)
 
-        if (field === 'title') {
+        if (field === 'slug') {
 
-            _seo.title = value
-            _seo.slug = string_to_slug(value)
+            if (value !== landingSeo.slug) {
 
-            setSeo(_seo)
-        } else {
-
-            setSeo({
-                ...seo,
-                [field]: value
-            })
+                setValidSlug(false)
+            }
         }
+
+        setSeo({
+            ...seo,
+            [field]: value
+        })
     }
 
     const handleMessagesInputsChange = (field, value) => {
@@ -142,6 +144,17 @@ const MyLanding = () => {
             ...messages,
             [field]: value
         })
+    }
+
+    const validarSlug = async () => {
+
+        const slug  = string_to_slug(seo.slug)
+
+        setSeo({ ...seo, slug })
+
+        const isValid = await dispatch(landingActions.validateSlug(landingId, slug))
+
+        setValidSlug(isValid)
     }
 
     const showPreview = (device) => {
@@ -183,6 +196,12 @@ const MyLanding = () => {
     }
 
     const saveSeo = () => {
+
+        if (!validSlug) {
+
+            alert('Valida la ruta para guardarla')
+            return
+        }
 
         dispatch(landingActions.saveSeo(seo))
     }
@@ -264,6 +283,16 @@ const MyLanding = () => {
                                             <i className="icon-globe"></i> {getPublishStatus()}
                                         </button>
                                     </div>
+                                    {isPublished && (
+                                        <div className="btn-group">
+                                            <a className="btn btn-secondary"
+                                                href={`${configApp.websiteUrl}/u/${seo.slug}`}
+                                                target="_blank"
+                                            >
+                                                Ver mi landing <i className="oc oc-external-link-alt"></i>
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="tab-pane-content less-toolbar">
                                     {!state.designLoaded ? null : (
@@ -369,19 +398,29 @@ const MyLanding = () => {
                                             Url:
                                         </label>
                                         <div className="col-sm-10">
-                                        <div className="input-group">
+                                        <div className="input-group has-validation">
                                             <div className="input-group-prepend">
                                                 <span className="input-group-text" id="basic-addon3">
                                                     {configApp.websiteUrl}/u/
                                                 </span>
                                             </div>
-                                            <input type="text" className="form-control"
+                                            <input type="text" className={`form-control is-${validSlug ? '' : 'in'}valid`}
                                                 value={seo.slug}
                                                 onChange={(e) => handleSeoInputsChange('slug', e.target.value)}
                                             />
                                             <div className="input-group-append">
-                                                <button className="btn btn-outline-secondary" type="button">
-                                                    <i className="oc oc-question-circle"></i> Validar
+                                                <button className={`btn btn-outline-${validSlug ? 'success' : 'danger'}`} type="button"
+                                                    onClick={() => validarSlug()}
+                                                >
+                                                    {!validSlug ? (
+                                                        <>
+                                                            <i className="oc oc-question-circle"></i> Validar
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <i className="oc oc-check-circle"></i> Válido
+                                                        </>
+                                                    )}
                                                 </button>
                                             </div>
                                         </div>

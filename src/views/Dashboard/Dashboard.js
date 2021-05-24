@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: "off" */
 
 import React, {useState} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   Carousel,
   CarouselItem,
@@ -9,7 +9,10 @@ import {
   CarouselIndicators,
   CarouselCaption,
   Modal, ModalHeader, ModalBody, ModalFooter,
-  Button
+  Button,
+  Card,
+  CardHeader,
+  CardBody
 } from 'reactstrap';
 // import PermissionHelper from '../../helpers/PermissionHelper'
 import accountAction from 'redux/actions/accountAction';
@@ -19,6 +22,7 @@ import slide2 from 'assets/img/slider/slide2.png';
 import slide3 from 'assets/img/slider/slide3.png';
 import slide4 from 'assets/img/slider/slide4.png';
 import slide5 from 'assets/img/slider/slide5.png';
+import { configApp } from 'helpers/config';
 
 const items = [
   {
@@ -55,15 +59,14 @@ const items = [
 
 const Dashboard = (props) => {
 
-  const session = JSON.parse(localStorage.getItem('session'))
-  // const tutorialShow = localStorage.getItem('onclick-show-tutorial');
-  // const my_permissions = useSelector((state) => state.accountReducer.permissions)
+  const dispatch = useDispatch()
 
-  // const permission_helper = new PermissionHelper(my_permissions)
+  const session = JSON.parse(localStorage.getItem('session'))
+
+  const landings = useSelector((state) => state.LandingsReducer.result)
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
-
-  const dispatch = useDispatch()
 
   const next = () => {
     if (animating) return;
@@ -95,7 +98,7 @@ const Dashboard = (props) => {
 
   const closeModal = () => {
     session.tutorial = false;
-    
+
     dispatch(accountAction.selfChangeTutorial()).then((status) => {
       localStorage.setItem('session', JSON.stringify(session));
     })
@@ -116,11 +119,36 @@ const Dashboard = (props) => {
 
   return (
     <div className="animated fadeIn">
-      <h1>Bienvenido a OnClick.la</h1>
-      <p>
-        ¿Deseas ver el uso de la plataforma nuevamente?&nbsp;
-        <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
-      </p>
+      <div>
+        <h1>Bienvenido a OnClick.la</h1>
+        <p>
+          ¿Deseas ver el uso de la plataforma nuevamente?&nbsp;
+          <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
+        </p>
+      </div>
+      <div className="row">
+        {landings.length && (
+          <div className="col-12">
+            <h2>Mi landing</h2>
+          </div>
+        )}
+        {landings.map((landing) => (
+          <div className='col-3' key={landing.id}>
+            <Card>
+              <CardBody>
+                <h3>
+                  {landing.title}
+                </h3>
+                <p>
+                  <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
+                    Ver mi landing <i className="oc oc-external-link-alt"></i>
+                  </a>
+                </p>
+              </CardBody>
+            </Card>
+          </div>
+        ))}
+      </div>
 
       <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} >
         <ModalBody>

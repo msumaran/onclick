@@ -12,11 +12,24 @@ const getMyLanding = async () => {
     }
 }
 
+const validateSlug = async (landingId, slug) => {
+
+    try {
+
+        return await apiService.get(`/my-landing/validateslug?id=${landingId}&slug=${slug}`)
+    } catch (error) {
+
+        throw error
+    }
+}
+
 const saveMyLanding = async (data) => {
 
     try {
 
-        return await apiService.put('/my-landing', data)
+        const res = await apiService.put('/my-landing', data)
+
+        return res
     } catch (error) {
 
         throw error
@@ -25,5 +38,6 @@ const saveMyLanding = async (data) => {
 
 export default {
     getMyLanding,
+    validateSlug,
     saveMyLanding,
 }
