@@ -250,14 +250,14 @@ const MyLanding = () => {
                                     SEO
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            {/* <NavItem>
                                 <NavLink
                                     className={activeTab === 'message' ? 'active' : ''}
                                     onClick={() => setActiveTab('message')}
                                 >
                                     Mensajes de Formulario
                                 </NavLink>
-                            </NavItem>
+                            </NavItem> */}
                         </Nav>
                         <TabContent activeTab={activeTab}>
                             <TabPane tabId='editor' className="tab-pane-editor">
@@ -286,10 +286,10 @@ const MyLanding = () => {
                                     {isPublished && (
                                         <div className="btn-group">
                                             <a className="btn btn-secondary"
-                                                href={`${configApp.websiteUrl}/u/${seo.slug}`}
+                                                href={`${configApp.websiteUrl}u/${seo.slug}`}
                                                 target="_blank"
                                             >
-                                                Ver mi landing <i className="oc oc-external-link-alt"></i>
+                                                Ver landing <i className="oc oc-external-link-alt"></i>
                                             </a>
                                         </div>
                                     )}

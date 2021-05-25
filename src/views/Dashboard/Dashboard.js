@@ -119,36 +119,36 @@ const Dashboard = (props) => {
 
   return (
     <div className="animated fadeIn">
-      <div>
+      <div className="mb-5">
         <h1>Bienvenido a OnClick.la</h1>
         <p>
           ¿Deseas ver el uso de la plataforma nuevamente?&nbsp;
           <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
         </p>
       </div>
-      <div className="row">
-        {landings.length && (
+      {landings.length && (
+        <div className="row">
           <div className="col-12">
             <h2>Mi landing</h2>
           </div>
-        )}
-        {landings.map((landing) => (
-          <div className='col-3' key={landing.id}>
-            <Card>
-              <CardBody>
-                <h3>
-                  {landing.title}
-                </h3>
-                <p>
-                  <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
-                    Ver mi landing <i className="oc oc-external-link-alt"></i>
-                  </a>
-                </p>
-              </CardBody>
-            </Card>
-          </div>
-        ))}
-      </div>
+          {landings.map((landing) => (
+            <div className='col-3' key={landing.id}>
+              <Card>
+                <CardBody>
+                  <h3>
+                    {landing.title}
+                  </h3>
+                  <p>
+                    <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
+                      Ver landing <i className="oc oc-external-link-alt"></i>
+                    </a>
+                  </p>
+                </CardBody>
+              </Card>
+            </div>
+          ))}
+        </div>
+      )}
 
       <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} >
         <ModalBody>
