@@ -113,7 +113,8 @@ const Activations = () => {
                                     <StripedTable
                                         columns={[
                                             { Header: 'Plan', accessor: 'pack.name' },
-                                            { Header: 'Nombres y apellidos', accessor: 'fullname' },
+                                            { Header: 'Nombres', accessor: 'name' },
+                                            { Header: 'Apellidos', accessor: 'lastname' },
                                             { Header: 'Email', accessor: 'email' },
                                             { Header: 'Teléfono', accessor: 'phone' },
                                             { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
