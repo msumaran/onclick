@@ -138,6 +138,9 @@ const saveSeo = (seo) => {
             })
 
             toast.success(_data.message, toastDefaults)
+            
+            return _data.code
+
         } catch (error) {
 
             dispatch({

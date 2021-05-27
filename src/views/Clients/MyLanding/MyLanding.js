@@ -16,6 +16,8 @@ import PermissionHelper from 'helpers/PermissionHelper'
 import HtmlEditor from '../../../components/HtmlEditor/HtmlEditor'
 import { configApp } from 'helpers/config'
 
+import accountAction from 'redux/actions/accountAction'
+
 const MyLanding = () => {
 
     const dispatch = useDispatch()
@@ -203,7 +205,12 @@ const MyLanding = () => {
             return
         }
 
-        dispatch(landingActions.saveSeo(seo))
+        dispatch(landingActions.saveSeo(seo)).then((status) => { 
+            if (status === 200 || status === 202) {
+                dispatch(accountAction.getAccountData())
+            }
+          })
+
     }
 
     const saveMessages = () => {

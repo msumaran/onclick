@@ -126,7 +126,7 @@ const Dashboard = (props) => {
           <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
         </p>
       </div>
-      {landings.length && (
+      {landings.length > 0 && (
         <div className="row">
           <div className="col-12">
             <h2>Mi landing</h2>
