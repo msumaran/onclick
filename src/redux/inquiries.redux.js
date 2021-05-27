@@ -92,6 +92,8 @@ const ActionCheck = (id) => {
                 }
             })
 
+            toast.success(data.message, toastDefaults)
+
             dispatch(ActionFindAll())
 
         } catch (error) {
