@@ -42,6 +42,7 @@ const Inquiries = () => {
     }
 
     const selectRow = (row) => {
+        
         setFeedbackRow(row)
 
         setShowModal(true)
@@ -224,7 +225,7 @@ const Inquiries = () => {
                         </FormGroup>
 
                         <FormGroup row>
-                            <Label sm={3}>Mensaje</Label>
+                            <Label sm={3}>Mensaje </Label>
                             <Col sm={9}>
                                 <textarea
                                     type="text"
@@ -237,8 +238,15 @@ const Inquiries = () => {
                         </FormGroup>
                     </Form>
                 </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" onClick={checkInquiry}>Marcar como resuelta</Button>{' '}
+                <ModalFooter> 
+
+                    {feedbackRow.isActive
+                        ? 
+                        <Button color="outline-secondary" onClick={checkInquiry}> Marcar como pendiente </Button> 
+                        :
+                        <Button color="primary" onClick={checkInquiry}> Marcar como resuelta </Button> 
+                    }
+                    
                     <Button color="secondary" onClick={closeModal}>Cancelar</Button>
                 </ModalFooter>
             </Modal>

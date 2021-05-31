@@ -93,6 +93,27 @@
             box-shadow: none;
         }
     }
+
+    &.btn-outline-secondary {
+        background-color: transparent;
+        border: solid #1d5cc1 2px;
+        color: #1d5cc1;
+        padding:0.375rem 0.5rem; 
+        .oc {
+            margin-right: 5px;
+        }
+
+        &:not(:disabled):not(.disabled) {
+            background-color: transparent;
+            // border-color: transparent;
+
+            &:active:focus {
+                outline: 0 none;
+                box-shadow: none;
+            }
+        }
+    }
+
 }
 
 .input-group {

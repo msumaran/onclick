@@ -283,6 +283,19 @@ const MyLanding = () => {
                                             <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
                                         </button>
                                     </div>
+
+                                    {isPublished && (
+                                        <div className="btn-group">
+                                            <a className="btn btn-outline-secondary mr-3"
+                                                href={`${configApp.websiteUrl}/u/${seo.slug}`}
+                                                target="_blank"
+                                            >
+                                                <i className="oc oc-external-link-alt"></i>
+                                                Ir a landing 
+                                            </a>
+                                        </div>
+                                    )}
+
                                     <div className="btn-group">
                                         <button className="btn btn-primary"
                                             onClick={() => publish()}
@@ -290,16 +303,7 @@ const MyLanding = () => {
                                             <i className="icon-globe"></i> {getPublishStatus()}
                                         </button>
                                     </div>
-                                    {isPublished && (
-                                        <div className="btn-group">
-                                            <a className="btn btn-secondary"
-                                                href={`${configApp.websiteUrl}u/${seo.slug}`}
-                                                target="_blank"
-                                            >
-                                                Ver landing <i className="oc oc-external-link-alt"></i>
-                                            </a>
-                                        </div>
-                                    )}
+
                                 </div>
                                 <div className="tab-pane-content less-toolbar">
                                     {!state.designLoaded ? null : (

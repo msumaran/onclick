@@ -140,7 +140,7 @@ const Dashboard = (props) => {
                   </h3>
                   <p>
                     <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
-                      Ver landing <i className="oc oc-external-link-alt"></i>
+                      Ir a landing <i className="oc oc-external-link-alt"></i>
                     </a>
                   </p>
                 </CardBody>
