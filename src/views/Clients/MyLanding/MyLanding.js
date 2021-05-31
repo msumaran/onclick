@@ -287,7 +287,7 @@ const MyLanding = () => {
                                     {isPublished && (
                                         <div className="btn-group">
                                             <a className="btn btn-outline-secondary mr-3"
-                                                href={`${configApp.websiteUrl}/u/${seo.slug}`}
+                                                href={`${configApp.websiteUrl}u/${seo.slug}`}
                                                 target="_blank"
                                             >
                                                 <i className="oc oc-external-link-alt"></i>
