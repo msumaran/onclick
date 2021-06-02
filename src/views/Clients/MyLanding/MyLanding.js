@@ -268,42 +268,44 @@ const MyLanding = () => {
                         </Nav>
                         <TabContent activeTab={activeTab}>
                             <TabPane tabId='editor' className="tab-pane-editor">
-                                <div className="btn-toolbar tab-pane-toolbar">
-                                    <div className="btn-group mr-1">
-                                        <button className="btn btn-secondary"
-                                            onClick={() => showPreview('desktop')}
-                                        >
-                                            <i className="icon-eye"></i> Previsualizar
-                                        </button>
-                                    </div>
-                                    <div className="btn-group mr-1">
-                                        <button className="btn btn-secondary"
-                                            onClick={() => saveDraft()}
-                                        >
-                                            <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
-                                        </button>
-                                    </div>
-
-                                    {isPublished && (
-                                        <div className="btn-group">
-                                            <a className="btn btn-outline-secondary mr-3"
-                                                href={`${configApp.websiteUrl}u/${seo.slug}`}
-                                                target="_blank"
+                                <div className="d-flex justify-content-between">
+                                    <div className="btn-toolbar tab-pane-toolbar">
+                                        <div className="btn-group mr-1">
+                                            <button className="btn btn-secondary"
+                                                onClick={() => showPreview('desktop')}
                                             >
-                                                <i className="oc oc-external-link-alt"></i>
-                                                Ir a landing
-                                            </a>
+                                                <i className="icon-eye"></i> Previsualizar
+                                            </button>
                                         </div>
-                                    )}
+                                        <div className="btn-group mr-1">
+                                            <button className="btn btn-secondary"
+                                                onClick={() => saveDraft()}
+                                            >
+                                                <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
+                                            </button>
+                                        </div>
 
-                                    <div className="btn-group">
-                                        <button className="btn btn-primary"
-                                            onClick={() => publish()}
-                                        >
-                                            <i className="icon-globe"></i> {getPublishStatus()}
-                                        </button>
+                                        <div className="btn-group">
+                                            <button className="btn btn-primary"
+                                                onClick={() => publish()}
+                                            >
+                                                <i className="icon-globe"></i> {getPublishStatus()}
+                                            </button>
+                                        </div>
                                     </div>
-
+                                    <div className="btn-toolbar tab-pane-toolbar">
+                                        {isPublished && (
+                                            <div className="btn-group">
+                                                <a className="btn btn-outline-secondary"
+                                                    href={`${configApp.websiteUrl}u/${seo.slug}`}
+                                                    target="_blank"
+                                                >
+                                                    <i className="oc oc-external-link-alt"></i>
+                                                    Ir a landing
+                                                </a>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="tab-pane-content less-toolbar">
                                     {!state.designLoaded ? null : (
