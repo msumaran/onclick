@@ -89,7 +89,7 @@ const MyContacts = () => {
                                             },
                                             {
                                                 Header: 'Fecha de registro',
-                                                accessor: 'startAt',
+                                                accessor: 'createdAt',
                                                 Cell: ({ cell: { value } }) => moment(value).format('LLL')
                                             },
                                             {
