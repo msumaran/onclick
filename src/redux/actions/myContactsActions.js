@@ -14,6 +14,11 @@ export const findAll = (reloading = false) => {
             dispatch({
                 type: 'MY_CONTACTS_RELOAD_ALL',
             })
+        } else {
+
+            dispatch({
+                type: 'MY_CONTACTS_FIND_ALL_START',
+            })
         }
 
         try {
@@ -21,7 +26,7 @@ export const findAll = (reloading = false) => {
             const data = await myContactsApi.findAll()
 
             dispatch({
-                type: 'MY_CONTACTS_FIND_ALL',
+                type: 'MY_CONTACTS_FIND_ALL_END',
                 payload: data.content
             })
         } catch (error) {

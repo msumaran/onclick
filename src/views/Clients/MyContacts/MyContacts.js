@@ -10,7 +10,7 @@ import PermissionHelper from 'helpers/PermissionHelper'
 
 import { StripedTable } from 'components/CustomTable'
 import { useEffect } from 'react'
-import { Button, Card, CardBody, CardHeader, Col, Row } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Modal, ModalBody, ModalHeader, Row } from 'reactstrap'
 
 import { SpinCircle } from 'components/Spin'
 import reportAction from 'redux/actions/reportAction'
@@ -23,8 +23,12 @@ const MyContacts = () => {
     const permission_helper = new PermissionHelper(my_permissions)
 
     const contacts = useSelector(state => state.myContactsReducer.contacts)
+    const contactsLoading = useSelector(state => state.myContactsReducer.loading)
     const contactsLoaded = useSelector(state => state.myContactsReducer.loaded)
     const contactsReloading = useSelector(state => state.myContactsReducer.reloading)
+
+    const [ showModal, setShowModal ] = useState(false)
+    const [ selected, setSelected ] = useState({})
 
     useEffect(() => {
 
@@ -36,6 +40,20 @@ const MyContacts = () => {
     }, [ contactsLoaded, dispatch ])
 
     const [submitting, setSubmitting] = useState(false)
+
+    const selectRow = (row) => {
+
+        setSelected(row)
+
+        setShowModal(true)
+    }
+
+    const resetModal = () => {
+
+        setSelected({})
+
+        setShowModal(false)
+    }
 
     return (
         <div className="animated fadeIn">
@@ -69,23 +87,21 @@ const MyContacts = () => {
                                                 Header: 'Estado',
                                                 accessor: 'status'
                                             },
-                                            // {
-                                            //     Header: 'Landing',
-                                            //     accessor: 'origin',
-                                            //     Cell: ({ cell: { value } }) => (
-                                            //         <>
-                                            //             {value}
-                                            //             &nbsp;
-                                            //             <a href={value} target="_blank">
-                                            //                 <i className="icons icon-link"></i>
-                                            //             </a>
-                                            //         </>
-                                            //     )
-                                            // },
                                             {
                                                 Header: 'Fecha de registro',
                                                 accessor: 'startAt',
                                                 Cell: ({ cell: { value } }) => moment(value).format('LLL')
+                                            },
+                                            {
+                                                Header: 'Acciones',
+                                                accessor: 'origin',
+                                                Cell: ({ row: { original } }) => (
+                                                    <button className="btn btn-secondary"
+                                                        onClick={() => selectRow(original)}
+                                                    >
+                                                        Abrir
+                                                    </button>
+                                                )
                                             },
                                         ]}
                                         data={contacts}
@@ -95,6 +111,7 @@ const MyContacts = () => {
                                                 desc: true
                                             }
                                         ]}
+                                        loading={contactsLoading}
                                         options={{
                                             toolbar: {
                                                 refreshButton: {
@@ -144,6 +161,36 @@ const MyContacts = () => {
                     </Card>
                 </Col>
             </Row>
+
+            <Modal isOpen={showModal} toggle={() => resetModal()}>
+                <ModalHeader toggle={() => setShowModal(false)}>Información de lead</ModalHeader>
+                <ModalBody>
+                    <table className="table table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Nombres</th>
+                                <td>{selected.name}</td>
+                            </tr>
+                            <tr>
+                                <th>Apellidos</th>
+                                <td>{selected.lastname}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{selected.email}</td>
+                            </tr>
+                            <tr>
+                                <th>Estado</th>
+                                <td>{selected.status}</td>
+                            </tr>
+                            <tr>
+                                <th>Mensaje</th>
+                                <td>{selected.message}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </ModalBody>
+            </Modal>
         </div>
     )
 }
