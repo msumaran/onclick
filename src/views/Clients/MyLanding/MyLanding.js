@@ -375,7 +375,6 @@ const MyLanding = () => {
                                                                             {
                                                                                 label: 'Marketing',
                                                                                 method: 'POST',
-                                                                                target: '_blank',
                                                                                 url: '',
                                                                             }
                                                                         ]
