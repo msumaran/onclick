@@ -205,7 +205,7 @@ const MyLanding = () => {
             return
         }
 
-        dispatch(landingActions.saveSeo(seo)).then((status) => { 
+        dispatch(landingActions.saveSeo(seo)).then((status) => {
             if (status === 200 || status === 202) {
                 dispatch(accountAction.getAccountData())
             }
@@ -291,7 +291,7 @@ const MyLanding = () => {
                                                 target="_blank"
                                             >
                                                 <i className="oc oc-external-link-alt"></i>
-                                                Ir a landing 
+                                                Ir a landing
                                             </a>
                                         </div>
                                     )}
@@ -334,8 +334,9 @@ const MyLanding = () => {
                                                                         allowCustomUrl: false,
                                                                         allowAddNewField: false,
                                                                         defaultFields: [
-                                                                            {name: "fullname", label: "Nombres y apellidos", type: "text"},
-                                                                            {name: "email", label: "Correo electrónico", type: "email"}
+                                                                            { name: "fullname", label: "Nombres y apellidos", type: "text" },
+                                                                            { name: "email", label: "Correo electrónico", type: "email" },
+                                                                            { name: "message", label: "Mensaje", type: "textarea", show_label: true }
                                                                         ],
                                                                     }
                                                                 },
@@ -355,6 +356,14 @@ const MyLanding = () => {
                                                                         placeholder_text: 'Correo electrónico',
                                                                         show_label: true,
                                                                         required: true,
+                                                                    },
+                                                                    {
+                                                                        name: 'message',
+                                                                        type: 'textarea',
+                                                                        label: 'Mensaje',
+                                                                        placeholder_text: 'Mensaje',
+                                                                        show_label: true,
+                                                                        required: false,
                                                                     },
                                                                 ]
                                                             },
