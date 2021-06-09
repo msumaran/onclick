@@ -49,6 +49,11 @@ const MyPayments = () => {
             Header: 'Termina',
             accessor: 'endAt',
             Cell: ({ cell: { value } }) => moment(value).format('DD/MM/YYYY H:mm a')
+        },
+        {
+            Header: 'Monto Pagado',
+            accessor: 'price',
+            Cell: ({ cell: { value } }) => `S/ ${value}`
         }
     ]
 
