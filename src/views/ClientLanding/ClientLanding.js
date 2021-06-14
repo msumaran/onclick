@@ -9,18 +9,24 @@ import Preloader from 'components/Preloader/Preloader'
 import { useDispatch, useSelector } from 'react-redux'
 
 import clientLandingActions from 'redux/actions/clientLandingActions'
+import { string_to_slug } from 'redux/reducers/clientLandingReducer'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 
 import HtmlEditor from 'components/HtmlEditor/HtmlEditor'
+
+import { configApp } from 'helpers/config'
 
 const ClientLanding = (props) => {
 
     const dispatch = useDispatch()
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
+    const permission_helper = new PermissionHelper(my_permissions)
 
+    const clientLandingId = useSelector((state) => state.clientLandingReducer.id)
     const clientLandingCode = useSelector((state) => state.clientLandingReducer.code)
+    const ClientLandingIsPublished = useSelector((state) => state.clientLandingReducer.published)
     const clientLandingSeo = useSelector((state) => state.clientLandingReducer.seo)
     const clientLandingMessages = useSelector((state) => state.clientLandingReducer.messages)
     const clientLandingLoaded = useSelector((state) => state.clientLandingReducer.loaded)
@@ -38,6 +44,7 @@ const ClientLanding = (props) => {
 
     const [ activeTab, setActiveTab ] = useState('editor')
     const [ seo, setSeo ] = useState(clientLandingSeo)
+    const [ validSlug, setValidSlug ] = useState(true)
     const [ messages, setMessages ] = useState(clientLandingMessages)
 
     const editor_ref = useRef()
@@ -119,6 +126,14 @@ const ClientLanding = (props) => {
 
     const handleSeoInputsChange = (field, value) => {
 
+        if (field === 'slug') {
+
+            if (value !== clientLandingSeo.slug) {
+
+                setValidSlug(false)
+            }
+        }
+
         setSeo({
             ...seo,
             [field]: value
@@ -131,6 +146,17 @@ const ClientLanding = (props) => {
             ...messages,
             [field]: value
         })
+    }
+
+    const validarSlug = async () => {
+
+        const slug  = string_to_slug(seo.slug)
+
+        setSeo({ ...seo, slug })
+
+        const isValid = await dispatch(clientLandingActions.validateSlug(clientLandingId, slug))
+
+        setValidSlug(isValid)
     }
 
     const showPreview = (device) => {
@@ -218,38 +244,57 @@ const ClientLanding = (props) => {
                                     SEO
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            {/* <NavItem>
                                 <NavLink
                                     className={activeTab === 'message' ? 'active' : ''}
                                     onClick={() => setActiveTab('message')}
                                 >
                                     Mensajes de Formulario
                                 </NavLink>
-                            </NavItem>
+                            </NavItem> */}
                         </Nav>
                         <TabContent activeTab={activeTab}>
                             <TabPane tabId='editor' className="tab-pane-editor">
-                                <div className="btn-toolbar tab-pane-toolbar">
-                                    <div className="btn-group mr-1">
-                                        <button className="btn btn-secondary"
-                                            onClick={() => showPreview('desktop')}
-                                        >
-                                            <i className="icon-eye"></i> Previsualizar
-                                        </button>
+                                <div className="d-flex justify-content-between">
+                                    <div className="btn-toolbar tab-pane-toolbar">
+                                        <div className="btn-group mr-1">
+                                            <button className="btn btn-secondary"
+                                                onClick={() => showPreview('desktop')}
+                                            >
+                                                <i className="icon-eye"></i> Previsualizar
+                                            </button>
+                                        </div>
+                                        {!permission_helper.validate('client_landing', 'u') ? null : (
+                                            <>
+                                                <div className="btn-group mr-1">
+                                                    <button className="btn btn-secondary"
+                                                        onClick={() => saveDraft()}
+                                                    >
+                                                        <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
+                                                    </button>
+                                                </div>
+                                                <div className="btn-group">
+                                                    <button className="btn btn-primary"
+                                                        onClick={() => publish()}
+                                                    >
+                                                        <i className="icon-globe"></i> {getPublishStatus()}
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
-                                    <div className="btn-group mr-1">
-                                        <button className="btn btn-secondary"
-                                            onClick={() => saveDraft()}
-                                        >
-                                            <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
-                                        </button>
-                                    </div>
-                                    <div className="btn-group">
-                                        <button className="btn btn-primary"
-                                            onClick={() => publish()}
-                                        >
-                                            <i className="icon-globe"></i> {getPublishStatus()}
-                                        </button>
+                                    <div className="btn-toolbar tab-pane-toolbar">
+                                        {ClientLandingIsPublished && (
+                                            <div className="btn-group">
+                                                <a className="btn btn-outline-secondary"
+                                                    href={`${configApp.websiteUrl}u/${seo.slug}`}
+                                                    target="_blank"
+                                                >
+                                                    <i className="oc oc-external-link-alt"></i>
+                                                    Ir a landing
+                                                </a>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="tab-pane-content less-toolbar">
@@ -349,6 +394,39 @@ const ClientLanding = (props) => {
                                                 value={seo.title}
                                                 onChange={(e) => handleSeoInputsChange('title', e.target.value)}
                                             />
+                                        </div>
+                                    </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="" className="col-sm-2 col-form-label text-right">
+                                            Url:
+                                        </label>
+                                        <div className="col-sm-10">
+                                        <div className="input-group has-validation">
+                                            <div className="input-group-prepend">
+                                                <span className="input-group-text" id="basic-addon3">
+                                                    {configApp.websiteUrl}u/
+                                                </span>
+                                            </div>
+                                            <input type="text" className={`form-control is-${validSlug ? '' : 'in'}valid`}
+                                                value={seo.slug}
+                                                onChange={(e) => handleSeoInputsChange('slug', e.target.value)}
+                                            />
+                                            <div className="input-group-append">
+                                                <button className={`btn btn-outline-${validSlug ? 'success' : 'danger'}`} type="button"
+                                                    onClick={() => validarSlug()}
+                                                >
+                                                    {!validSlug ? (
+                                                        <>
+                                                            <i className="oc oc-question-circle"></i> Validar
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <i className="oc oc-check-circle"></i> Válido
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                     <div className="form-group row">

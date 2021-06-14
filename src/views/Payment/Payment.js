@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import { Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Card, CardHeader, CardBody, Form, FormGroup, Label, Modal, ModalBody, ModalHeader, Table} from 'reactstrap'
 import moment from 'moment'
@@ -70,12 +71,12 @@ const Payment = () => {
   const selectRow = (row) => {
     setRowSelected(row);
     dispatch(paymentAction.findByUserId(row.username_id)).then((status) => {
-      setShowModal(true); 
+      setShowModal(true);
     },[dispatch, paymentsinfo, showInfo])
-  } 
+  }
 
-  useEffect(() => { 
-      setShowInfo(paymentsinfo) 
+  useEffect(() => {
+      setShowInfo(paymentsinfo)
   }, [paymentsinfo, setShowInfo])
 
   useEffect(() => {
@@ -85,6 +86,11 @@ const Payment = () => {
       fetchPayments()
     }
   }, [loaded, fetchPayments])
+
+  if (!permission_helper.validate('payment', 'r')) {
+
+    return <Redirect to='/' />
+  }
 
   return (
     <div className="animated fadeIn">
@@ -96,20 +102,17 @@ const Payment = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-
-                {permission_helper.validate('user', 'r') ? (
-                  <StripedTable
-                    columns={columns}
-                    data={data}
-                    defaultSorted={[
-                      {
-                        id: 'createdAt',
-                        desc: true
-                      }
-                    ]}
-                    loading={loading}
-                  />
-                ) : null}
+                <StripedTable
+                  columns={columns}
+                  data={data}
+                  defaultSorted={[
+                    {
+                      id: 'createdAt',
+                      desc: true
+                    }
+                  ]}
+                  loading={loading}
+                />
               </div>
             </CardBody>
           </Card>
@@ -120,27 +123,27 @@ const Payment = () => {
           <ModalHeader toggle={() => setShowModal(false)}>{ rowSelected.username } - Historial de pagos</ModalHeader>
           <ModalBody>
               <Form>
-                  
+
                   <Table striped bordered hover size="sm">
                     <thead>
                       <tr>
                         <th>#</th>
                         <th>Paquete</th>
                         <th>Inicio</th>
-                        <th>Fin</th> 
+                        <th>Fin</th>
                       </tr>
                     </thead>
                     <tbody>
-                      
+
                     {showInfo.map((item, index) => (
                         <tr>
                           <td>{ index + 1 }</td>
                           <td>{ item.pack.name}</td>
                           <td>{ getRowDate(item.startAt) }</td>
-                          <td>{ getRowDate(item.endAt) }</td> 
+                          <td>{ getRowDate(item.endAt) }</td>
                         </tr>
                     ))}
- 
+
                     </tbody>
                   </Table>
 

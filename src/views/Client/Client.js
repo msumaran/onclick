@@ -1,6 +1,7 @@
 /*eslint no-unused-vars: "off" */
 
 import React, { useState, useEffect, useCallback, useMemo, Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Row, Col, Card, CardHeader, CardBody, Button, Badge } from 'reactstrap'
 import moment from 'moment'
@@ -35,122 +36,108 @@ const Client = () => {
     setClientCode(!showClientCode)
   }, [showClientCode])
 
-  const columns = useMemo(
-    () => [
-      {
-        Header: 'Nombre',
-        accessor: 'name'
-      },
-      {
-        Header: 'Apellidos',
-        accessor: 'lastname'
-      },
-      {
-        Header: 'Landing ID',
-        accessor: 'nickname',
-        Cell: ({ cell: { value, row: { original } } }) => (
-          <>
-            <span>{value}</span>
-            {!original.hasLanding ? null : (
-              <Link to={`/client-landing/${original.id}`} className="btn btn-secondary"><i className="oc oc-edit"></i></Link>
-            )}
-          </>
-        )
-      },
-      {
-        Header: 'Correo electrónico',
-        accessor: 'email'
-      },
-      {
-        Header: 'Status',
-        accessor: 'isActive',
-        Cell: ({ cell: { value } }) =>
-          value ? <Badge color="success">Activo</Badge> : <Badge color="danger">Inactivo</Badge>
-      },
-      {
-        Header: 'Registro',
-        accessor: 'createdAt',
-        Cell: ({ cell: { value } }) => moment(value).format('LLL')
-      },
-      {
-        Header: 'Actions',
-        width: 300,
-        Cell: ({ row: { original } }) => {
-          const [deleting, setDeleting] = useState({ [`row_id_${original.id}`]: false })
-          const [activating, setActivating] = useState({ [`row_id_${original.id}`]: false })
+  const getColumns = () => {
 
-          return (
-            <div className="btn-group btn-group-sm">
-              {permission_helper.validate('user_password_change', 'u') ? (
-                <Button
-                  className="btn btn-secondary"
-                  disabled={deleting[`row_id_${original.id}`]}
-                  onClick={() => {
-                    dispatch(clientAction.find(original.id))
-                    toggleClientCode()
-                  }}
-                >
-                  <i className="icon-key"></i> Code GA
-                </Button>
-              ) : null}
+    const columns = []
 
-              {permission_helper.validate('user', 'd') && original.isActive ? (
-                <button
-                  className="btn btn-danger"
-                  disabled={deleting[`row_id_${original.id}`]}
-                  onClick={() =>
-                    confirm('Desactivar', '¿Está seguro que deseas desactivar este registro?').then(() => {
-                      setDeleting({ [`row_id_${original.id}`]: true })
-                      dispatch(clientAction.remove(original.id)).then((status) => {
-                        setDeleting({ [`row_id_${original.id}`]: false })
-                      })
-                    })
-                  }
-                >
-                  {deleting[`row_id_${original.id}`] ? (
-                    <Fragment>
-                      <SpinCircle /> Desactivando...
-                    </Fragment>
-                  ) : (
-                    <i className="oc oc-trash" style={{
-                      fontSize: '1.2rem',
-                    }}></i>
-                  )}
-                </button>
-              ) : null}
+    columns.push({ Header: 'Nombre', accessor: 'name' })
+    columns.push({ Header: 'Apellidos', accessor: 'lastname' })
 
-              {permission_helper.validate('user', 'd') && !original.isActive ? (
-                <button
-                  className="btn btn-success"
-                  disabled={activating[`row_id_${original.id}`]}
-                  onClick={() =>
-                    confirm('Activar', '¿Está seguro que deseas activar este registro?').then(() => {
-                      setActivating({ [`row_id_${original.id}`]: true })
-                      dispatch(clientAction.active(original.id)).then((status) => {
-                        setActivating({ [`row_id_${original.id}`]: false })
-                      })
-                    })
-                  }
-                >
-                  {activating[`row_id_${original.id}`] ? (
-                    <Fragment>
-                      <SpinCircle /> Activando...
-                    </Fragment>
-                  ) : (
-                    <i className="oc oc-check" style={{
-                      fontSize: '1.2rem',
-                    }}></i>
-                  )}
-                </button>
-              ) : null}
+    if (permission_helper.validate('client_landing', 'r')) {
 
-            </div>
-          )
-        }
-      }
-    ],
-    [dispatch, toggleClientCode, permission_helper]
-  )
+      columns.push({ Header: 'Landing', accessor: 'nickname', Cell: ({ cell: { value, row: { original } } }) => (
+        <>
+          <span>{value}</span>
+          {!original.hasLanding ? null : (
+            <Link to={`/client-landing/${original.id}`} className="btn btn-secondary">
+              <i className="oc oc-edit"></i>
+            </Link>
+          )}
+        </>
+      )})
+    }
+
+    columns.push({ Header: 'Correo electrónico', accessor: 'email' })
+    columns.push({ Header: 'Status', accessor: 'isActive', Cell:  ({ cell: { value } }) => {
+
+      return value ? <Badge color="success">Activo</Badge> : <Badge color="danger">Inactivo</Badge>
+    }})
+
+    columns.push({ Header: 'Registro', accessor: 'createdAt', Cell: ({ cell: { value } }) => moment(value).format('LLL') })
+    columns.push({ Header: 'Actions', width: 300, Cell: ({ row: { original } }) => {
+      const [deleting, setDeleting] = useState({ [`row_id_${original.id}`]: false })
+      const [activating, setActivating] = useState({ [`row_id_${original.id}`]: false })
+
+      return (
+        <div className="btn-group btn-group-sm">
+          {!permission_helper.validate('code_ga', 'u') ? null : (
+            <Button
+              className="btn btn-secondary"
+              disabled={deleting[`row_id_${original.id}`]}
+              onClick={() => {
+                dispatch(clientAction.find(original.id))
+                toggleClientCode()
+              }}
+            >
+              <i className="icon-key"></i> Code GA
+            </Button>
+          )}
+
+          {!permission_helper.validate('user', 'd') && original.isActive ? null : (
+            <button
+              className="btn btn-danger"
+              disabled={deleting[`row_id_${original.id}`]}
+              onClick={() =>
+                confirm('Desactivar', '¿Está seguro que deseas desactivar este registro?').then(() => {
+                  setDeleting({ [`row_id_${original.id}`]: true })
+                  dispatch(clientAction.remove(original.id)).then(() => {
+                    setDeleting({ [`row_id_${original.id}`]: false })
+                  })
+                })
+              }
+            >
+              {deleting[`row_id_${original.id}`] ? (
+                <Fragment>
+                  <SpinCircle /> Desactivando...
+                </Fragment>
+              ) : (
+                <i className="oc oc-trash" style={{
+                  fontSize: '1.2rem',
+                }}></i>
+              )}
+            </button>
+          )}
+
+          {!permission_helper.validate('user', 'u') && !original.isActive ? null : (
+            <button
+              className="btn btn-success"
+              disabled={activating[`row_id_${original.id}`]}
+              onClick={() =>
+                confirm('Activar', '¿Está seguro que deseas activar este registro?').then(() => {
+                  setActivating({ [`row_id_${original.id}`]: true })
+                  dispatch(clientAction.active(original.id)).then(() => {
+                    setActivating({ [`row_id_${original.id}`]: false })
+                  })
+                })
+              }
+            >
+              {activating[`row_id_${original.id}`] ? (
+                <Fragment>
+                  <SpinCircle /> Activando...
+                </Fragment>
+              ) : (
+                <i className="oc oc-check" style={{
+                  fontSize: '1.2rem',
+                }}></i>
+              )}
+            </button>
+          )}
+        </div>
+      )
+    }})
+
+    return columns
+  }
 
   const data = useSelector((store) => store.clientReducer.clients)
 
@@ -170,6 +157,11 @@ const Client = () => {
     }
   }, [loaded, fetchClients])
 
+  if (!permission_helper.validate('user', 'r')) {
+
+    return <Redirect to='/' />
+  }
+
   return (
     <div className="animated fadeIn">
       <Row>
@@ -180,20 +172,17 @@ const Client = () => {
             </CardHeader>
             <CardBody>
               <div className="rt-wrapper">
-
-                {permission_helper.validate('user', 'r') ? (
-                  <StripedTable
-                    columns={columns}
-                    data={data}
-                    defaultSorted={[
-                      {
-                        id: 'createdAt',
-                        desc: true
-                      }
-                    ]}
-                    loading={loading}
-                  />
-                ) : null}
+                <StripedTable
+                  columns={getColumns()}
+                  data={data}
+                  defaultSorted={[
+                    {
+                      id: 'createdAt',
+                      desc: true
+                    }
+                  ]}
+                  loading={loading}
+                />
               </div>
             </CardBody>
           </Card>

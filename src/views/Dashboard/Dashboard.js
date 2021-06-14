@@ -17,6 +17,8 @@ import {
 // import PermissionHelper from '../../helpers/PermissionHelper'
 import accountAction from 'redux/actions/accountAction';
 
+import PermissionHelper from 'helpers/PermissionHelper'
+
 import slide1 from 'assets/img/slider/slide1.png';
 import slide2 from 'assets/img/slider/slide2.png';
 import slide3 from 'assets/img/slider/slide3.png';
@@ -60,6 +62,9 @@ const items = [
 const Dashboard = (props) => {
 
   const dispatch = useDispatch()
+
+  const my_permissions = useSelector((state) => state.accountReducer.permissions)
+  const permission_helper = new PermissionHelper(my_permissions)
 
   const session = JSON.parse(localStorage.getItem('session'))
 
@@ -126,28 +131,32 @@ const Dashboard = (props) => {
           <a className="pointer-link" type="button" onClick={toggle} >Mira el minitutorial.</a>
         </p>
       </div>
-      {landings.length > 0 && (
-        <div className="row">
-          <div className="col-12">
-            <h2>Mi landing</h2>
-          </div>
-          {landings.map((landing) => (
-            <div className='col-3' key={landing.id}>
-              <Card>
-                <CardBody>
-                  <h3>
-                    {landing.title}
-                  </h3>
-                  <p>
-                    <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
-                      Ir a landing <i className="oc oc-external-link-alt"></i>
-                    </a>
-                  </p>
-                </CardBody>
-              </Card>
+      {!permission_helper.validate('landing', 'r') ? null : (
+        <>
+          {landings.length > 0 && (
+            <div className="row">
+              <div className="col-12">
+                <h2>Mi landing</h2>
+              </div>
+              {landings.map((landing) => (
+                <div className='col-3' key={landing.id}>
+                  <Card>
+                    <CardBody>
+                      <h3>
+                        {landing.title}
+                      </h3>
+                      <p>
+                        <a href={`${configApp.websiteUrl}u/${landing.slug}`} target="_blank">
+                          Ir a landing <i className="oc oc-external-link-alt"></i>
+                        </a>
+                      </p>
+                    </CardBody>
+                  </Card>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
 
       <Modal isOpen={modal} toggle={toggle} size="lg" backdrop='static' keyboard={false} >

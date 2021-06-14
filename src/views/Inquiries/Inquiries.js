@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 
@@ -36,13 +37,18 @@ const Inquiries = () => {
         }
     }, [ inquiries_load_status, dispatch ])
 
+    if (!permission_helper.validate('page_contact', 'r')) {
+
+        return <Redirect to='/' />
+    }
+
     const getRowDate = (date) => {
 
         return moment(date).format('DD/MM/YYYY H:mm a')
     }
 
     const selectRow = (row) => {
-        
+
         setFeedbackRow(row)
 
         setShowModal(true)
@@ -92,61 +98,59 @@ const Inquiries = () => {
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
-                                {!permission_helper.validate('page_contact', 'r') ? null : (
-                                    <StripedTable
-                                        columns={[
-                                            { Header: 'Nombre', accessor: 'name' },
-                                            { Header: 'Apellidos', accessor: 'lastname' },
-                                            { Header: 'Email', accessor: 'email' },
-                                            { Header: 'Teléfono', accessor: 'phone' },
-                                            { Header: 'Actividad', accessor: 'activity' },
-                                            // { Header: 'Mensaje', accessor: 'message' },
-                                            { Header: 'Fecha de ingreso', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
-                                            { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Resuelto' : 'Pendiente'},
-                                            { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
-                                                <>
-                                                    <button className="btn btn-secondary" onClick={() => selectRow(original)}>
-                                                        Leer
-                                                    </button>
-                                                </>
-                                            )}
-                                        ]}
-                                        data={inquiries_result}
-                                        loading={inquiries_load_status === 'loading'}
-                                        options={{
-                                            toolbar: {
-                                                rightButtons: [
-                                                    (
-                                                        <div className="btn-group">
-                                                            <Dropdown isOpen={showFilter} toggle={toggleFilter}>
-                                                                <DropdownToggle caret>
-                                                                    {getFilterText()}
-                                                                </DropdownToggle>
-                                                                <DropdownMenu right>
-                                                                    <DropdownItem active={filter === ''}
-                                                                        onClick={() => changeFilter('')}
-                                                                    >
-                                                                        Todos
-                                                                    </DropdownItem>
-                                                                    <DropdownItem active={filter === 'pending'}
-                                                                        onClick={() => changeFilter('pending')}
-                                                                    >
-                                                                        Pendientes
-                                                                    </DropdownItem>
-                                                                    <DropdownItem active={filter === 'solved'}
-                                                                        onClick={() => changeFilter('solved')}
-                                                                    >
-                                                                        Resueltos
-                                                                    </DropdownItem>
-                                                                </DropdownMenu>
-                                                            </Dropdown>
-                                                        </div>
-                                                    )
-                                                ],
-                                            }
-                                        }}
-                                    />
-                                )}
+                                <StripedTable
+                                    columns={[
+                                        { Header: 'Nombre', accessor: 'name' },
+                                        { Header: 'Apellidos', accessor: 'lastname' },
+                                        { Header: 'Email', accessor: 'email' },
+                                        { Header: 'Teléfono', accessor: 'phone' },
+                                        { Header: 'Actividad', accessor: 'activity' },
+                                        // { Header: 'Mensaje', accessor: 'message' },
+                                        { Header: 'Fecha de ingreso', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
+                                        { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Resuelto' : 'Pendiente'},
+                                        { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
+                                            <>
+                                                <button className="btn btn-secondary" onClick={() => selectRow(original)}>
+                                                    Leer
+                                                </button>
+                                            </>
+                                        )}
+                                    ]}
+                                    data={inquiries_result}
+                                    loading={inquiries_load_status === 'loading'}
+                                    options={{
+                                        toolbar: {
+                                            rightButtons: [
+                                                (
+                                                    <div className="btn-group">
+                                                        <Dropdown isOpen={showFilter} toggle={toggleFilter}>
+                                                            <DropdownToggle caret>
+                                                                {getFilterText()}
+                                                            </DropdownToggle>
+                                                            <DropdownMenu right>
+                                                                <DropdownItem active={filter === ''}
+                                                                    onClick={() => changeFilter('')}
+                                                                >
+                                                                    Todos
+                                                                </DropdownItem>
+                                                                <DropdownItem active={filter === 'pending'}
+                                                                    onClick={() => changeFilter('pending')}
+                                                                >
+                                                                    Pendientes
+                                                                </DropdownItem>
+                                                                <DropdownItem active={filter === 'solved'}
+                                                                    onClick={() => changeFilter('solved')}
+                                                                >
+                                                                    Resueltos
+                                                                </DropdownItem>
+                                                            </DropdownMenu>
+                                                        </Dropdown>
+                                                    </div>
+                                                )
+                                            ],
+                                        }
+                                    }}
+                                />
                             </div>
                         </CardBody>
                     </Card>
@@ -238,15 +242,17 @@ const Inquiries = () => {
                         </FormGroup>
                     </Form>
                 </ModalBody>
-                <ModalFooter> 
-
-                    {feedbackRow.isActive
-                        ? 
-                        <Button color="outline-secondary" onClick={checkInquiry}> Marcar como pendiente </Button> 
-                        :
-                        <Button color="primary" onClick={checkInquiry}> Marcar como resuelta </Button> 
-                    }
-                    
+                <ModalFooter>
+                    {!permission_helper.validate('page_contact', 'u') ? null : (
+                        <>
+                            <Button
+                                color={`outline-${feedbackRow.isActive ? 'secondary' : 'primary'}`}
+                                onClick={checkInquiry}
+                            >
+                                Marcar como {feedbackRow.isActive ? 'pendiente' : 'resuelta'}
+                            </Button>
+                        </>
+                    )}
                     <Button color="secondary" onClick={closeModal}>Cancelar</Button>
                 </ModalFooter>
             </Modal>

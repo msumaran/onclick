@@ -15,6 +15,7 @@ const getClientLanding = (client_id) => {
             dispatch({
                 type: 'CLIENT_LANDING_LOAD_FROM_DB',
                 payload: {
+                    id: data.content.id,
                     code: data.content.code,
                     html: data.content.html,
                     seo: data.content.seo,
@@ -22,6 +23,35 @@ const getClientLanding = (client_id) => {
                 }
             })
         } catch (error) {
+
+            throw error
+        }
+    }
+}
+
+const validateSlug = (landingId, slug) => {
+
+    return async (dispatch) => {
+
+        // dispatch({
+        //     type: 'LANDING_VALIDATE_SLUG_START'
+        // })
+
+        try {
+            const data = await clientLandingApi.validateSlug(landingId, slug)
+
+            // dispatch({
+            //     type: 'LANDING_VALIDATE_SLUG_SUCCESS',
+            // })
+
+            return data.content.isValid
+        } catch (error) {
+
+            // dispatch({
+            //     type: 'LANDING_VALIDATE_SLUG_ERROR'
+            // })
+
+            throw error
         }
     }
 }
@@ -150,6 +180,7 @@ const saveMessages = (client_id, messages) => {
 
 export default {
     getClientLanding,
+    validateSlug,
     saveDraft,
     publish,
     saveSeo,

@@ -1,7 +1,7 @@
 /*eslint no-unused-vars: "off" */
 
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { Button, Card, CardBody, CardHeader, Col, Row, Form, FormGroup, Label, Modal, ModalBody, ModalHeader } from 'reactstrap'
 
 import moment from 'moment'
@@ -32,6 +32,8 @@ const Feedback = () => {
     const [ feedbackRow, setFeedbackRow ] = useState({
         user: {}
     })
+
+    const [submitting, setSubmitting] = useState(false)
 
     const feedback_reloading = useSelector(state => state.FeedbackReducer.reloading)
 
@@ -64,7 +66,10 @@ const Feedback = () => {
         }
     }, [ feedback_load_status, dispatch ])
 
-    const [submitting, setSubmitting] = useState(false)
+    if (!permission_helper.validate('feedback', 'r')) {
+
+        return <Redirect to="/" />
+    }
 
     return (
         <div className="animated fadeIn">
@@ -76,68 +81,65 @@ const Feedback = () => {
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
-                                {!permission_helper.validate('feedback', 'r') ? null : (
-                                    <StripedTable
-                                        columns={[
-                                            { Header: 'Tipo', accessor: 'type', Cell: ({ row: { original } }) => getRowType(original) },
-                                            { Header: 'Usuario', accessor: 'user.name' },
-                                            { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
-                                            { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
-                                                <>
-                                                    <button className="btn btn-secondary" onClick={() => selectRow(original)}>
-                                                        Leer
-                                                    </button>
-                                                </>
-                                            )}
-                                        ]}
-                                        data={feedback_result}
-                                        loading={feedback_load_status === 'loading'}
+                                <StripedTable
+                                    columns={[
+                                        { Header: 'Tipo', accessor: 'type', Cell: ({ row: { original } }) => getRowType(original) },
+                                        { Header: 'Usuario', accessor: 'user.name' },
+                                        { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
+                                        { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
+                                            <>
+                                                <button className="btn btn-secondary" onClick={() => selectRow(original)}>
+                                                    Leer
+                                                </button>
+                                            </>
+                                        )}
+                                    ]}
+                                    data={feedback_result}
+                                    loading={feedback_load_status === 'loading'}
 
-                                        options={{
-                                            toolbar: {
-                                                refreshButton: {
-                                                    enabled: true,
-                                                    classNames: 'btn btn-secondary',
-                                                    refreshing: feedback_reloading,
-                                                    autoDispatchInSeconds: 60,
-                                                    dispatch: () => dispatch(FeedbackActions.reloadAll())
-                                                },
-                                                leftButtons:[
-                                                    (
-                                                        <>
+                                    options={{
+                                        toolbar: {
+                                            refreshButton: {
+                                                enabled: true,
+                                                classNames: 'btn btn-secondary',
+                                                refreshing: feedback_reloading,
+                                                autoDispatchInSeconds: 60,
+                                                dispatch: () => dispatch(FeedbackActions.reloadAll())
+                                            },
+                                            leftButtons:[
+                                                (
+                                                    <>
 
-                                                            <Button
-                                                                className="ml-1"
-                                                                color="primary"
-                                                                onClick={() =>{
-                                                                    setSubmitting(true)
-                                                                    dispatch(reportAction.make('get_feedback')).then((res) => {
-                                                                        setSubmitting(false)
+                                                        <Button
+                                                            className="ml-1"
+                                                            color="primary"
+                                                            onClick={() =>{
+                                                                setSubmitting(true)
+                                                                dispatch(reportAction.make('get_feedback')).then((res) => {
+                                                                    setSubmitting(false)
 
-                                                                        if (res.path) window.open(res.path)
-                                                                        else window.open(res)
-                                                                    })
-                                                                }}
-                                                            >
-                                                                {submitting ? (
-                                                                <>
-                                                                    <SpinCircle /> Procesando...
-                                                                </>
-                                                                ) : (
-                                                                <>
-                                                                    <i className="icon-cloud-download"></i> Exportar
-                                                                </>
-                                                                )}
-                                                            </Button>
+                                                                    if (res.path) window.open(res.path)
+                                                                    else window.open(res)
+                                                                })
+                                                            }}
+                                                        >
+                                                            {submitting ? (
+                                                            <>
+                                                                <SpinCircle /> Procesando...
+                                                            </>
+                                                            ) : (
+                                                            <>
+                                                                <i className="icon-cloud-download"></i> Exportar
+                                                            </>
+                                                            )}
+                                                        </Button>
 
-                                                        </>
-                                                    )
-                                                ]
-                                            }
-                                        }}
-
-                                    />
-                                )}
+                                                    </>
+                                                )
+                                            ]
+                                        }
+                                    }}
+                                />
                             </div>
                         </CardBody>
                     </Card>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import PermissionHelper from 'helpers/PermissionHelper'
 
@@ -52,6 +53,10 @@ const Activations = () => {
         }
     }, [ activations_load_status, dispatch ])
 
+    if (!permission_helper.validate('page_activation', 'r')) {
+
+        return <Redirect to={{ pathname: '/'}} />
+    }
     const selectRow = (row) => {
 
         const data = {
@@ -109,58 +114,58 @@ const Activations = () => {
                         </CardHeader>
                         <CardBody>
                             <div className="rt-wrapper">
-                                {!permission_helper.validate('page_activation', 'r') ? null : (
-                                    <StripedTable
-                                        columns={[
-                                            { Header: 'Plan', accessor: 'pack.name' },
-                                            { Header: 'Nombres', accessor: 'name' },
-                                            { Header: 'Apellidos', accessor: 'lastname' },
-                                            { Header: 'Email', accessor: 'email' },
-                                            { Header: 'Teléfono', accessor: 'phone' },
-                                            { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
-                                            { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar' },
-                                            { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
-                                                <>
+                                <StripedTable
+                                    columns={[
+                                        { Header: 'Plan', accessor: 'pack.name' },
+                                        { Header: 'Nombres', accessor: 'name' },
+                                        { Header: 'Apellidos', accessor: 'lastname' },
+                                        { Header: 'Email', accessor: 'email' },
+                                        { Header: 'Teléfono', accessor: 'phone' },
+                                        { Header: 'Fecha de solicitud', accessor: 'createdAt', Cell: ({ cell: { value } }) =>  moment(value).format('DD/MM/YYYY h:mm a') },
+                                        { Header: 'Estado', accessor: 'isActive', Cell: ({ cell: { value } }) =>  value ? 'Activado' : 'Por activar' },
+                                        { Header: 'Acciones', width: 250, Cell: ({ row: { original } }) => (
+                                            <>
+                                                {!permission_helper.validate('user', 'c') ? null : (
                                                     <button className="btn btn-secondary" onClick={() => selectRow(original)}>
                                                         {/* <i className="nav-icon oc oc-users"></i>  */}
                                                         Registrar usuario
                                                     </button>
-                                                </>
-                                            )}
-                                        ]}
-                                        data={activations_result}
-                                        loading={activations_load_status === 'loading'}
-                                        options={{
-                                            toolbar: {
-                                                refreshButton: {
-                                                    enabled: true,
-                                                    classNames: 'btn btn-secondary',
-                                                    refreshing: activations_reloading,
-                                                    autoDispatchInSeconds: 60,
-                                                    dispatch: () => dispatch(ActivationActions.reloadAll(dateFilter.period))
-                                                },
-                                                dateFilter: {
-                                                    enabled: true,
-                                                    classNames: 'btn btn-secondary',
-                                                    periods: dateFilter.periods,
-                                                    value: dateFilter.period,
-                                                    onChange: (value, range) => {
+                                                )}
+                                            </>
+                                        )}
+                                    ]}
+                                    data={activations_result}
+                                    loading={activations_load_status === 'loading'}
+                                    options={{
+                                        toolbar: {
+                                            refreshButton: {
+                                                enabled: true,
+                                                classNames: 'btn btn-secondary',
+                                                refreshing: activations_reloading,
+                                                autoDispatchInSeconds: 60,
+                                                dispatch: () => dispatch(ActivationActions.reloadAll(dateFilter.period))
+                                            },
+                                            dateFilter: {
+                                                enabled: true,
+                                                classNames: 'btn btn-secondary',
+                                                periods: dateFilter.periods,
+                                                value: dateFilter.period,
+                                                onChange: (value, range) => {
 
-                                                        setDateFilter({ ...dateFilter, period: value })
+                                                    setDateFilter({ ...dateFilter, period: value })
 
-                                                        if (value === 'custom') {
+                                                    if (value === 'custom') {
 
-                                                            dispatch(ActivationActions.reloadAll(`custom&from=${range.from}&to=${range.to}`))
-                                                        } else {
+                                                        dispatch(ActivationActions.reloadAll(`custom&from=${range.from}&to=${range.to}`))
+                                                    } else {
 
-                                                            dispatch(ActivationActions.reloadAll(value))
-                                                        }
+                                                        dispatch(ActivationActions.reloadAll(value))
                                                     }
-                                                },
-                                            }
-                                        }}
-                                    />
-                                )}
+                                                }
+                                            },
+                                        }
+                                    }}
+                                />
                             </div>
                         </CardBody>
                     </Card>

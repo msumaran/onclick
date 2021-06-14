@@ -23,6 +23,7 @@ const MyLanding = () => {
     const dispatch = useDispatch()
 
     const my_permissions = useSelector((state) => state.accountReducer.permissions)
+    const permission_helper = new PermissionHelper(my_permissions)
 
     const landingId = useSelector((state) => state.landingReducer.id)
     const landingCode = useSelector((state) => state.landingReducer.code)
@@ -277,21 +278,24 @@ const MyLanding = () => {
                                                 <i className="icon-eye"></i> Previsualizar
                                             </button>
                                         </div>
-                                        <div className="btn-group mr-1">
-                                            <button className="btn btn-secondary"
-                                                onClick={() => saveDraft()}
-                                            >
-                                                <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
-                                            </button>
-                                        </div>
-
-                                        <div className="btn-group">
-                                            <button className="btn btn-primary"
-                                                onClick={() => publish()}
-                                            >
-                                                <i className="icon-globe"></i> {getPublishStatus()}
-                                            </button>
-                                        </div>
+                                        {!permission_helper.validate('landing', 'u') ? null : (
+                                            <>
+                                                <div className="btn-group mr-1">
+                                                    <button className="btn btn-secondary"
+                                                        onClick={() => saveDraft()}
+                                                    >
+                                                        <i className="icon-disc"></i> {getSaveDraftStatus()} {draftModified ? '*' : ''}
+                                                    </button>
+                                                </div>
+                                                <div className="btn-group">
+                                                    <button className="btn btn-primary"
+                                                        onClick={() => publish()}
+                                                    >
+                                                        <i className="icon-globe"></i> {getPublishStatus()}
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                     <div className="btn-toolbar tab-pane-toolbar">
                                         {isPublished && (
@@ -394,13 +398,15 @@ const MyLanding = () => {
 
                             <TabPane tabId='seo'>
                                 <div className="btn-toolbar tab-pane-toolbar">
-                                    <div className="btn-group">
-                                        <button className="btn btn-primary"
-                                            onClick={() => saveSeo()}
-                                        >
-                                            <i className="icon-save"></i> {getSaveSeoStatus()}
-                                        </button>
-                                    </div>
+                                    {!permission_helper.validate('landing', 'u') ? null : (
+                                        <div className="btn-group">
+                                            <button className="btn btn-primary"
+                                                onClick={() => saveSeo()}
+                                            >
+                                                <i className="icon-save"></i> {getSaveSeoStatus()}
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                                 <form>
                                     <div className="form-group row">
